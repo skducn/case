@@ -1,0 +1,119 @@
+# Helicon ISAPI_Rewrite configuration file
+# Version 3.1.0.112
+
+RewriteEngine on
+rewriteBase /
+
+RewriteRule ^admMain.html /adm/admMain.asp
+RewriteRule ^admMainExit.html /adm/admMain.asp?action=exit
+RewriteRule ^admMainSave.html /adm/admMain.asp?action=save
+RewriteRule ^theme-setting.html /adm/theme-setting.asp
+RewriteRule ^admProfile.html /adm/admProfile.asp
+RewriteRule ^admProfileSave.html /adm/admProfile.asp?action=save
+
+RewriteRule ^admProjectAdd.html /adm/admProjectAdd.asp
+RewriteRule ^admProjectAddSubmit.html /adm/admProjectAdd.asp?action=submit
+RewriteRule ^admProjectEdit-(.*).html /adm/admProjectEdit.asp?pjtId=$1
+RewriteRule ^admProjectEditSave.html /adm/admProjectEdit.asp?action=save
+RewriteRule ^admProjectView-(.*).html /adm/admProjectView.asp?pjtId=$1
+RewriteRule ^admProjectInfo-(.*).html /adm/admProjectInfo.asp?pjtId=$1
+RewriteRule ^admPlatformAdd-(.*).html /adm/admPlatformAdd.asp?pjtId=$1
+RewriteRule ^admPlatformAddSubmit.html /adm/admPlatformAdd.asp?action=submit
+RewriteRule ^admPlatformEdit-(.*)-(.*).html /adm/admPlatformEdit.asp?pjtId=$1&platformId=$2
+RewriteRule ^admPlatformEditSave.html /adm/admPlatformEdit.asp?action=save
+RewriteRule ^admPlatformEditDel-(.*)-(.*).html /adm/admPlatformEdit.asp?action=del&pjtId=$1&platformId=$2
+RewriteRule ^admLabelAdd-(.*)-(.*).html /adm/admLabelAdd.asp?pjtId=$1&platformId=$2
+RewriteRule ^admLabelEdit-(.*)-(.*)-(.*).html /adm/admLabelEdit.asp?pjtId=$1&platformId=$2&lblId=$3
+RewriteRule ^admLabelAddSubmit.html /adm/admLabelAdd.asp?action=submit
+RewriteRule ^admLabelEditSave.html /adm/admLabelEdit.asp?action=save
+RewriteRule ^admUserAdd.html /adm/admUserAdd.asp
+RewriteRule ^admUserAddSubmit.html /adm/admUserAdd.asp?action=submit
+RewriteRule ^admUserEdit-(.*).html /adm/admUserEdit.asp?userId=$1
+RewriteRule ^admUserEditSave-(.*).html /adm/admUserEdit.asp?action=save&userId=$1
+RewriteRule ^admUserEditDel-(.*).html /adm/admUserEdit.asp?action=del&userId=$1
+RewriteRule ^admTaskAdd.html /adm/admTaskAdd.asp
+RewriteRule ^admTaskAddSubmit.html /adm/admTaskAdd.asp?action=submit
+RewriteRule ^admTaskEdit-(.*).html /adm/admTaskEdit.asp?taskId=$1
+RewriteRule ^admTaskEditSave.html /adm/admTaskEdit.asp?action=save
+RewriteRule ^admTaskEditDel-(.*).html /adm/admTaskEdit.asp?action=del&taskId=$1
+
+RewriteRule ^admTaskList.html /adm/admTaskList.asp
+RewriteRule ^admPlanAdd-(.*)-(.*).html /adm/admPlanAdd.asp?pjtId=$1&platformId=$2
+RewriteRule ^admPlanEdit-(.*)-(.*).html /adm/admPlanEdit.asp?pjtId=$1&platformId=$2
+RewriteRule ^admPlanAddSubmit.html /adm/admPlanAdd.asp?action=submit
+RewriteRule ^admTestPlanList-(.*)-(.*).html /adm/admTestPlanList.asp?pjtId=$1&platformId=$2
+RewriteRule ^admPlanAddCopy.html /adm/admPlanAdd.asp?action=copy
+
+RewriteRule ^admSearchSearch.html /adm/admSearch.asp?action=search
+RewriteRule ^admReportAudit-(.*)-(.*).html /adm/admReportAudit.asp?pjtId=$1&platformId=$2
+RewriteRule ^admReportAuditAudit-(.*)-(.*).html /adm/admReportAudit.asp?action=audit&pjtId=$1&platformId=$2
+RewriteRule ^admReportAuditNoaudit-(.*)-(.*).html /adm/admReportAudit.asp?action=noAudit&pjtId=$1&platformId=$2
+RewriteRule ^admExcTestcaseTa-(.*)-(.*)-(.*)-(.*)-(.*).html /adm/admExcTestcaseTa.asp?pjtId=$1&platformId=$2&lblId=$3&caseStage=$4&user=$5
+RewriteRule ^admDatabase-(.*)-(.*).html /adm/admDatabase.asp?pjtId=$1&pjtDBDatabase=$2
+RewriteRule ^admDatebaseRecord-(.*)-(.*)-(.*)-(.*).html /adm/admDatabase.asp?action=record&pjtId=$1&pjtDBDatabase=$2&tablename=$3&recordSum=$4
+RewriteRule ^admDatebaseColumn-(.*)-(.*)-(.*)-(.*)-(.*).html /adm/admDatabase.asp?action=column&pjtId=$1&pjtDBDatabase=$2&tablename=$3&recordSum=$4&no=$5
+
+RewriteRule ^excTestcaseEdit-(.*)-(.*).html /excTestcaseEdit.asp?caseId=$1&pjtId=$2
+RewriteRule ^excTestcaseEdit-(.*).html /excTestcaseEdit.asp?caseId=$1
+RewriteRule ^excTestcaseEdit-(.*)-(.*)-(.*).html /excTestcaseEdit.asp?caseId=$1&pjtId=$2&caseStage=$3
+RewriteRule ^excTestcaseEditTa-(.*)-(.*).html /excTestcaseEditTa.asp?caseId=$1&user=$2
+RewriteRule ^excTestcaseEditTaSave.html /excTestcaseEditTa.asp?action=save
+RewriteRule ^excTestcaseEditSave.html /excTestcaseEdit.asp?action=save
+RewriteRule ^excTestcase-(.*)-(.*)-(.*)-(.*).html /excTestcase.asp?pjtId=$1&platformId=$2&lblId=$3&caseStage=$4
+RewriteRule ^excTestcaseTa-(.*)-(.*)-(.*)-(.*)-(.*).html /excTestcaseTa.asp?pjtId=$1&platformId=$2&lblId=$3&caseStage=$4&user=$5
+RewriteRule ^excTestcaseTaReport-(.*)-(.*)-(.*)-(.*).html /excTestcaseTaReport.asp?pjtId=$1&platformId=$2&lblId=$3&caseStage=$4
+RewriteRule ^excTestcaseReport-(.*)-(.*)-(.*)-(.*).html /excTestcaseReport.asp?pjtId=$1&platformId=$2&lblId=$3&caseStage=$4
+
+
+
+RewriteRule ^index.html /index.asp
+RewriteRule ^indexLogin.html /index.asp?action=login
+RewriteRule ^lock.html /lock.asp
+RewriteRule ^lockLogin.html /lock.asp?action=login
+RewriteRule ^indexClear-(.*).html /index.asp?action=clear&userName=$1
+
+RewriteRule ^main.html /main.asp
+RewriteRule ^mainExit.html /main.asp?action=exit
+RewriteRule ^mainSave.html /main.asp?action=save
+RewriteRule ^mainExportExcel-(.*).html /main.asp?action=exportExcel&pjtId=$1
+
+RewriteRule ^sltDatebase-(.*)-(.*).html /sltDatabase.asp?pjtId=$1&pjtDBDatabase=$2
+RewriteRule ^sltTaskItem-(.*).html /sltTaskItem.asp?taskId=$1
+RewriteRule ^sltSearchSearch.html /sltSearch.asp?action=search
+RewriteRule ^sltTestcaseList-(.*)-(.*)-(.*)-(.*).html /sltTestcaseList.asp?pjtId=$1&platformId=$2&lblId=$3&caseStage=$4
+RewriteRule ^sltTestcase-(.*)-(.*)-(.*).html /sltTestcase.asp?pjtId=$1&platformId=$2&lblId=$3
+RewriteRule ^sltTestcaseSubmit.html /sltTestcase.asp?action=submit
+RewriteRule ^sltReportCreate-(.*)-(.*)-(.*).html /sltReportCreate.asp?pjtId=$1&platformId=$2&rptId=$3
+RewriteRule ^sltReportCreateSubmit.html /sltReportCreate.asp?action=submit
+RewriteRule ^sltReportShow-(.*)-(.*).html /sltReportShow.asp?pjtId=$1&platformId=$2
+RewriteRule ^sltReportShowDel-(.*)-(.*).html /sltReportShow.asp?action=del&pjtId=$1&platformId=$2
+RewriteRule ^sltProjectInfo-(.*).html /sltProjectInfo.asp?pjtId=$1
+RewriteRule ^sltProjectInfoSave.html /sltProjectInfo.asp?action=save
+RewriteRule ^sltTestcaseEdit-(.*).html /sltTestcaseEdit.asp?caseId=$1
+RewriteRule ^sltTestcaseEditSave.html /sltTestcaseEdit.asp?action=save
+RewriteRule ^sltTestcaseList-(.*)-(.*).html /sltTestcaseList.asp?pjtId=$1&platformId=$2
+RewriteRule ^sltExcelImportImport-(.*)-(.*)-(.*).html /sltExcelImport.asp?action=import&importRecordcount=$1&errorFields2=$2&errorNums=$3
+RewriteRule ^sltExcelImportImportExcel.html /sltExcelImport.asp?action=importExcel
+RewriteRule ^sltExcelImport.html /sltExcelImport.asp
+RewriteRule ^sltTaskList.html /sltTaskList.asp
+RewriteRule ^sltUserEdit.html /sltUserEdit.asp
+RewriteRule ^sltUserEditSave.html /sltUserEdit.asp?action=save
+RewriteRule ^sltReportEdit-(.*)-(.*).html /sltReportEdit.asp?pjtId=$1&platformId=$2
+RewriteRule ^sltReportEditSave.html /sltReportEdit.asp?action=save
+
+RewriteRule ^sltPlanAdd-(.*)-(.*)-(.*).html /sltPlanAdd.asp?pjtId=$1&platformId=$2&planId=$3
+RewriteRule ^sltTestPlanDone-(.*)-(.*).html /sltTestPlanDone.asp?pjtId=$1&platformId=$2
+RewriteRule ^sltPlanEdit-(.*)-(.*).html /sltPlanEdit.asp?pjtId=$1&platformId=$2
+RewriteRule ^sltPlanAddSubmit.html /sltPlanAdd.asp?action=submit
+RewriteRule ^sltPlanEditSubmit.html /sltPlanEdit.asp?action=submit
+RewriteRule ^sltTestPlanList-(.*).html /sltTestPlanList.asp?planId=$1
+RewriteRule ^sltPlanAddCopy.html /sltPlanAdd.asp?action=copy
+
+RewriteRule ^review.html /review.asp
+
+RewriteRule ^tourist.html /tourist.asp
+RewriteRule ^testcase-(.*)-(.*)-(.*)-(.*).html /testcase.asp?pjtId=$1&platformId=$2&lblId=$3&caseStage=$4
+
+
+
+RewriteRule ^reviewtestcase-(.*)-(.*)-(.*)-(.*).html /reviewtestcase.asp?pjtId=$1&platformId=$2&lblId=$3&caseStage=$4
