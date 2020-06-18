@@ -9,6 +9,7 @@ if rs.eof then
 else
 	pjtId = rs("case_pjtId")
 	platformId = rs("case_platformId")
+	caseStage = rs("caseStage")
 end if
 rs.close
 %>
@@ -19,7 +20,7 @@ rs.close
 
 <%
 set rs = server.CreateObject("ADODB.RecordSet")
-rs.Open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" and caseId<>"&request("caseId")&"",conn,3,3
+rs.Open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" and caseId<>"&request("caseId")&" and caseStage="&caseStage&"",conn,3,3
 Do while not rs.eof
 	If arr_caseTitle = "" then
 		arr_caseTitle = rs("caseTitle")
@@ -147,22 +148,27 @@ set rs2 = nothing
 					
 					<form role="form" action="sltTestcaseEditSave.html" method="post" name="addForm" onSubmit="return CheckPost()" >
 
-						<div class="box box-danger box-solid box-default">		
-							<div class="box-header with-border">
-								<h3 class="box-title">
-								<% response.write pjtName + " - " + platformName %>（<%=caseId%>）
-								</h3>
-								<hr>
+						<div class="box box-danger box-solid box-default">	
+						
+							<div class="row">
+								<div class="col-md-6" align="left">
+									<h3 class="box-title"><% response.write pjtName + platformName %></h3>						
+								</div>				
+								<div class="col-md-6" align="right">								
+									<button type="submit" class="btn btn-warning " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button>	
+									<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
+								</div>	
 							</div>
-					
-					
+																		
+							<hr>
+						
 							<div class="row">
 								<div class="col-md-7">
 									<div class="well bs-component">								
 										<fieldset>																						
 										<div class="row">	
 											<div class="col-md-12">						
-												<label>用例标题 * (1<50) </label>
+												<h4 class="box-title">用例标题 * (1<50)（ID：<%=caseId%>） </h4>
 												<input type="text" name="caseTitle"  maxlength="50" value="<%=rs("caseTitle")%>" class="form-control">
 											</div>	
 										</div>		
@@ -172,7 +178,7 @@ set rs2 = nothing
 										<div class="row">	
 															
 											<div class="col-md-4">
-												<label>用例标签</label>
+												<h4 class="box-title">用例标签</h4>
 												<% set rs66 = server.createobject("adodb.recordset")
 												rs66.open "select * from tbl_label where lbl_pjtId="&pjtId&" and lbl_platformId="&platformId&"",conn,3,3 %>
 												<select name="case_lblId" id="case_lblId" class="form-control">
@@ -190,7 +196,7 @@ set rs2 = nothing
 											</div>
 			 
 											<div class="col-md-4">
-												<label>测试阶段</label>
+												<h4 class="box-title">测试阶段</h4>
 												<select name="caseStage" id="stageId" class="form-control" style="width: 100%;">
 												<% if rs("caseStage") = 1 then %>
 												  <option value="1" selected="selected">冒烟测试</option>
@@ -211,7 +217,7 @@ set rs2 = nothing
 											</div>	
 											
 											<div class="col-md-4">
-											     <label>用例状态</label>
+											   <h4 class="box-title">用例状态</h4>
 											     <select class="form-control" name="caseStatus">
 												  <%if rs("caseStatus") = 1 then%>
 													<option value="1" selected="selected">正常</option>
@@ -235,7 +241,7 @@ set rs2 = nothing
 										
 										<div class="row">
 											<div class="col-md-12">
-												<label >用例步骤 * </label>
+												<h4 class="box-title">用例步骤 * </h4>
 												<script id="caseStep" style="width:100%; height:400px" name="caseStep"><%=rs("caseStep")%></script>	
 												<script > var editor_a = UE.getEditor('caseStep');</script>
 											</div>
@@ -249,9 +255,7 @@ set rs2 = nothing
 																						
 									<div class="row">
 										<div class="col-md-12">	
-											<label>测试对象 *</label>		
-											
-							
+											<h4 class="box-title">测试对象 *</h4>		
 											<div class="animated-checkbox">
 												<label>
 												<% if rs("caseWeb") = "on" then%>
@@ -297,11 +301,11 @@ set rs2 = nothing
 									</div>
 									</div>
 									
-									<br><br>
+									<br>
 									
 									<div class="row">
 										<div class="col-md-12">							
-											<label>需求问题类型 </label>
+											<h4 class="box-title">需求问题类型 </h4>
 											<% set rs66 = server.createobject("adodb.recordset")
 											rs66.open "select * from tbl_errortype ",conn,3,3 %>
 											<select name="caseErrorType" id="caseErrorType" class="form-control select2">
@@ -324,8 +328,8 @@ set rs2 = nothing
 									
 									<div class="row">
 										<div class="col-md-12">	
-										<label>需求问题</label>
-										<textarea  name="caseProblem" class="form-control" rows="20" placeholder="请注明日期"><%=rs("caseProblem")%></textarea>
+										<h4 class="box-title">需求问题</h4>
+										<textarea  name="caseProblem" class="form-control" rows="25" placeholder="请输入 ..."><%=rs("caseProblem")%></textarea>
 										</div>
 									</div>
 									
@@ -333,20 +337,22 @@ set rs2 = nothing
 							</div>
 
 							<input type="hidden" name="arr_caseTitle" value="<%=arr_caseTitle%>">
-							<input name="caseId" type="hidden" value="<%=request("caseId")%>" />
+							<input type="hidden" name="caseId" value="<%=request("caseId")%>" />
+							
+
 	
 							<div class="col-md-12">		
-								<br>						
-								<div align="center"><button type="submit" class="btn btn-warning" style="margin-right: 5px;"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交 用例</button></div>
+								<br>		
+								<hr>				
+								<div align="center"><button type="submit" class="btn btn-warning"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button></div>
 
 							</div>	
 						</div>					
 					</form>	
 				</div>
-					<!-- top按钮 -->
-					<div class="col-md-12" align="right">	
-					<hr>
-					<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>			
+					<div class="col-md-12" align="right">						
+						<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
+						<a id='DD'></a>				
 					</div>
 			</div>
 		</div>

@@ -252,7 +252,7 @@ lblId = request("lblId")
 			rs4.Open "select * from tbl_project where pjtId="&pjtId&"",conn,3,3%>
 			<%Set rs5 = Server.CreateObject("Adodb.Recordset")
 			rs5.Open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" ",conn,3,3			
-			response.write rs4("pjtName") &" - "& rs5("platformName")
+			response.write rs4("pjtName") & rs5("platformName")
 			rs5.close
 			set rs5 = nothing
 			
@@ -268,7 +268,7 @@ lblId = request("lblId")
 					<hr>
 					<div class="row">	
 						<div class="col-md-12">						
-							<label>用例标题 * （1<50）</label>
+							<h4 class="box-title">用例标题 * （1<50）</h4>
 							<input type="text" name="caseTitle(<%=varcount%>)"  maxlength="50" class="form-control"  placeholder="简洁明了哦 ...">
 						</div>		
 						<br>
@@ -278,7 +278,7 @@ lblId = request("lblId")
 	
 					<div class="row">	
 						<div class="col-md-12">						
-							<label>用例步骤 *</label>
+							<h4 class="box-title">用例步骤 *</h4>
 							<script id="caseStep(<%=varcount%>)" style="width:100%; height:400px" name="caseStep(<%=varcount%>)"></script>	
 							<script>var editor_a = UE.getEditor('caseStep(<%=varcount%>)');</script>	
 						</div>
@@ -293,7 +293,7 @@ lblId = request("lblId")
 				<div class="row">										
 					<div class="col-md-12">
 						<!-- 测试阶段 -->									
-						<label>测试阶段 *</label>
+						<h4 class="box-title">测试阶段 *</h4>
 						
 						<div class="animated-checkbox">
 						<%Set rs8 = Server.CreateObject("Adodb.Recordset")
@@ -326,7 +326,7 @@ lblId = request("lblId")
 				<div class="col-md-12">
 				<!-- 测试对象 -->
 				<div class="form-group">
-				<label>测试对象 *</label>
+				<h4 class="box-title">测试对象 *</h4>
 				
 				<div class="animated-checkbox">
 					<label>
@@ -434,10 +434,10 @@ lblId = request("lblId")
 				<div class="row">
 				<div class="col-md-12">	
 				<div class="form-group">
-				<label class="control-label" for="focusedInput">需求问题类型</label>	<br>									 
+				<h4 class="box-title">需求问题类型</h4>									 
 				<% set rs66 = server.createobject("adodb.recordset")
 				rs66.open "select * from tbl_errortype ",conn,3,3 %>
-				<select name="caseErrorType(<%=varcount%>)" id="caseErrorType" class="form-control select3">
+				<select name="caseErrorType(<%=varcount%>)" id="caseErrorType" class="form-control select2">
 				<option value=0  selected="selected">无</option>
 				<% do while not rs66.eof%>
 				<option value="<%=rs66("errorId")%>" ><%=rs66("errorName")%></option>
@@ -453,7 +453,7 @@ lblId = request("lblId")
 				<div class="row">
 				<div class="col-md-12">		
 				<div class="form-group">
-				<label class="control-label" for="focusedInput">需求问题描述</label> 
+				<h4 class="box-title">需求问题描述</h4> 
 				<textarea  name="caseProblem(<%=varcount%>)" class="form-control" rows="17" placeholder="请注明日期"></textarea>
 				</div>
 				</div></div>			
@@ -466,7 +466,8 @@ lblId = request("lblId")
 				<input name="lblId" type="hidden" value="<%=lblId_array(varcount)%>" />
 				<div class="col-md-12">		
 							<br>			
-					<div align="center"><button type="submit" class="btn btn-danger" style="margin-right: 5px;"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交用例</button></div>
+								<hr>
+					<div align="center"><button type="submit" class="btn btn-danger" style="margin-right: 5px;"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button></div>
 
 				</div>														
 			</div>
@@ -483,7 +484,7 @@ lblId = request("lblId")
 			
 				<!-- top按钮 -->
 				<div class="col-md-12" align="right">	
-					<hr>
+				
 					<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>			
 				</div>
 				
@@ -498,25 +499,19 @@ lblId = request("lblId")
 <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- 表格 展开 必须放在 Bootstrap 3.3.5后面 -->
-<script src="bootstrap/js/jquery.js"></script>  
-<script src="bootstrap/js/custom.js?v=0.9.1"></script>
-
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
-
-
 <!-- Select2 -->
 <script src="plugins/select2/select2.full.min.js"></script>
 <script>
   $(function () {
     //Initialize Select2 Elements
     $(".select2").select2();   
- 	$(".select3").select3();   
   });
 </script>
 
 <!-- AdminLTE App -->
 <script src="dist/js/app.min.js"></script>
+
+
+
 </body>
 </html>

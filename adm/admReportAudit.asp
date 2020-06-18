@@ -118,7 +118,7 @@ rs1.close
 
 				<div class="col-md-12" align="center">
 				<br>
-				<textarea name="rejectReason" cols="100" rows="5"  placeholder="请填写反馈信息"><%=rs("rptRejectReason")%></textarea>
+				<textarea name="rejectReason" cols="100" rows="5" maxlength="100"  placeholder="请填写反馈信息"><%=rs("rptRejectReason")%></textarea>
 				</div>
 			</div>		
 						
@@ -410,12 +410,12 @@ rs1.close
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
 				<tr>
-				<th style="width: 5%">用例Id</th>
-				<th style="width: 15%">标签</th>
-				<th style="width: 45%">用例标题</th>
-				<th style="width: 15%">测试对象</th>
-				<th style="width: 15%">测试阶段</th>
-				<th style="width: 5%">测试结果</th>
+				<th style="width: 10%">用例编号</th>
+				<th style="width: 10%">标签</th>
+				<th style="width: 50%">标题</th>
+				<th style="width: 10%">测试对象</th>
+				<th style="width: 10%">测试阶段</th>
+				<th style="width: 10%">测试结果</th>
 				</tr>
 				</thead>
 				<tbody>	  
@@ -462,13 +462,13 @@ rs1.close
 					</td>
 				    <td>
 					<% if rs2("caseResult") ="error" then
-					response.write "<font color=red>error</font>"
+					response.write "<font color=red>未通过</font>"
 					elseif rs2("caseResult") = "ok" then
-					response.write "<font color=blue>ok</font>"
+					response.write "<font color=green>通过</font>"
 					elseif rs2("caseStatus") = "3" then
-					response.write "<font color=blue>hang-up</font>"
+					response.write "<font color=black>搁置</font>"
 					elseif rs2("caseStatus") = "2" then
-					response.write "<font color=red>pause</font>"
+					response.write "<font color=blue>暂停</font>"
 					end if %>
 					</td>
 					</tr>
@@ -510,12 +510,13 @@ rs1.close
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
 				<tr>
-				<th style="width: 25%">版本 - 标签</th>
-				<th style="width: 15%">用例总数</th>
-				<th style="width: 15%">已通过数(s)</th>
-				<th style="width: 15%">未通过数</th>
-				<th style="width: 15%">未测试数(搁置）</th>
-				<th style="width: 15%">用例执行覆盖率</th>
+				<th style="width: 14.28%">版本</th>
+				<th style="width: 14.28%">标签</th>
+				<th style="width: 14.28%">用例总数</th>
+				<th style="width: 14.28%">已通过数</th>
+				<th style="width: 14.28%">未通过数</th>
+				<th style="width: 14.28%">未测试数(搁置/暂停）</th>
+				<th style="width: 14.28%">用例执行覆盖率</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -528,11 +529,11 @@ rs1.close
 						set rs6 = server.createobject("adodb.recordset")
 						rs6.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" and case_lblId="&rs5("lblId")&" order by caseId asc",conn,3,3 %>
 						<tr>
-						<td><% response.write rs4("platformName") + " - " + rs5("lblName")%></td>
+						<td><%=rs4("platformName")%></td>
+						<td><%=rs5("lblName")%></td>
 					
 						<td><% if rs("rptCaseTotal") <>"" then
-								response.write rs("rptCaseTotal")
-							else
+						
 								response.write rs6.recordcount
 							end if %>
 					
@@ -548,41 +549,37 @@ rs1.close
 								if rs6("caseResult") = "error" then
 								   varErrorSum3 = varErrorSum3 + 1
 								end if 
-								if isnull(rs6("caseResult")) then
+								if rs6("caseResult")="empty" and rs6("caseStatus") = "1" then
 								   varEmptySum3 = varEmptySum3 + 1
 								end if 
-									if rs6("caseStatus") = "3" then
+									if rs6("caseStatus") = "3" or rs6("caseStatus") = "2" then
 								   varEmptySum3 = varEmptySum3 + 1
 								end if 
 							rs6.movenext
 							loop
 							
 						if rs("rptCasePass") <>"" then
-							response.write rs("rptCasePass")
-						else
+						
 							response.write varOkSum3
 						end if %>							
 						</td>
 						<td>
 						<% if rs("rptNoPass") <>"" then
-							response.write rs("rptNoPass")
-						else
+							
 							response.write varErrorSum3
 						end if %>
 						
 						</td>
 						<td>
 						<%  if rs("rptNoTest") <>"" then
-							response.write rs("rptNoTest")
-						else
+						
 							response.write varEmptySum3
 						end if %>
 						
 						</td>
 						<td>
-							<%  if rs("rptCaseCoverage") <>"" then
-							response.write rs("rptCaseCoverage")
-						else
+						<%  if rs("rptCaseCoverage") <>"" then
+						
 							varFGL = int((varOkSum3+varErrorSum3)/rs6.recordcount*100)
 							response.write cstr(varFGL) + "%"
 						end if  
@@ -745,7 +742,8 @@ rs1.close
 			</div><!-- /.col -->
 			
 			<div class="col-md-12">
-				<a href="<%=platformRedmine%>" target="_blank">buglist</i></a>
+				<a href="<%=platformRedmine%>" target="_blank">请登录禅道查看</i></a>
+				<br>
 			</div>
 			
 				<!--  上传redmine截图 --> 

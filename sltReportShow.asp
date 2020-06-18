@@ -67,17 +67,15 @@ end if
 		<div><ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">测试报告</a></li></ul></div>
 	</div>	
 								
-	<div class="card">
-	
-	
+	<div class="card">		
 		<div class="row">
 			<div class="col-md-6" align="left">
-				<h3 class="box-title">	<% if rs("rptStatus") = "undone" then%>
-					<%=pjtName%> - <%=platformName%> （待审核）
+				<h3 class="box-title"><% if rs("rptStatus") = "undone" then%>
+					<%=pjtName%> <%=platformName%> （待审核）
 					<% elseif rs("rptStatus") = "reject" then%>
-					<%=pjtName%> - <%=platformName%> （已拒绝）
+					<%=pjtName%> <%=platformName%> （已拒绝）
 					<% else %>
-					<%=pjtName%> - <%=platformName%> (已完成)
+					<%=pjtName%> <%=platformName%> (已完成)
 					<% end if %></h3>						
 			</div>				
 			<div class="col-md-6" align="right">
@@ -86,8 +84,7 @@ end if
 					
 				<%end if %>	
 				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
-			</div>	
-						
+			</div>							
 		</div>
 		
 		<div class="row">
@@ -100,72 +97,59 @@ end if
 	
 		<hr>
 		
-		
-		
-		
 		<div class="row">
 			<div class="col-md-12">
-				<div class="nav-tabs-custom">
-					
-					
-					
-					
-				
-				</div>									
-	
-	
 				<h3 class="box-title">概要</h3>
-			      
 				<div class="row">
 					<div class="col-md-12">							
 						<table id="example2" class="table table-bordered table-hover">
 						<thead>
 						<tr>
-						<th style="width: 25%"><div class="box-header"><h4 class="box-title">模板名称</h4></div></th>
-						<th style="width: 25%"><div class="box-header"><h4 class="box-title">交付周期</h4></div></th>
-						<th style="width: 25%"><div class="box-header"><h4 class="box-title">参与人员</h4></div></th>
-						<th style="width: 25%"><div class="box-header"><h4 class="box-title">相关平台</h4></div></th>						
+						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 模板名称</h4></div></th>
+						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 交付周期</h4></div></th>
+						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 参与人员</h4></div></th>
 						</tr>
 						</thead>
 						<tbody>	  
 						<tr>
 						<td><%=replace(rs("rptNo"),chr(13),"<BR>")%></td>
 						<td><%=replace(rs("rptPeriod"),chr(13),"<BR>")%></td>
-						<td><%=replace(rs("rptMember"),chr(13),"<BR>")%></td>	
-						<td><%=replace(rs("rptTerminal"),chr(13),"<BR>")%></td>													
+						<td><%=replace(rs("rptMember"),chr(13),"<BR>")%></td>																
 						</tr>
 						</tbody>					
 						</table>
 					</div>	
-					
-					
 					
 					<div class="col-md-12">							
 						<table id="example2" class="table table-bordered table-hover">
 						<thead>
 						<tr>
-						<th style="width: 25%"><div class="box-header"><h4 class="box-title">环境配置</h4></div></th>		
-						<th style="width: 75%"><div class="box-header"><h4 class="box-title">风险</h4></div></th>		
+						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 相关平台</h4></div></th>	
+						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 环境配置</h4></div></th>		
+						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 风险</h4></div></th>						
 						</tr>
 						</thead>
 						<tbody>	  
 						<tr>
-						<td><%=replace(rs("rptBasis"),chr(13),"<BR>")%></td>						
-						<td><%=replace(rs("rptRisk"),chr(13),"<BR>")%></td>						
+						<td><%=replace(rs("rptTerminal"),chr(13),"<BR>")%></td>		
+							<td><%=replace(rs("rptBasis"),chr(13),"<BR>")%></td>						
+						<td><%=replace(rs("rptRisk"),chr(13),"<BR>")%></td>												
 						</tr>
 						</tbody>					
 						</table>
-					</div>	
+					</div>
+					
+		
 					
 					<div class="col-md-12">	
 					<h3 class="box-title">测试结果</h3>
-					<h4>测试环境：
+					测试环境：
 					<% if rs("rptTestResult") = "pass" then %>
 							&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font>
 						<%else%>							
 							&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
 						<%end if %>					 
-					<br><br>
+					<br>
 					生产环境：
 						<% if rs("rptOnlineResult") = "pass" then %>
 							&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font>
@@ -173,7 +157,7 @@ end if
 							&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
 						<%end if %>  
 					</div>
-					</h4>					        
+										        
 				</div><!-- /.row -->
 				
 				<br>
@@ -243,24 +227,24 @@ end if
 									
 			<div class="row">			
 				<div class="col-md-12">							
-						<table id="example2" class="table table-bordered table-hover">
-						<thead>
-						<tr>
-						<th style="width: 25%"><div class="box-header"><h4 class="box-title">1.1 目的</h4></div></th>
-						<th style="width: 25%"><div class="box-header"><h4 class="box-title">1.2 背景</h4></div></th>
-						<th style="width: 25%"><div class="box-header"><h4 class="box-title">1.3 软件软件</h4></div></th>
-						<th style="width: 25%"><div class="box-header"><h4 class="box-title">1.4 硬件资源</h4></div></th>
-						</tr>
-						</thead>
-						<tbody>	  
-						<tr>
-						<td><%=replace(rs("rptGoal"),chr(13),"<BR>")%></td>
-						<td><%=replace(rs("rptScene"),chr(13),"<BR>")%></td>
-						<td><%=replace(rs("rptSoft"),chr(13),"<BR>")%></td>
-						<td><%=replace(rs("rptHard"),chr(13),"<BR>")%></td>
-						</tr>
-						</tbody>					
-						</table>
+					<table id="example2" class="table table-bordered table-hover">
+					<thead>
+					<tr>
+					<th style="width: 25%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.1 目的</h4></div></th>
+					<th style="width: 25%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.2 背景</h4></div></th>
+					<th style="width: 25%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.3 软件软件</h4></div></th>
+					<th style="width: 25%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.4 硬件资源</h4></div></th>
+					</tr>
+					</thead>
+					<tbody>	  
+					<tr>
+					<td><%=replace(rs("rptGoal"),chr(13),"<BR>")%></td>
+					<td><%=replace(rs("rptScene"),chr(13),"<BR>")%></td>
+					<td><%=replace(rs("rptSoft"),chr(13),"<BR>")%></td>
+					<td><%=replace(rs("rptHard"),chr(13),"<BR>")%></td>
+					</tr>
+					</tbody>					
+					</table>
 				</div>	
 	
 			</div>					
@@ -269,9 +253,9 @@ end if
 			<div class="form-group">
 				<table class="table table-bordered">
 				<tr>               
-				<th style="width: 15%">测试类目</th>
-				<th style="width: 15%">开始结束日期</th>
-				<th style="width: 70%">备注</th>
+				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title">测试类目</h4></th>
+				<th style="width: 30%" bgcolor="#f1f1f1"><h4 class="box-title">开始结束日期</h4></th>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">备注</h4></th>
 				</tr>					
 				<tr>
 				<td>需求文档分析</td>
@@ -342,8 +326,8 @@ end if
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th style="width: 50%"><div class="box-header"><h4 class="box-title">1.6 定义</h4></div></th>		
-					<th style="width: 50%"><div class="box-header"><h4 class="box-title">1.7 参考资料</h4></div></th>		
+					<th style="width: 50%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.6 定义</h4></div></th>		
+					<th style="width: 50%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.7 参考资料</h4></div></th>		
 					</tr>
 					</thead>
 					<tbody>	  
@@ -368,14 +352,14 @@ end if
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
 				<tr>
-				<th style="width: 10%">编号</th>
-				<th style="width: 10%">标签</th>
-				<th style="width: 30%">用例标题</th>
-				<th style="width: 10%">测试对象</th>
-				<th style="width: 10%">测试阶段</th>
-				<th style="width: 10%">测试结果</th>
-				<th style="width: 10%">创建者</th>
-				<th style="width: 10%">执行者</th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">编号</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">标签</h4></th>
+				<th style="width: 40%" bgcolor="#f1f1f1"><h4 class="box-title">标题</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">测试对象</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">测试阶段</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">测试结果</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">创建/执行者</h4></th>
+			
 				</tr>
 				</thead>
 				<tbody>	  
@@ -422,24 +406,31 @@ end if
 					</td>
 				    <td>
 					<% if rs2("caseResult") ="error" then
-						response.write "<font color=red>error</font>"
+						response.write "<font color=red>未通过</font>"
 					elseif rs2("caseResult") = "ok" then
-						response.write "<font color=blue>ok</font>"
+						response.write "<font color=green>通过</font>"
 					elseif rs2("caseStatus") = "3" then
-						response.write "<font color=blue>hang-up</font>"
+						response.write "<font color=grey>搁置</font>"
 					elseif rs2("caseStatus") = "2" then
-						response.write "<font color=red>pause</font>"
+						response.write "<font color=blue>暂停</font>"
 					end if %>
 					</td>
-					<% set rs4 = server.createobject("adodb.recordset")
+				
+						
+					<td>
+						<%set rs4 = server.createobject("adodb.recordset")
 						rs4.open "select * from tbl_user where userName='"&rs2("caseCreateUser")&"' order by userId ",conn,3,3 
+						response.write rs4("userNickname")
+						rs4.close%>
+/
+					<%if rs2("caseExcUser") <> "" then
 						set rs5 = server.createobject("adodb.recordset")
 						rs5.open "select * from tbl_user where userName='"&rs2("caseExcUser")&"' order by userId ",conn,3,3 
-					%>
-					 <td><%=rs4("userNickname")%></td>
-					 <td><%=rs5("userNickname")%></td>
-					 <%rs5.close
-					 rs4.close%>
+						response.write rs5("userNickname")
+						rs5.close
+					end if%>
+					</td>
+					
 					</tr>
 				<%rs2.movenext
 				loop
@@ -464,13 +455,13 @@ end if
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
 				<tr>
-				<th style="width: 10%">版本</th>
-				<th style="width: 15%">标签</th>
-				<th style="width: 15%">用例总数</th>
-				<th style="width: 15%">已通过数(s)</th>
-				<th style="width: 15%">未通过数</th>
-				<th style="width: 15%">未测试数(搁置）</th>
-				<th style="width: 15%">用例执行覆盖率</th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">版本</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">标签</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">用例总数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">已通过数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">未通过数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">未测试数(搁置/暂停）</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">用例执行覆盖率</h4></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -486,8 +477,7 @@ end if
 						<td><%=rs4("platformName")%></td>
 						<td><%=rs5("lblName")%></td>						
 						<td><% if rs("rptCaseTotal") <>"" then
-								response.write rs("rptCaseTotal")
-							else
+						
 								response.write rs6.recordcount
 							end if %>
 						</td>
@@ -495,48 +485,44 @@ end if
 						varOkSum3 = 0
 						varErrorSum3 = 0
 						varEmptySum3 = 0
-								do while not rs6.eof
+							do while not rs6.eof
 								if rs6("caseResult") = "ok" then
 								   varOkSum3 = varOkSum3 + 1
 								end if 
 								if rs6("caseResult") = "error" then
 								   varErrorSum3 = varErrorSum3 + 1
 								end if 
-								if isnull(rs6("caseResult")) then
+								if rs6("caseResult")="empty" and rs6("caseStatus") = "1"  then
 								   varEmptySum3 = varEmptySum3 + 1
 								end if 
-									if rs6("caseStatus") = "3" then
+									if rs6("caseStatus") = "3" or rs6("caseStatus") = "2" then
 								   varEmptySum3 = varEmptySum3 + 1
 								end if 
 							rs6.movenext
 							loop
 						
 						if rs("rptCasePass") <>"" then
-							response.write rs("rptCasePass")
-						else
+						
 							response.write varOkSum3
 						end if %>							
 						</td>
 						<td>
 						<% if rs("rptNoPass") <>"" then
-							response.write rs("rptNoPass")
-						else
+						
 							response.write varErrorSum3
 						end if %>
 						
 						</td>
 						<td>
 						<%  if rs("rptNoTest") <>"" then
-							response.write rs("rptNoTest")
-						else
+							
 							response.write varEmptySum3
 						end if %>
 						
 						</td>
 						<td>
 							<%  if rs("rptCaseCoverage") <>"" then
-							response.write rs("rptCaseCoverage")
-						else
+							
 							varFGL = int((varOkSum3+varErrorSum3)/rs6.recordcount*100)
 							response.write cstr(varFGL) + "%"
 						end if  
@@ -562,8 +548,8 @@ end if
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th style="width: 50%">系统平台</th>
-					<th style="width: 50%">Bug数</th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">系统平台</h4></th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">Bug数</h4></th>
 					</tr>
 					</thead>
 					<tbody>
@@ -611,8 +597,8 @@ end if
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th style="width: 50%">严重程度</th>
-					<th style="width: 50%">Bug数</th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">严重程度</h4></th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">Bug数</h4></th>
 					</tr>
 					</thead>
 					<tbody>
@@ -655,8 +641,8 @@ end if
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th style="width: 50%">缺陷状态</th>
-					<th style="width: 50%">Bug数</th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">缺陷状态</h4></th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">Bug数</h4></th>
 					</tr>
 					</thead>
 					<tbody>
@@ -694,27 +680,19 @@ end if
 			</div>
 			
 			<div class="row">
-				<div class="col-md-12">
-					<div class="box-header"><h4 class="box-title">3.5 遗留/反馈</h4></div>
-					<table id="example2" class="table table-bordered table-hover">
-					<thead>
-					<tr>
-					<td><%=replace(rs("rptFeedback"),chr(13),"<BR>")%></td>		
-					</tr>
-					</thead>			
-					</table>
-				</div><!-- /.col -->
-		
+						
 				<div class="col-md-12">							
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th style="width: 50%"><div class="box-header"><h4 class="box-title">3.6 建议</h4></div></th>		
-					<th style="width: 50%"><div class="box-header"><h4 class="box-title">3.7 测试交付物</h4></div></th>		
+					<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">3.5 遗留问题</h4></div></th>	
+					<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">3.6 建议</h4></div></th>		
+					<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">3.7 测试交付物</h4></div></th>		
 					</tr>
 					</thead>
 					<tbody>	  
 					<tr>
+					<td><%=replace(rs("rptFeedback"),chr(13),"<BR>")%></td>	
 					<td><%=replace(rs("rptAdvice"),chr(13),"<BR>")%></td>						
 					<td><%=replace(rs("rptDelivery"),chr(13),"<BR>")%></td>						
 					</tr>
@@ -748,7 +726,7 @@ end if
 
 		<div class="row">
 			<div class="col-md-12" align="right">	
-				<hr>
+			
 				<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
 				<a id='DD'></a>		
 			</div>

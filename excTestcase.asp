@@ -176,6 +176,10 @@ if not rs6.eof then
 		<dt1> 
 		<span class="code"><span class="self">展开</span>&nbsp;</span>	
 		<%=rs6("caseId")%>&nbsp;,
+
+			
+		<a href="excTestcaseEdit-<%=rs6("caseId")%>.html"><%=rs6("caseTitle")%></a>
+	&nbsp;
 		<%			
 		if rs6("caseWebResult") = "ng" then 
 			response.write "<font color='red'><i class='fa fa-windows'></i></font> "
@@ -207,25 +211,23 @@ if not rs6.eof then
 			response.write "<i class='fa fa-sitemap'></i> "
 		end if
 		%>	
-			
-		&nbsp;<a href="excTestcaseEdit-<%=rs6("caseId")%>.html"><%=rs6("caseTitle")%></a>
-	
+		
 		<% set rs8 = server.createobject("adodb.recordset")
 		rs8.open "select * from tbl_user where userName='"&rs6("caseExcUser")&"' order by userId desc",conn,3,3
 
 		if rs6("caseExcUser") <> rs6("caseExcDate") then 
 			if rs6("caseExcUser") <> rs6("caseCreateUser") then %> 
-				<font color=blue>（<%=rs8("userNickname")%> 于 <%=rs6("caseExcDate")%> 已执行)</font>
+				<font color=blue>（<%=rs8("userNickname")%> - <%=rs6("caseExcDate")%> )</font>
 			<%else%>
-				（<%=rs6("caseExcDate")%> 已执行）
+				（<%=rs6("caseExcDate")%>）
 			<%end if 
 		end if 
 		rs8.close%>
 							
 		<%if rs6("caseStatus")=2 then
-			response.write "<font color=red><i class='fa fa-hourglass-half'></i></font> "
+			response.write "<font color=red>暂停</font> "
 		elseif rs6("caseStatus")=3 then
-			response.write "<font color=red><i class='fa fa-remove'></i></font> "
+			response.write "<font color=black>搁置</font> "
 		end if 	
 		
 		if rs6("caseExcUser") = "" then

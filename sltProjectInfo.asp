@@ -68,28 +68,28 @@ end if
 					
 				    <div class="col-md-3">
 						<div class="form-group">
-						<label>服务器IP</label>
+						<h4 class="box-title">服务器IP</h4>
 						<input type="text" name="pjtDBServer" class="form-control" maxlength="15" value="<%=rs("pjtDBServer")%>">
 						</div>
 					</div>
 					
 					<div class="col-md-3">
 						<div class="form-group">
-						<label>数据库（<30）</label>
+						<h4 class="box-title">数据库（<30）</h4>
 						<input type="text" name="pjtDBDatabase" class="form-control" maxlength="30" value="<%=rs("pjtDBDatabase")%>">
 						</div>
 					</div>
 					
 					<div class="col-md-3">
 						<div class="form-group">
-						<label>用户名（<30）</label>
+						<h4 class="box-title">用户名（<30）</h4>
 						<input type="text" name="pjtDBUser" class="form-control" maxlength="30" value="<%=rs("pjtDBUser")%>">
 						</div>
 					</div>
 					
 					<div class="col-md-3">
 						<div class="form-group">
-						<label>密码（<30）</label>
+						<h4 class="box-title">密码（<30）</h4>
 						<input type="text" name="pjtDBPassword" class="form-control" maxlength="30" value="<%=rs("pjtDBPassword")%>">
 						</div>
 					</div>
@@ -97,7 +97,7 @@ end if
 					<% if rs("pjtDBDatabase") <>"" then%>
 						<div class="col-md-12">
 							<div class="form-group">
-							<label>查表信息</label> <br>
+							<h4 class="box-title">查表信息</h4> <br>
 							<!-- <a href="sltDatabase-< %=rs("pjtId")%>-< %=rs("pjtDBDatabase")%>.html"><button type="button" class="btn btn-info pull-left"  href="#"> 表结构、类型、数据</button></a><br><br>  </-->
 							</div>
 						</div>
@@ -105,7 +105,7 @@ end if
 					
 					<div class="col-md-12">
 						<div class="form-group">
-						<label>项目信息</label>
+						<<h4 class="box-title">项目信息</h4>
 						<script type="text/plain" id="pjtIntro" style="width:100%; height:400px" name="pjtIntro"><%=rs("pjtIntro")%> </script>	
 						<script>var editor_a = UE.getEditor('pjtIntro');</script>
 						</div>
@@ -114,7 +114,7 @@ end if
 					<input name="pjtId" type="hidden" value="<%=rs("pjtId")%>" />	
 					
 					<div class="col-md-12">					
-					
+					<hr>
 						<div align="center"><button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button></div>
 
 					</div>
@@ -124,9 +124,9 @@ end if
 					
 					<!-- top按钮 -->
 					<div class="col-md-12" align="right">	
-						<hr>
+					
 						<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
-							<a id='DD'></a>			
+						<a id='DD'></a>			
 					</div>
 	
 		

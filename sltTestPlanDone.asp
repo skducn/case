@@ -37,7 +37,7 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 	<div class="card">				
 		<div class="row">
 			<div class="col-md-6" align="left">
-				<h3 class="box-title"><%=pjtName%> - <%=platformName%></h3>						
+				<h3 class="box-title"><%=pjtName%> <%=platformName%></h3>						
 			</div>				
 			<div class="col-md-6" align="right">
 			<%if rs3("planAuthor") = session("userName") then%>
@@ -58,21 +58,21 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 						<h3 class="box-title">一、概述</h3>	
 						<div class="row">
 							<div class="col-md-4">							
-								<label>1.1 目的</label>
+								<h4 class="box-title">1.1 目的</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planGoal")%></textarea></td></tr>
 								</table>																	
 							</div>
 							
 							<div class="col-md-4">							
-								<label>1.2 背景</label>
+								<h4 class="box-title">1.2 背景</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planScene")%></textarea></td></tr>
 								</table>																	
 							</div>
 							
 								<div class="col-md-4">							
-								<label>1.3 术语与参考</label>
+								<h4 class="box-title">1.3 术语与参考</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planInfo")%></textarea></td></tr>
 								</table>																	
@@ -86,21 +86,21 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 						<h3 class="box-title">二、约定</h3>		
 						<div class="row">
 							<div class="col-md-4">							
-								<label>2.1 测试任务</label>
+								<h4 class="box-title">2.1 测试任务</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planTask")%></textarea></td></tr>
 								</table>																	
 							</div>
 							
 							<div class="col-md-4">
-								<label>2.2 人员和设备</label>
+								<h4 class="box-title">2.2 人员和设备</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planSource")%></textarea></td></tr>					
 								</table>							
 							</div>
 							
 							<div class="col-md-4">
-								<label>2.3 条件（输入、输出）</label>
+								<h4 class="box-title">2.3 条件（输入、输出）</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planInOut")%></textarea></td></tr>					
 								</table>
@@ -108,13 +108,13 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 							
 							<div class="col-md-12">
 								<div class="form-group">
-									<label>2.4 测试进度</label>
+									<h4 class="box-title">2.4 测试进度</h4>
 									<table class="table table-bordered">
 									<tr>               
-										<th style="width: 15%">测试阶段</th>
-										<th style="width: 55%">测试任务</th>
-										<th style="width: 15%">工作量/人员</th>
-										<th style="width: 15%">起止时间</th>
+										<th style="width: 20%" bgcolor="f1f1f1">测试阶段</th>
+										<th style="width: 30%" bgcolor="f1f1f1">测试任务</th>
+										<th style="width: 30%" bgcolor="f1f1f1">工作量/人员</th>
+										<th style="width: 20%" bgcolor="f1f1f1">起止时间</th>
 									</tr>					
 									<tr>
 									<td>阶段1：需求分析</td>
@@ -200,37 +200,37 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 						
 						<div class="row">
 							<div class="col-md-4">							
-								<label>3.1 接口测试阶段</label>
+								<h4 class="box-title">3.1 接口测试阶段</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planInterface")%></textarea></td></tr>
 								</table>																	
 							</div>
 							<div class="col-md-4">							
-								<label>3.2 功能测试阶段</label>
+								<h4 class="box-title">3.2 功能测试阶段</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planFunc")%></textarea></td></tr>
 								</table>																	
 							</div>
 							<div class="col-md-4">							
-								<label>3.3 系统测试阶段</label>
+								<h4 class="box-title">3.3 系统测试阶段</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planSystem")%></textarea></td></tr>
 								</table>																	
 							</div>
 							<div class="col-md-4">							
-								<label>3.4 性能测试阶段</label>
+								<h4 class="box-title">3.4 性能测试阶段</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planPerformance")%></textarea></td></tr>
 								</table>																	
 							</div>
 							<div class="col-md-4">							
-								<label>3.5 兼容测试阶段</label>
+								<h4 class="box-title">3.5 兼容测试阶段</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planCompatible")%></textarea></td></tr>
 								</table>																	
 							</div>
 							<div class="col-md-4">							
-								<label>3.6 自动化测试</label>
+								<h4 class="box-title">3.6 自动化测试</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planAuto")%></textarea></td></tr>
 								</table>																	
@@ -244,19 +244,19 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 				
 						<div class="row">
 							<div class="col-md-4">							
-								<label>4.1 缺陷优先级</label>
+								<h4 class="box-title">4.1 缺陷优先级</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planDefect")%></textarea></td></tr>
 								</table>																	
 							</div>
 							<div class="col-md-4">							
-								<label>4.2 测试方法、策略</label>
+								<h4 class="box-title">4.2 测试方法、策略</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planWay")%></textarea></td></tr>
 								</table>																	
 							</div>
 							<div class="col-md-4">							
-								<label>4.3 测试约束条件</label>
+								<h4 class="box-title">4.3 测试约束条件</h4>
 								<table class="table table-bordered">												
 								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planLimit")%></textarea></td></tr>
 								</table>																	

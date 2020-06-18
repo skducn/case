@@ -16,36 +16,7 @@ set rs = server.createobject("adodb.recordset")
 function CheckPost()
 {      	
 	
-	// 判断测试结果5个不能全为空
-	var chestr="";
-	var str = document.getElementsByName("caseWebResult");
-	for (i=0;i<str.length;i++){
-		if(str[i].checked == true){
-			chestr+=str[i].value+",";}}
-	
-	var str = document.getElementsByName("caseIosResult");
-	for (i=0;i<str.length;i++){
-		if(str[i].checked == true){
-			chestr+=str[i].value+",";}}
-	
-	var str = document.getElementsByName("caseAndroidResult");
-	for (i=0;i<str.length;i++){
-		if(str[i].checked == true){
-			chestr+=str[i].value+",";}}
-	
-	var str = document.getElementsByName("caseCSResult");
-	for (i=0;i<str.length;i++){
-		if(str[i].checked == true){
-			chestr+=str[i].value+",";}}
-	
-	var str = document.getElementsByName("caseDeviceResult");
-	for (i=0;i<str.length;i++){
-		if(str[i].checked == true)	{
-			chestr+=str[i].value+",";}}
-		
-	if(chestr == ""){
-		alert("测试结果不能为空！");
-		return false;}
+
 		  
     //提交前弹框确认      
     var gnl=confirm("确定要执行吗?");
@@ -64,7 +35,8 @@ function CheckPost()
 <% if request("action")="save" then  
 	set rs1 = server.CreateObject("ADODB.RecordSet")
 	rs1.Open "select * from tbl_case where caseId="&request("caseId")&"",conn,3,3 
-	rs1("case_lblId") = request("case_lblId")
+	rs1("case_lblId") = request("case_lblId")	
+	rs1("caseTitle") = request("caseTitle")
 	rs1("caseStep") = request("caseStep")
 	rs1("caseWeb") = request("caseWeb")
 	rs1("caseIos") = request("caseIos")
@@ -79,15 +51,20 @@ function CheckPost()
 	rs1("caseDeviceResult") = request("caseDeviceResult")
 	rs1("caseMemo") = request("caseMemo")
 	rs1("caseExcDate") = now	
-	if rs1("caseIosResult") = "ng" or rs1("caseAndroidResult") = "ng" or rs1("caseWebResult") = "ng" or rs1("caseCSResult") = "ng" or rs1("caseDeviceResult") = "ng" then
-		rs1("caseResult") = "error"
-	elseif request("caseIosResult") = "" and request("caseAndroidResult")= "" and request("caseWebResult") = "" and request("caseCSResult")= "" and request("caseDeviceResult") = "" then
-		rs1("caseExcDate") = null
+	rs1("caseStatus") = request("caseStatus")
+	if rs1("caseStatus") = "1" then
+		if rs1("caseIosResult") = "ng" or rs1("caseAndroidResult") = "ng" or rs1("caseWebResult") = "ng" or rs1("caseCSResult") = "ng" or rs1("caseDeviceResult") = "ng" then
+			rs1("caseResult") = "error"
+		elseif request("caseIosResult") = "" and request("caseAndroidResult")= "" and request("caseWebResult") = "" and request("caseCSResult")= "" and request("caseDeviceResult") = "" then
+			rs1("caseExcDate") = null
+		else
+			rs1("caseResult") = "ok"
+		end if 
 	else
-		rs1("caseResult") = "ok"
+		rs1("caseResult") = "empty"
 	end if 
 	rs1("caseExcUser") = session("userName")
-	rs1("caseStatus") = request("caseStatus")
+	
 	rs1("caseProblem") = request("caseProblem")
 	rs1("caseErrorType") = request("caseErrorType")	
 	rs1.update
@@ -132,18 +109,28 @@ function CheckPost()
 						<form role="form" action="excTestcaseEditSave.html" method="post" name="addForm" onSubmit="return CheckPost()">
 
 						<div class="box box-danger box-solid box-default">
-							<div class="box-header with-border"><h3 class="box-title">
+							
+							
+							<div class="row">
+								<div class="col-md-6" align="left">
+									<h3 class="box-title"><h3 class="box-title">
 								<!-- 显示项目名 - 平台名 -->
 								<%Set rs4 = Server.CreateObject("Adodb.Recordset")
 								rs4.Open "select * from tbl_project where pjtId="&pjtId&"",conn,3,3%>
 								<%Set rs5 = Server.CreateObject("Adodb.Recordset")
 								rs5.Open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" ",conn,3,3%>
-								<%=rs4("pjtName")%> - <%=rs5("platformName")%> 
+								<%=rs4("pjtName")%> <%=rs5("platformName")%> 
 								<%rs5.close
 								set rs5 = nothing
-								%></h3><hr>
+								%></h3></h3>						
+								</div>				
+								<div class="col-md-6" align="right">								
+									<button type="submit" class="btn btn-primary" href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;执行用例</button>	
+									<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
+								</div>	
 							</div>
-												
+									
+				   		    <hr>			
 												
 							<div class="row">
 								<div class="col-md-7">
@@ -152,7 +139,9 @@ function CheckPost()
 										
 										<div class="row">	
 											<div class="col-md-12">
-												<h4> <%=rs("caseTitle")%>（<%=caseId%>）</h4>
+												<h4 class="box-title">用例标题（<%=caseId%>） </h4>
+												<input type="text" name="caseTitle" class="form-control pull-right" maxlength="50" value="<%=rs("caseTitle")%>">
+												
 											</div>
 										</div>	
 										
@@ -160,7 +149,7 @@ function CheckPost()
 																
 										<div class="row">	
 											<div class="col-md-4">
-												<label>用例标签 </label>
+												<h4 class="box-title">用例标签 </h4>
 												<% set rs66 = server.createobject("adodb.recordset")
 												rs66.open "select * from tbl_label where lbl_pjtId="&pjtId&" and lbl_platformId="&platformId&"",conn,3,3 %>
 												<select name="case_lblId" id="case_lblId" class="form-control ">
@@ -179,7 +168,7 @@ function CheckPost()
 	
 						
 											<div class="col-md-4">
-												<label>测试阶段</label>
+												<h4 class="box-title">测试阶段</h4>
 												<select name="caseStage" id="stageId" class="form-control " style="width: 100%;">
 												<% if rs("caseStage") = 1 then %>
 												  <option value="1" selected="selected">冒烟测试</option>
@@ -201,7 +190,7 @@ function CheckPost()
 						
 											
 											<div class="col-md-4">
-											     <label>用例状态</label>
+											     <h4 class="box-title">用例状态</h4>
 											     <select class="form-control" name="caseStatus">
 												  <%if rs("caseStatus") = 1 then%>
 													<option value="1" selected="selected">正常</option>
@@ -224,7 +213,7 @@ function CheckPost()
 
 										<div class="row">
 											<div class="col-md-12">
-												<label >用例步骤 * </label>
+												<h4 class="box-title">用例步骤 * </h4>
 												<script id="caseStep" style="width:100%; height:582px" name="caseStep"><%=rs("caseStep")%></script>	
 												<script > var editor_a = UE.getEditor('caseStep');</script>
 											</div>
@@ -239,7 +228,7 @@ function CheckPost()
 																							
 									<div class="row">
 										<div class="col-md-12">	
-											<label>测试对象 *</label>	
+											<h4 class="box-title">测试对象 *</h4>	
 											<div class="animated-checkbox">
 												<label>
 												<% if rs("caseWeb") = "on" then%>
@@ -288,7 +277,7 @@ function CheckPost()
 									
 									<div class="row">
 									<div class="col-md-12">	
-										<label class="control-label" for="focusedInput">需求问题类型</label>						
+										<h4 class="box-title">需求问题类型</h4>						
 										<% set rs66 = server.createobject("adodb.recordset")
 										rs66.open "select * from tbl_errortype ",conn,3,3 %>
 										<select name="caseErrorType" id="caseErrorType" class="form-control select2">
@@ -311,7 +300,7 @@ function CheckPost()
 									
 									<div class="row">
 									<div class="col-md-12">	
-										<label class="control-label" for="focusedInput">需求问题描述</label> 
+										<h4 class="box-title">需求问题描述</h4> 
 										<textarea  name="caseProblem" class="form-control" rows="8" placeholder="请注明日期"><%=rs("caseProblem")%></textarea>
 									</div>		
 									</div>
@@ -320,9 +309,9 @@ function CheckPost()
 									
 									<div class="row">									
 									<div class="col-md-12">										
-										<label>测试备注：</label>
-										<label><a href="<%=platformRedmine%>" target="_blank">buglist</i></a>
-										</label>
+										<h4 class="box-title">测试备注 （<a href="<%=platformRedmine%>" target="_blank">请登录禅道</i></a>）</h4>
+										
+										
 										<textarea  name="caseMemo" class="form-control" rows="8" placeholder="Enter ..."><%=rs("caseMemo")%></textarea>
 									</div>
 									</div>
@@ -334,15 +323,15 @@ function CheckPost()
 									<div class="row"> 
 						
 								<div class="col-md-12">
-									<label>测试结果 *</label>
+									<h4 class="box-title">测试结果 *</h4>
 									<div class="box box-solid box-default">
 									  <table class="table table-bordered">
 										<tr>
-										  <th style="white-space: nowrap;width: 20%;"><i class="fa fa-windows"></i> B/S 结果</th>
-										  <th style="white-space: nowrap;width: 20%;"><i class="fa fa-apple"></i> iOS 结果</th>
-										  <th style="white-space: nowrap;width: 20%;"><i class="fa fa-android"></i> android 结果</th>
-										  <th style="white-space: nowrap;width: 20%;"><i class="fa fa-archive"></i> C/S 结果</th>
-										  <th style="white-space: nowrap;width: 20%;"><i class="fa fa-sitemap"></i> device 结果</th>
+										  <th style="white-space: nowrap;width: 20%;"  bgcolor="#f1f1f1"><i class="fa fa-windows"></i> B/S 结果</th>
+										  <th style="white-space: nowrap;width: 20%;"  bgcolor="#f1f1f1"><i class="fa fa-apple"></i> iOS 结果</th>
+										  <th style="white-space: nowrap;width: 20%;"  bgcolor="#f1f1f1"><i class="fa fa-android"></i> android 结果</th>
+										  <th style="white-space: nowrap;width: 20%;"  bgcolor="#f1f1f1"><i class="fa fa-archive"></i> C/S 结果</th>
+										  <th style="white-space: nowrap;width: 20%;"  bgcolor="#f1f1f1"><i class="fa fa-sitemap"></i> device 结果</th>
 										</tr>
 										<tr>
 										  <!-- web结果 -->
@@ -351,13 +340,13 @@ function CheckPost()
 												  <%if rs("caseWebResult") = "pass" then%><input  type="checkbox"  name="caseWebResult" value="pass" checked="checked" />
 												  <%else%><input  type="checkbox"  name="caseWebResult" value="pass"  />
 												  <%end if %>
-												  <span class="label-text"><i class="fa fa-circle-o"></i> 正确</span></label>
+												  <span class="label-text"><font color="green"><i class="fa fa-circle-o"></i> 正确</font></span></label>
 											  </div>  
 											  <div class="animated-checkbox"><label>
 												  <% if rs("caseWebResult") = "ng" then%><input  type="checkbox"  name="caseWebResult" value="ng"  checked="checked" />
 												  <%else%><input type="checkbox" name="caseWebResult" value="ng"  />
 												  <%end if %>
-												    <span class="label-text"><i class="fa fa-close"></i> 错误</span></label>
+												    <span class="label-text"><font color="red"><i class="fa fa-close"></i> 错误</font></span></label>
 											  </div>			  
 										  </td>
 										  
@@ -367,13 +356,13 @@ function CheckPost()
 												  <% if rs("caseIosResult") = "pass" then%><input  type="checkbox"  name="caseIosResult" value="pass"  checked="checked" />
 												  <%else%><input  type="checkbox" name="caseIosResult" value="pass"  />
 												  <%end if %>
-												  <span class="label-text"><i class="fa fa-circle-o"></i> 正确</span></label>
+												  <span class="label-text"><font color="green"><i class="fa fa-circle-o"></i> 正确</font></span></label>
 											  </div>			  
 											  <div class="animated-checkbox"><label>
 												  <% if rs("caseIosResult") = "ng" then%><input  type="checkbox" name="caseIosResult" value="ng"  checked="checked" />
 												  <%else%><input  type="checkbox" name="caseIosResult" value="ng"  />
 												  <%end if %>
-												 <span class="label-text"><i class="fa fa-close"></i> 错误</span></label>
+												 <span class="label-text"><font color="red"><i class="fa fa-close"></i> 错误</font></span></label>
 											  </div>
 										  </td>
 										  
@@ -383,13 +372,13 @@ function CheckPost()
 												  <% if rs("caseAndroidResult") = "pass" then%><input  type="checkbox"  name="caseAndroidResult" value="pass"  checked="checked" />
 												  <%else%><input  type="checkbox" name="caseAndroidResult" value="pass"  />
 												  <%end if %>
-												  <span class="label-text"><i class="fa fa-circle-o"></i> 正确</span></label>
+												  <span class="label-text"><font color="green"><i class="fa fa-circle-o"></i> 正确</font></span></label>
 											  </div>
 											  <div class="animated-checkbox"><label>
 												  <% if rs("caseAndroidResult") = "ng" then%><input  type="checkbox" name="caseAndroidResult" value="ng"  checked="checked" />
 												  <%else%><input  type="checkbox" name="caseAndroidResult" value="ng"  />
 												  <%end if %>
-												  <span class="label-text"><i class="fa fa-close"></i> 错误</span></label>
+												  <span class="label-text"><font color="red"><i class="fa fa-close"></i> 错误</font></span></label>
 											  </div>
 										  </td>
 										  
@@ -399,13 +388,13 @@ function CheckPost()
 												  <% if rs("caseCSResult") = "pass" then%><input  type="checkbox"  name="caseCSResult" value="pass"  checked="checked" />
 												  <%else%><input  type="checkbox" name="caseCSResult" value="pass"  />
 												  <%end if %>
-												  <span class="label-text"><i class="fa fa-circle-o"></i> 正确</span></label>
+												  <span class="label-text"><font color="green"><i class="fa fa-circle-o"></i> 正确</font></span></label>
 											  </div>			  
 											  <div class="animated-checkbox"><label>
 												  <% if rs("caseCSResult") = "ng" then%><input  type="checkbox" name="caseCSResult" value="ng"  checked="checked" />
 												  <%else%><input  type="checkbox" name="caseCSResult" value="ng"  />
 												  <%end if %>
-												  <span class="label-text"><i class="fa fa-close"></i> 错误</span></label>
+												  <span class="label-text"><font color="red"><i class="fa fa-close"></i> 错误</font></span></label>
 											 </div>
 										  </td>
 										  
@@ -415,13 +404,13 @@ function CheckPost()
 												  <% if rs("caseDeviceResult") = "pass" then%><input  type="checkbox"  name="caseDeviceResult" value="pass"  checked="checked" />
 												  <%else%><input  type="checkbox" name="caseDeviceResult" value="pass"  />
 												  <%end if %>
-												 <span class="label-text"><i class="fa fa-circle-o"></i> 正确</span></label>
+												 <span class="label-text"><font color="green"><i class="fa fa-circle-o"></i> 正确</font></span></label>
 											  </div>			  
 											  <div class="animated-checkbox"><label>
 												  <% if rs("caseDeviceResult") = "ng" then%><input  type="checkbox" name="caseDeviceResult" value="ng"  checked="checked" />
 												  <%else%><input  type="checkbox" name="caseDeviceResult" value="ng"  />
 												  <%end if %>
-												  <span class="label-text"><i class="fa fa-close"></i> 错误</span></label>
+												  <span class="label-text"><font color="red"><i class="fa fa-close"></i> 错误</font></span></label>
 											  </div>
 										  </td>
 										</tr>									  
@@ -431,35 +420,28 @@ function CheckPost()
 							</div> 
 							</div>	
 								
-					
-
-	
-						
-		  
-
-							<input name="caseId" type="hidden" value="<%=request("caseId")%>" />
 	
 							<div class="col-md-12">		
-								<br>						
+								<br>			
+								<hr>			
 								<div align="center"><button type="submit" class="btn btn-primary" style="margin-right: 5px;"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;执行用例</button></div>
 
 							</div>	
-						</div>					
+						</div>	
+							<input name="caseId" type="hidden" value="<%=request("caseId")%>" />				
 					</form>	
 				</div>
 				
-					<div class="col-md-12" align="right">	
-					<hr>
-					<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>			
-					</div>
+				<div class="col-md-12" align="right">	
+			
+					<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
+					<a id='DD'></a>				
+				</div>
 			</div>
 		</div>
 	</div>
-</div></div>
-
-
-
-
+</div>
+</div>
 
 
 <!-- jQuery 2.1.4 -->

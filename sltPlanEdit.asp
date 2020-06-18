@@ -175,10 +175,10 @@ x = rs3.recordcount
 			<h4>2.4 测试进度</h4>
 			<table class="table table-bordered">
 			<tr>               
-			<th style="width: 15%">测试阶段</th>
-			<th style="width: 50%">测试任务</th>
-			<th style="width: 15%">工作量/人员</th>
-			<th style="width: 20%">起止时间</th>
+			<th style="width: 20%" bgcolor="#f1f1f1">测试阶段</th>
+			<th style="width: 30%" bgcolor="#f1f1f1">测试任务</th>
+			<th style="width: 30%" bgcolor="#f1f1f1">工作量/人员</th>
+			<th style="width: 20%" bgcolor="#f1f1f1">起止时间</th>
 			</tr>			
 			<tr>
 			<td>阶段1、需求分析<br>（产品、开发的文档等）</td>
@@ -373,15 +373,15 @@ x = rs3.recordcount
 		<div class="row">
 			<div class="col-md-4">
 				<h4>4.1 缺陷优先级</h4>
-				<textarea  name="planDefect" class="form-control" rows="12" placeholder="Enter ..."><%=rs3("planDefect") %></textarea>		
+				<textarea  name="planDefect" class="form-control" rows="5" placeholder="Enter ..."><%=rs3("planDefect") %></textarea>		
 			</div>
 			<div class="col-md-4">			
 				<h4>4.2 测试方法、策略</h4>
-				<textarea  name="planWay" class="form-control" rows="12" placeholder="Enter ..."><%=rs3("planWay") %></textarea>					
+				<textarea  name="planWay" class="form-control" rows="5" placeholder="Enter ..."><%=rs3("planWay") %></textarea>					
 			</div>
 			<div class="col-md-4">
 				<h4>4.3 测试约束条件</h4>
-				<textarea  name="planLimit" class="form-control" rows="12" placeholder="Enter ..."><%=rs3("planLimit") %></textarea>					
+				<textarea  name="planLimit" class="form-control" rows="5" placeholder="Enter ..."><%=rs3("planLimit") %></textarea>					
 			</div>
 		</div> 
 	
@@ -389,7 +389,7 @@ x = rs3.recordcount
 
 		<div class="row">
 			<div class="col-md-12">			
-				<textarea  name="planRisk" class="form-control" rows="10" placeholder="Enter ..."><%=rs3("planRisk") %></textarea>
+				<textarea  name="planRisk" class="form-control" rows="5" placeholder="Enter ..."><%=rs3("planRisk") %></textarea>
 			</div> 						
 		</div>				
 						
@@ -400,6 +400,7 @@ x = rs3.recordcount
 		<div class="row">
 			<div class="col-md-12">		
 				<br>  
+				<hr>
 				<div align="center"><button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button></div>
 			</div>
 		</div>
@@ -408,7 +409,7 @@ x = rs3.recordcount
 
 		<div class="row">
 			<div class="col-md-12" align="right">	
-				<hr>
+				
 				<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
 				<a id='DD'></a>		
 			</div>

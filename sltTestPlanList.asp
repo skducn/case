@@ -117,10 +117,10 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 									<h4>2.4 测试进度</h4>
 									<table class="table table-bordered">
 									<tr>               
-										<th style="width: 15%">测试阶段</th>
-										<th style="width: 55%">测试任务</th>
-										<th style="width: 15%">工作量/人员</th>
-										<th style="width: 15%">起止时间</th>
+										<th style="width: 20%" bgcolor="f1f1f1">测试阶段</th>
+										<th style="width: 30%" bgcolor="f1f1f1">测试任务</th>
+										<th style="width: 30%" bgcolor="f1f1f1">工作量/人员</th>
+										<th style="width: 20%" bgcolor="f1f1f1">起止时间</th>
 									</tr>					
 									<tr>
 									<td>阶段1：需求分析</td>
@@ -252,19 +252,19 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 							<div class="col-md-4">							
 								<h4>4.1 缺陷优先级</h4>
 								<table class="table table-bordered">												
-								<tr><td><textarea class="form-control" rows="12" placeholder="无" disabled="disabled"><%=rs3("planDefect")%></textarea></td></tr>
+								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planDefect")%></textarea></td></tr>
 								</table>																	
 							</div>
 							<div class="col-md-4">							
 								<h4>4.2 测试方法、策略</h4>
 								<table class="table table-bordered">												
-								<tr><td><textarea class="form-control" rows="12" placeholder="无" disabled="disabled"><%=rs3("planWay")%></textarea></td></tr>
+								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planWay")%></textarea></td></tr>
 								</table>																	
 							</div>
 							<div class="col-md-4">							
 								<h4>4.3 测试约束条件</h4>
 								<table class="table table-bordered">												
-								<tr><td><textarea class="form-control" rows="12" placeholder="无" disabled="disabled"><%=rs3("planLimit")%></textarea></td></tr>
+								<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planLimit")%></textarea></td></tr>
 								</table>																	
 							</div>			
 						</div><!-- /.row -->
@@ -276,7 +276,7 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 			<div class="row">
 				<div class="col-md-12">
 					<table class="table table-bordered">												
-					<tr><td><textarea class="form-control" rows="10" placeholder="无" disabled="disabled"><%=rs3("planRisk")%></textarea></td></tr>
+					<tr><td><textarea class="form-control" rows="5" placeholder="无" disabled="disabled"><%=rs3("planRisk")%></textarea></td></tr>
 					</table>		
 				</div>  <!-- /.col -->
 			</div><!-- /.row -->

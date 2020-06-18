@@ -190,19 +190,24 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
   
 <div class="content-wrapper">
 	<div class="page-title">
-		<div><h1><i class="fa fa-edit"></i> 编辑测试报告</h1><p>edit testreport</p></div>
-		<div><ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">编辑测试报告</a></li></ul></div>
+		<div>
+			<h1><i class="fa fa-edit"></i> 编辑测试报告</h1><p>edit testreport</p>
+		</div>
+		<div>
+			<ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">编辑测试报告</a></li></ul>
+		</div>
 	</div>
+	
 																			
 	<div class="card">
 		<form id="form1" name="addForm" onSubmit="return CheckPost()" method="post" action="sltReportEditSave.html">
 		
 		<div class="row">
 			<div class="col-md-6" align="left">
-				<h3 class="box-title"><%=pjtName%> <%=platformName%> 测试报告（待审核）</h3>						
+				<h3 class="box-title"><%=pjtName%><%=platformName%> 测试报告（待审核）</h3>						
 			</div>				
 			<div class="col-md-6" align="right">
-				<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>保存</button>	
+				<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button>	
 				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
 			</div>	
 		</div>
@@ -212,49 +217,49 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 		<h3 class="box-title">测试概要</h3>		
 							     
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-4">
 			<div class="box-header"><h4 class="box-title"> 模板名称</h4></div>
 			<div class="form-group"><textarea  name="rptNo" class="form-control" rows="5"><%=rs("rptNo")%></textarea></div></div>
-			<div class="col-md-3">
+			<div class="col-md-4">
 			<div class="box-header"><h4 class="box-title"> 交付周期</h4></div>
 			<div class="form-group"><textarea  name="rptPeriod" class="form-control" rows="5"><%=rs("rptPeriod")%></textarea></div></div>
-			<div class="col-md-3">
+			<div class="col-md-4">
 			<div class="box-header"><h4 class="box-title"> 参与人员</h4></div>
 			<div class="form-group"><textarea  name="rptMember" class="form-control" rows="5"><%=rs("rptMember")%></textarea></div></div>					
-			<div class="col-md-3">
+			<div class="col-md-4">
 			<div class="box-header"><h4 class="box-title"> 相关平台</h4></div>
 			<div class="form-group"><textarea  name="rptTerminal" class="form-control" rows="5"><%=rs("rptTerminal")%></textarea></div></div>			
-			<div class="col-md-3">
+			<div class="col-md-4">
 			<div class="box-header"><h4 class="box-title"> 环境配置</h4></div>
-			<div class="form-group"><textarea name="rptBasis" class="form-control" rows="10"><%=rs("rptBasis")%></textarea></div></div>
-			<div class="col-md-9">
+			<div class="form-group"><textarea name="rptBasis" class="form-control" rows="5"><%=rs("rptBasis")%></textarea></div></div>
+			<div class="col-md-4">
 			<div class="box-header"><h4 class="box-title"> 已知风险</h4></div>
-			<div class="form-group"><textarea  name="rptRisk" class="form-control" rows="10"><%=rs("rptRisk")%></textarea></div></div>						
+			<div class="form-group"><textarea  name="rptRisk" class="form-control" rows="5"><%=rs("rptRisk")%></textarea></div></div>						
 		</div>		
 					
 		<br>					
 					
 		<div class="col-md-4"></div>						  
 		<div class="col-md-2">							
-			<label>测试环境结果</label><br>
+			<h4 class="box-title"> 测试环境结果</h4><br>
 			 <div class="animated-radio-button">
 			<%if rs("rptTestResult") = "pass" then%>									
-				<label><input type="radio" name="rptTestResult" value="pass" checked><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;，	
+				<label><input type="radio" name="rptTestResult" value="pass" checked><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;	
 				<label><input type="radio" name="rptTestResult" value="failed"><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>															
 			<%else%>
-				<label><input type="radio" name="rptTestResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;，	
+				<label><input type="radio" name="rptTestResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;
 				<label><input type="radio" name="rptTestResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>									
 			<%end if %>								
 			</div>
 		</div>						
 		<div class="col-md-6">					
-			<label>生产环境结果</label><br>
+			<h4 class="box-title"> 生产环境结果</h4><br>
 			<div class="animated-radio-button">
 			<% if rs("rptOnlineResult") = "pass" then%>
-				<label><input type="radio" name="rptOnlineResult" value="pass" checked><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>	&nbsp;&nbsp;，
+				<label><input type="radio" name="rptOnlineResult" value="pass" checked><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>	&nbsp;&nbsp;
 				<label><input type="radio" name="rptOnlineResult" value="failed"><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>															
 			<%else%>
-				<label><input type="radio" name="rptOnlineResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;，	
+				<label><input type="radio" name="rptOnlineResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;
 				<label><input type="radio" name="rptOnlineResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>									
 			<%end if %>	
 			</div>
@@ -266,24 +271,29 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 
 		<div class="row">
 			<div class="col-md-3">
-			<div class="box-header"><h4 class="box-title"> 1.1 目的</h4></div>
-			<div class="form-group"><textarea  name="rptGoal" class="form-control" rows="5"><%=rs("rptGoal")%></textarea></div></div>
+				<div class="box-header"><h4 class="box-title"> 1.1 目的</h4></div>
+				<div class="form-group"><textarea  name="rptGoal" class="form-control" rows="5"><%=rs("rptGoal")%></textarea></div>
+			</div>
 			<div class="col-md-3">
-			<div class="box-header"><h4 class="box-title"> 1.2 背景</h4></div>
-			<div class="form-group"><textarea  name="rptScene" class="form-control" rows="5"><%=rs("rptScene")%></textarea></div></div>
+				<div class="box-header"><h4 class="box-title"> 1.2 背景</h4></div>
+				<div class="form-group"><textarea  name="rptScene" class="form-control" rows="5"><%=rs("rptScene")%></textarea></div>
+			</div>
 			<div class="col-md-3">
-			<div class="box-header"><h4 class="box-title"> 1.3 软件环境</h4></div>
-			<div class="form-group"><textarea  name="rptSoft" class="form-control" rows="5"><%=rs("rptSoft")%></textarea></div></div>
+				<div class="box-header"><h4 class="box-title"> 1.3 软件环境</h4></div>
+				<div class="form-group"><textarea  name="rptSoft" class="form-control" rows="5"><%=rs("rptSoft")%></textarea></div>
+			</div>
 			<div class="col-md-3">
-			<div class="box-header"><h4 class="box-title"> 1.4 硬件资源</h4></div>
-			<div class="form-group"><textarea  name="rptHard" class="form-control" rows="5"><%=rs("rptHard")%></textarea></div></div>						
+				<div class="box-header"><h4 class="box-title"> 1.4 硬件资源</h4></div>
+				<div class="form-group"><textarea  name="rptHard" class="form-control" rows="5"><%=rs("rptHard")%></textarea></div>
+			</div>						
 	
-			<div class="col-md-12"><div class="box-header"><h4 class="box-title"> 1.5 测试进度</h3></div>
+			<div class="col-md-12">
+				<div class="box-header"><h4 class="box-title"> 1.5 测试进度</h3></div>
 				<div class="form-group">
 				<table class="table table-bordered"><tr>
-				<th style="width: 15%">测试类目</th>
-				<th style="width: 15%">开始结束日期</th>
-				<th style="width: 70%">备注</th></tr>
+				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试类目</h4></th>
+				<th style="width: 30%" bgcolor="#f1f1f1"><h4 class="box-title"> 开始结束日期</h4></th>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 备注</h4></th></tr>
 				<tr><td>需求文档分析</td><td>
 				<div class="form-group"><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 				<input type="text" name="rptStoryDate" class="form-control pull-right" id="reservation" value="<%=rs("rptStoryDate")%>"></div></div></td>
@@ -308,11 +318,13 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			</div>
 			
 			<div class="col-md-6">
-			<div class="box-header"><h4 class="box-title"> 1.6 定义</h3></div>
-			<div class="form-group"><textarea  name="rptCaption" class="form-control" rows="5"><%=rs("rptCaption")%></textarea></div></div>
+				<div class="box-header"><h4 class="box-title"> 1.6 定义</h3></div>
+				<div class="form-group"><textarea  name="rptCaption" class="form-control" rows="5"><%=rs("rptCaption")%></textarea></div>
+			</div>
 			<div class="col-md-6">
-			<div class="box-header"><h4 class="box-title"> 1.7 参考资料</h3></div>
-			<div class="form-group"><textarea  name="rptRef" class="form-control" rows="5"><%=rs("rptRef")%></textarea></div></div>						
+				<div class="box-header"><h4 class="box-title"> 1.7 参考资料</h3></div>
+				<div class="form-group"><textarea  name="rptRef" class="form-control" rows="5"><%=rs("rptRef")%></textarea></div>
+			</div>						
 		</div>					 
 
 		<h3 class="box-title">2、测试用例</h3>
@@ -320,12 +332,12 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 		<div class="row">
 			<div class="col-md-12">
 				<table id="example2" class="table table-bordered table-hover"><thead><tr>
-				<th style="width: 10%">用例Id</th>
-				<th style="width: 15%">标签</th>
-				<th style="width: 35%">用例标题</th>
-				<th style="width: 10%">测试对象</th>
-				<th style="width: 15%">测试阶段</th>
-				<th style="width: 15%">测试结果</th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例编号</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 标签</h4></th>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 标题</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试对象</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试阶段</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试结果</h4></th>
 				</tr></thead><tbody>	  
 				<% set rs2 = server.createobject("adodb.recordset")
 				rs2.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" order by caseStage ,caseId asc",conn,3,3 
@@ -364,13 +376,13 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 				end if %>
 				</td><td>
 				<% if rs2("caseResult") ="error" then
-				response.write "<font color=red>error</font>"
+				response.write "<font color=red>未通过</font>"
 				elseif rs2("caseResult") = "ok" then
-				response.write "<font color=blue>ok</font>"
+				response.write "<font color=green>通过</font>"
 				elseif rs2("caseStatus") = "3" then
-				response.write "<font color=blue>hang-up</font>"
+				response.write "<font color=grey>搁置</font>"
 				elseif rs2("caseStatus") = "2" then
-				response.write "<font color=red>pause</font>"
+				response.write "<font color=blue>暂停</font>"
 				end if %>
 				</td></tr>
 				<%rs2.movenext
@@ -386,13 +398,13 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			<div class="col-md-12">
 				<div class="box-header"><h4 class="box-title">3.1  测试覆盖率</h4></div>
 				<table id="example2" class="table table-bordered table-hover"><thead><tr>
-				<th style="width: 10%">版本</th>
-				<th style="width: 15%">标签</th>
-				<th style="width: 15%">用例总数</th>
-				<th style="width: 15%">已通过数(s)</th>
-				<th style="width: 15%">未通过数</th>
-				<th style="width: 15%">未测试数(搁置）</th>
-				<th style="width: 15%">用例执行覆盖率</th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 版本</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 标签</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例总数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 已通过数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未通过数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未测试数(搁置/暂停）</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例执行覆盖率</h4></th>
 				</tr></thead><tbody>
 				<% set rs4 = server.createobject("adodb.recordset")
 				rs4.open "select * from tbl_platform where platformId="&platformId&" order by platformId asc",conn,3,3 
@@ -407,60 +419,56 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 				<td><%=rs5("lblName")%></td>
 				<td>
 				<%if rs("rptCaseTotal") <> "" then %>
-					<input maxlength="6" type="text" name="caseTotal" class="form-control" value="<%=rs("rptCaseTotal")%>">					
-				<%else%>
-					<input maxlength="6" type="text" name="caseTotal" class="form-control" value="<%=rs6.recordcount%>">				 
+				
+					<input maxlength="6" type="text" name="caseTotal" class="form-control" value="<%=rs6.recordcount%>" readonly="">				 
 				<%end if %>				
 				</td>
-				<td><%
+				<%
 				varOkSum3 = 0
 				varErrorSum3 = 0
 				varEmptySum3 = 0
 				do while not rs6.eof
 				if rs6("caseResult") = "ok" then
-				varOkSum3 = varOkSum3 + 1
+					varOkSum3 = varOkSum3 + 1
 				end if 
 				if rs6("caseResult") = "error" then
-				varErrorSum3 = varErrorSum3 + 1
+					varErrorSum3 = varErrorSum3 + 1
 				end if 
-				if isnull(rs6("caseResult")) then
-				varEmptySum3 = varEmptySum3 + 1
+				if rs6("caseResult")= "empty" and rs6("caseStatus") = "1" then
+					varEmptySum3 = varEmptySum3 + 1
+				end if 
+				if rs6("caseStatus") = "2" then
+					varEmptySum3 = varEmptySum3 + 1
 				end if 
 				if rs6("caseStatus") = "3" then
-				varEmptySum3 = varEmptySum3 + 1
+					varEmptySum3 = varEmptySum3 + 1
 				end if 
 				rs6.movenext
 				loop
+				 caseCoverage = cstr(int((varOkSum3+varErrorSum3)/rs6.recordcount*100)) + "%" 
+				%>
 				
-				if rs("rptCasePass") <> "" then %>
-					<input maxlength="6" type="text" name="casePass" class="form-control" value="<%=rs("rptCasePass")%>">					
-				<%else%>
-					<input maxlength="6" type="text" name="casePass" class="form-control" value="<%=varOkSum3%>">				 
+				<td>				
+				<%if rs("rptCasePass") <> "" then %>			
+					<input maxlength="6" type="text" name="casePass" class="form-control" value="<%=varOkSum3%>" readonly="">				 
 				<%end if %>
 				</td>
 				
 				<td>
-				<%if rs("rptNoPass") <> "" then %>
-					<input maxlength="6" type="text" name="caseNoPass" class="form-control" value="<%=rs("rptNoPass")%>">					
-				<%else%>
-					<input maxlength="6" type="text" name="caseNoPass" class="form-control" value="<%=varErrorSum3%>">				 
+				<%if rs("rptNoPass") <> "" then %>				
+					<input maxlength="6" type="text" name="caseNoPass" class="form-control" value="<%=varErrorSum3%>" readonly="">				 
 				<%end if %>
 				</td>
 				
 				<td>
-				<%if rs("rptNoTest") <> "" then %>
-					<input maxlength="6" type="text" name="caseNoTest" class="form-control" value="<%=rs("rptNoTest")%>">					
-				<%else%>
-					<input maxlength="6" type="text" name="caseNoTest" class="form-control" value="<%=varEmptySum3%>">				 
+				<%if rs("rptNoTest") <> "" then %>				
+					<input maxlength="6" type="text" name="caseNoTest" class="form-control" value="<%=varEmptySum3%>" readonly="">				 
 				<%end if %>
 				</td>
 				
 				<td>
-				<%if rs("rptCaseCoverage") <> "" then %>
-					<input maxlength="6" type="text" name="caseCoverage" class="form-control" value="<%=rs("rptCaseCoverage")%>">					
-				<%else
-					caseCoverage = cstr(int((varOkSum3+varErrorSum3)/rs6.recordcount*100)) + "%"%>
-					<input maxlength="6" type="text" name="caseCoverage" class="form-control" value="<%=caseCoverage%>">				 
+				<%if rs("rptCaseCoverage") <> "" then %>													
+					<input maxlength="6" type="text" name="caseCoverage" class="form-control" value="<%=caseCoverage%>" readonly="">				 
 				<%end if 
 			
 				rs6.close%>
@@ -478,38 +486,40 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			<div class="col-md-4">
 				<div class="box"><div class="box-header"><h4 class="box-title">3.2 缺陷平台统计</h4></div>
 				<div class="box-body"><table id="example2" class="table table-bordered table-hover"><thead><tr>
-				<th style="width: 50%">系统平台</th>
-				<th style="width: 50%">Bug数 （<a href="<%=platformRedmine%>" target="_blank"> buglist</i></a>）</th></tr></thead><tbody><tr>
-				<td>iOS</td><td><div class="form-group"><input maxlength="3" type="text" name="rptIbug" class="form-control" value="<%=split(rs("rptBugQty"),",")(0)%>"></div></td></tr><tr>
-				<td>android</td><td><div class="form-group"><input maxlength="3" type="text" name="rptAbug" class="form-control" value="<%=split(rs("rptBugQty"),",")(1)%>"></div></td></tr><tr>
-				<td>数据库/接口类</td><td><div class="form-group"><input maxlength="3" type="text" name="rptSbug" class="form-control" value="<%=split(rs("rptBugQty"),",")(2)%>"></div></td></tr><tr>
-				<td>web php C/S</td><td><div class="form-group"><input maxlength="3" type="text" name="rptPbug" class="form-control" value="<%=split(rs("rptBugQty"),",")(3)%>"></div></td></tr>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 系统平台</h4></th>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> Bug数</h4></th></tr></thead><tbody><tr> 
+				<td>iOS</td><td><div class="form-group"><input maxlength="3" type="text" name="rptIbug" class="form-control" value="<%=split(rs("rptBugQty"),",")(0)%>" oninput="value=value.replace(/[^\d]/g,'')" ></div></td></tr><tr>
+				<td>android</td><td><div class="form-group"><input maxlength="3" type="text" name="rptAbug" class="form-control" value="<%=split(rs("rptBugQty"),",")(1)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr><tr>
+				<td>数据库/接口类</td><td><div class="form-group"><input maxlength="3" type="text" name="rptSbug" class="form-control" value="<%=split(rs("rptBugQty"),",")(2)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr><tr>
+				<td>web php C/S</td><td><div class="form-group"><input maxlength="3" type="text" name="rptPbug" class="form-control" value="<%=split(rs("rptBugQty"),",")(3)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr>
 				</tbody></table></div> </div>
 			</div>
 
 			<div class="col-md-4">
-				<div class="box"><div class="box-header"><h4 class="box-title">3.3 缺陷严重程度</h4></div>
+				<div class="box"><div class="box-header"><h4 class="box-title">3.3 缺陷严重程度统计</h4></div>
 				<div class="box-body"><table id="example2" class="table table-bordered table-hover"><thead><tr>
-				<th style="width: 50%">严重程度</th>
-				<th style="width: 50%">Bug数</th></tr></thead><tbody><tr>
-				<td>紧急</td><td><div class="form-group"><input maxlength="3" type="text" name="rptJdegree" class="form-control" value="<%=split(rs("rptBugDegree"),",")(0)%>"></div></td></tr><tr>
-				<td>高</td><td><div class="form-group"><input maxlength="3" type="text" name="rptGdegree" class="form-control" value="<%=split(rs("rptBugDegree"),",")(1)%>"></div></td></tr><tr>
-				<td>普通</td><td><div class="form-group"><input maxlength="3" type="text" name="rptPdegree" class="form-control" value="<%=split(rs("rptBugDegree"),",")(2)%>"></div></td></tr><tr>
-				<td>低</td><td><div class="form-group"><input maxlength="3" type="text" name="rptDdegree" class="form-control" value="<%=split(rs("rptBugDegree"),",")(3)%>"></div></td></tr></tbody></table></div></div>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 严重程度</h4></th>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> Bug数</h4></th></tr></thead><tbody><tr>
+				<td>紧急</td><td><div class="form-group"><input maxlength="3" type="text" name="rptJdegree" class="form-control" value="<%=split(rs("rptBugDegree"),",")(0)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr><tr>
+				<td>高</td><td><div class="form-group"><input maxlength="3" type="text" name="rptGdegree" class="form-control" value="<%=split(rs("rptBugDegree"),",")(1)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr><tr>
+				<td>普通</td><td><div class="form-group"><input maxlength="3" type="text" name="rptPdegree" class="form-control" value="<%=split(rs("rptBugDegree"),",")(2)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr><tr>
+				<td>低</td><td><div class="form-group"><input maxlength="3" type="text" name="rptDdegree" class="form-control" value="<%=split(rs("rptBugDegree"),",")(3)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr></tbody></table></div></div>
 			</div>
 
 			<div class="col-md-4">
 				<div class="box"><div class="box-header"><h4 class="box-title">3.4 缺陷状态统计</h4></div>
 				<div class="box-body"><table id="example2" class="table table-bordered table-hover"><thead><tr>
-				<th style="width: 50%">缺陷状态</th>
-				<th style="width: 50%">Bug数</th></tr></thead><tbody><tr>
-				<td>未处理(新建)</td><td><div class="form-group"><input maxlength="3" type="text" name="rptWstatus" class="form-control" value="<%=split(rs("rptBugStatus"),",")(0)%>"></div></td></tr><tr>
-				<td>处理中</td><td><div class="form-group"><input maxlength="3" type="text" name="rptCstatus" class="form-control" value="<%=split(rs("rptBugStatus"),",")(1)%>"></div></td></tr><tr>
-				<td>已解决</td><td><div class="form-group"><input maxlength="3" type="text" name="rptJstatus" class="form-control" value="<%=split(rs("rptBugStatus"),",")(2)%>"></div></td></tr><tr>
-				<td>已反馈</td><td><div class="form-group"><input maxlength="3" type="text" name="rptFstatus" class="form-control" value="<%=split(rs("rptBugStatus"),",")(3)%>"></div></td></tr></tbody></table>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 缺陷状态</h4></th>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> Bug数</h4></th></tr></thead><tbody><tr>
+				<td>未处理(新建)</td><td><div class="form-group"><input maxlength="3" type="text" name="rptWstatus" class="form-control" value="<%=split(rs("rptBugStatus"),",")(0)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr><tr>
+				<td>处理中</td><td><div class="form-group"><input maxlength="3" type="text" name="rptCstatus" class="form-control" value="<%=split(rs("rptBugStatus"),",")(1)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr><tr>
+				<td>已解决</td><td><div class="form-group"><input maxlength="3" type="text" name="rptJstatus" class="form-control" value="<%=split(rs("rptBugStatus"),",")(2)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr><tr>
+				<td>已反馈</td><td><div class="form-group"><input maxlength="3" type="text" name="rptFstatus" class="form-control" value="<%=split(rs("rptBugStatus"),",")(3)%>" oninput="value=value.replace(/[^\d]/g,'')"></div></td></tr></tbody></table>
 				</div>
 			</div>
 		</div>
+		
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=platformRedmine%>" target="_blank">请参考禅道</i></a>
 
 		<div class="col-md-12">	
 			<div class="box-header"><h3 class="box-title"> 需求缺陷统计</h3></div>
@@ -519,7 +529,7 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 				set rs4 = server.createobject("adodb.recordset")
 				rs4.open "select * from tbl_errortype ",conn,3,3
 				do while not rs4.eof%>			
-					<th><%=rs4("errorName")%></th>
+					<th bgcolor="#f1f1f1"><%=rs4("errorName")%></th>
 				<%						
 				rs4.movenext
 				loop
@@ -538,51 +548,54 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			</div>
 		</div>	
 
-		<div class="col-md-12">
-		<div class="box-header"><h4 class="box-title"> 3.5 遗留/反馈</h4></div>
-		<div class="form-group"><textarea  name="rptFeedback" class="form-control" rows="10" ><%=rs("rptFeedback")%></textarea></div></div>
-		<div class="col-md-6">
-		<div class="box-header"><h4 class="box-title"> 3.6 建议</h4></div>
-		<div class="form-group"><textarea  name="rptAdvice" class="form-control" rows="5" ><%=rs("rptAdvice")%></textarea></div></div>
-		<div class="col-md-6">
-		<div class="box-header"><h4 class="box-title"> 3.7 测试交付物</h4></div>
-		<div class="form-group"><textarea  name="rptDelivery" class="form-control" rows="5" ><%=rs("rptDelivery")%></textarea></div>
-	
-	</div><!-- /.col -->
-</div><!-- /.row -->	  
+		<div class="col-md-4">
+			<div class="box-header"><h4 class="box-title"> 3.5 遗留问题</h4></div>
+			<div class="form-group"><textarea  name="rptFeedback" class="form-control" rows="5" ><%=rs("rptFeedback")%></textarea></div>
+		</div>
+		<div class="col-md-4">
+			<div class="box-header"><h4 class="box-title"> 3.6 建议</h4></div>
+			<div class="form-group"><textarea  name="rptAdvice" class="form-control" rows="5" ><%=rs("rptAdvice")%></textarea></div>
+		</div>
+		<div class="col-md-4">
+			<div class="box-header"><h4 class="box-title"> 3.7 测试交付物</h4></div>
+			<div class="form-group"><textarea  name="rptDelivery" class="form-control" rows="5" ><%=rs("rptDelivery")%></textarea></div>
+		</div>
+		
+	</div><!-- /.row -->	  
 	
 
 		<h3 class="box-title">4、测试结论</h3>
 			
 		<div class="row">
-			<div class="col-md-12"><div class="form-group"><textarea  name="rptConclusion" class="form-control" rows="10" ><%=rs("rptConclusion")%></textarea></div></div>
+			<div class="col-md-12">
+				<div class="form-group"><textarea  name="rptConclusion" class="form-control" rows="5" ><%=rs("rptConclusion")%></textarea></div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">	
+				<hr>
+				<div align="center"><button type="submit" class="btn btn-primary" ><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button></div>
+			</div>
 		</div>
 		
 		<input name="pjtId" type="hidden" value="<%=pjtId%>" />
 		<input name="platformId" type="hidden" value="<%=platformId%>" />
 		<input name="rptLatestdDate" type="hidden" value="<%=now%>" />
-
-		<div class="row"><div class="col-md-12">	
-			<br>
-			<div align="center"><button type="submit" class="btn btn-primary" ><i class="fa fa-fw  fa-check-circle"></i>保存</button></div>
-		</div>
-		</div>
+		
 		</form>
 			
 			
 		<div class="row">
-			<div class="col-md-12" align="right">	
-				<hr>
-				<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
-				<a id='DD'></a>		
+			<div class="col-md-12" align="right">				
+			<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
+			<a id='DD'></a>		
 			</div>
 		</div>
 		
 		
 	</div>
 </div>
-
-
 
 
 <!-- jQuery 2.1.4 -->
@@ -614,7 +627,6 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 <script src="dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-
 
 <script>
   $(function () {

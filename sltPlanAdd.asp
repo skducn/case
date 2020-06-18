@@ -123,18 +123,18 @@ set rs = nothing
 <div class="col-md-12">
 <div class="nav-tabs-custom">	
 
-																
+			<form role="form" action="sltPlanAddSubmit.html" method="post" name="addForm" onSubmit="return CheckPost()" >																
 	<div class="row">
-		<div class="col-md-9" align="left">
-			<h3> <%=pjtName%> - <%=platformName%></h3>
+		<div class="col-md-8" align="left">
+			<h3> <%=pjtName%> <%=platformName%></h3>
 		</div>
 		
 		<!--  导入计划模板 -->			
-		<div class="col-md-2"  align="right">				
+		<div class="col-md-2"  align="center">				
 			 <% set rs66 = server.createobject("adodb.recordset")
 			rs66.open "select * from tbl_plan where planAuthor='"&session("userName")&"' order by planId desc ",conn,3,3 %>
 			<select name="testplan" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
-			<option value="0"  selected="selected">< 选择计划模板 ></option>
+			<option value="0"  selected="selected">请选择计划模板</option>
 			<option value="sltPlanAdd-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >无</option>				
 			<% do while not rs66.eof
 				  set rs67 = server.createobject("adodb.recordset")
@@ -153,14 +153,15 @@ set rs = nothing
 			</select>		
 
 		</div>
-		<div class="col-md-1" align="right">				
+		<div class="col-md-2" align="right">		
+			<button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button>		
 			<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>
 		</div>
 	</div>
 	<hr>			
 
 								
-	<form role="form" action="sltPlanAddSubmit.html" method="post" name="addForm" onSubmit="return CheckPost()" >			
+	
 
 	<% 
 	set rs3 = server.createobject("adodb.recordset")
@@ -177,25 +178,25 @@ set rs = nothing
 			<div class="col-md-4">						
 				<h4>1.1 目的</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planGoal" class="form-control" rows="6" placeholder="描述编写的目的、约定和文档的编排方式"><%=rs3("planGoal")%></textarea>					
+					 <textarea  name="planGoal" class="form-control" rows="5" placeholder="描述编写的目的、约定和文档的编排方式"><%=rs3("planGoal")%></textarea>					
 				<%else%>
-					 <textarea  name="planGoal" class="form-control" rows="6" placeholder="描述编写的目的、约定和文档的编排方式" ></textarea>	
+					 <textarea  name="planGoal" class="form-control" rows="5" placeholder="描述编写的目的、约定和文档的编排方式" ></textarea>	
 				<%end if%>	
 			</div>
 			<div class="col-md-4">						
 				<h4>1.2 背景</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planScene" class="form-control" rows="6" placeholder="描述项目背景"><%=rs3("planScene")%></textarea>					
+					 <textarea  name="planScene" class="form-control" rows="5" placeholder="描述项目背景"><%=rs3("planScene")%></textarea>					
 				<%else%>
-					  <textarea  name="planScene" class="form-control" rows="6" placeholder="描述项目背景"></textarea>	
+					  <textarea  name="planScene" class="form-control" rows="5" placeholder="描述项目背景"></textarea>	
 				<%end if%>	
 			</div>
 			<div class="col-md-4">						
 				<h4>1.3 术语与参考</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planInfo" class="form-control" rows="6" placeholder="请填写参考资料与术语解释"><%=rs3("planInfo")%></textarea>					
+					 <textarea  name="planInfo" class="form-control" rows="5" placeholder="请填写参考资料与术语解释"><%=rs3("planInfo")%></textarea>					
 				<%else%>
-					 <textarea  name="planInfo" class="form-control" rows="6" placeholder="请填写参考资料与术语解释"></textarea>	
+					 <textarea  name="planInfo" class="form-control" rows="5" placeholder="请填写参考资料与术语解释"></textarea>	
 				<%end if%>					
 			</div>
 		</div>
@@ -206,26 +207,26 @@ set rs = nothing
 			<div class="col-md-4">			
 				<h4>2.1 测试任务</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planTask" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("planTask")%></textarea>					
+					 <textarea  name="planTask" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planTask")%></textarea>					
 				<%else%>
-					 <textarea  name="planTask" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planTask" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			</div>
 			<div class="col-md-4">						
 				<h4>2.2 人员和设备</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planSource" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("planSource")%></textarea>					
+					 <textarea  name="planSource" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planSource")%></textarea>					
 				<%else%>
-					 <textarea  name="planSource" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planSource" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			
 			</div>
 			<div class="col-md-4">						
 				<h4>2.3 条件（输入、输出）</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planInOut" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("planInOut")%></textarea>					
+					 <textarea  name="planInOut" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planInOut")%></textarea>					
 				<%else%>
-					 <textarea  name="planInOut" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planInOut" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 		
 			</div>
@@ -234,34 +235,34 @@ set rs = nothing
 			<div class="col-md-12">	<br>						
 				<h4>2.4 测试进度</h4>
 				<table class="table table-bordered"><tr>               
-				<th style="width: 15%">测试阶段</th>
-				<th style="width: 50%">测试任务</th>
-				<th style="width: 15%">工作量/人员</th>
+				<th style="width: 20%">测试阶段</th>
+				<th style="width: 30%">测试任务</th>
+				<th style="width: 30%">工作量/人员</th>
 				<th style="width: 20%">起止时间</th></tr>
 				
 				<tr>
 				<td>阶段1、需求分析</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan1Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan1Task")%></textarea>					
+						 <textarea  name="plan1Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan1Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan1Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan1Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan1Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan1Work")%></textarea>					
+						 <textarea  name="plan1Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan1Work")%></textarea>					
 					<%else%>
-					 	 <textarea  name="plan1Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 	 <textarea  name="plan1Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 				<div class="input-group">			
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan1Date" class="form-control pull-right" rows="6" id="reservation1" placeholder="Enter ..." value="<%=rs3("plan1Date")%>">
+							 <input type="text" name="plan1Date" class="form-control pull-right" rows="5" id="reservation1" placeholder="请输入 ..." value="<%=rs3("plan1Date")%>">
 						<%else%>
-							 <input type="text" name="plan1Date" class="form-control pull-right" rows="6"  id="reservation1" placeholder="Enter ...">		
+							 <input type="text" name="plan1Date" class="form-control pull-right" rows="5"  id="reservation1" placeholder="请输入 ...">		
 						<%end if%>	
 				</div>				
 				</td>
@@ -271,25 +272,25 @@ set rs = nothing
 				<td>阶段2、设计编写用例</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan2Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan2Task")%></textarea>					
+						 <textarea  name="plan2Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan2Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan2Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan2Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan2Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan2Work")%></textarea>					
+						 <textarea  name="plan2Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan2Work")%></textarea>					
 					<%else%>
-						 <textarea  name="plan2Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan2Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan2Date" class="form-control pull-right" rows="6" id="reservation2" placeholder="Enter ..." value="<%=rs3("plan2Date")%>">
+							 <input type="text" name="plan2Date" class="form-control pull-right" rows="5" id="reservation2" placeholder="请输入 ..." value="<%=rs3("plan2Date")%>">
 						<%else%>
-							 <input type="text" name="plan2Date" class="form-control pull-right" rows="6"  id="reservation2" placeholder="Enter ...">		
+							 <input type="text" name="plan2Date" class="form-control pull-right" rows="5"  id="reservation2" placeholder="请输入 ...">		
 						<%end if%>
 				</div>
 				</td>
@@ -298,25 +299,25 @@ set rs = nothing
 				<td>阶段3、接口测试</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan3Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan3Task")%></textarea>					
+						 <textarea  name="plan3Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan3Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan3Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan3Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan3Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan3Work")%></textarea>					
+						 <textarea  name="plan3Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan3Work")%></textarea>					
 					<%else%>
-						 <textarea  name="plan3Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan3Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>			
 				</td>
 				<td>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan3Date" class="form-control pull-right" rows="6" id="reservation3" placeholder="Enter ..." value="<%=rs3("plan3Date")%>">
+							 <input type="text" name="plan3Date" class="form-control pull-right" rows="5" id="reservation3" placeholder="请输入 ..." value="<%=rs3("plan3Date")%>">
 						<%else%>
-							 <input type="text" name="plan3Date" class="form-control pull-right" rows="6"  id="reservation3" placeholder="Enter ...">		
+							 <input type="text" name="plan3Date" class="form-control pull-right" rows="5"  id="reservation3" placeholder="请输入 ...">		
 						<%end if%>
 				</div>			
 				</td>
@@ -326,25 +327,25 @@ set rs = nothing
 				<td>阶段4、功能测试</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan4Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan4Task")%></textarea>					
+						 <textarea  name="plan4Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan4Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan4Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan4Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan4Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan4Work")%></textarea>					
+						 <textarea  name="plan4Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan4Work")%></textarea>					
 					<%else%>
-						 <textarea  name="plan4Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan4Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan4Date" class="form-control pull-right" rows="6" id="reservation4" placeholder="Enter ..." value="<%=rs3("plan4Date")%>">
+							 <input type="text" name="plan4Date" class="form-control pull-right" rows="5" id="reservation4" placeholder="请输入 ..." value="<%=rs3("plan4Date")%>">
 						<%else%>
-							 <input type="text" name="plan4Date" class="form-control pull-right" rows="6"  id="reservation4" placeholder="Enter ...">		
+							 <input type="text" name="plan4Date" class="form-control pull-right" rows="5"  id="reservation4" placeholder="请输入 ...">		
 						<%end if%>			
 				</div>
 				</td>
@@ -353,25 +354,25 @@ set rs = nothing
 				<td>阶段5、系统测试</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan5Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan5Task")%></textarea>					
+						 <textarea  name="plan5Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan5Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan5Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan5Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan5Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan5Work")%></textarea>					
+						 <textarea  name="plan5Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan5Work")%></textarea>					
 					<%else%>
-						 <textarea  name="plan5Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan5Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan5Date" class="form-control pull-right" rows="6" id="reservation5" placeholder="Enter ..." value="<%=rs3("plan5Date")%>">
+							 <input type="text" name="plan5Date" class="form-control pull-right" rows="5" id="reservation5" placeholder="请输入 ..." value="<%=rs3("plan5Date")%>">
 						<%else%>
-							 <input type="text" name="plan5Date" class="form-control pull-right" rows="6"  id="reservation5" placeholder="Enter ...">		
+							 <input type="text" name="plan5Date" class="form-control pull-right" rows="5"  id="reservation5" placeholder="请输入 ...">		
 						<%end if%>
 				</div>	
 				</td>
@@ -380,25 +381,25 @@ set rs = nothing
 				<td>阶段6、性能测试</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan6Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan6Task")%></textarea>					
+						 <textarea  name="plan6Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan6Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan6Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan6Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan6Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan6Work")%></textarea>					
+						 <textarea  name="plan6Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan6Work")%></textarea>					
 					<%else%>
-						 <textarea  name="plan6Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan6Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan6Date" class="form-control pull-right" rows="6" id="reservation6" placeholder="Enter ..." value="<%=rs3("plan6Date")%>">
+							 <input type="text" name="plan6Date" class="form-control pull-right" rows="5" id="reservation6" placeholder="请输入 ..." value="<%=rs3("plan6Date")%>">
 						<%else%>
-							 <input type="text" name="plan6Date" class="form-control pull-right" rows="6"  id="reservation6" placeholder="Enter ...">		
+							 <input type="text" name="plan6Date" class="form-control pull-right" rows="5"  id="reservation6" placeholder="请输入 ...">		
 						<%end if%>
 				</div>		
 				</td>
@@ -407,25 +408,25 @@ set rs = nothing
 				<td>阶段7、兼容测试</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan7Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan7Task")%></textarea>					
+						 <textarea  name="plan7Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan7Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan7Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan7Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan7Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan7Work")%></textarea>					
+						 <textarea  name="plan7Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan7Work")%></textarea>					
 					<%else%>
-						 <textarea  name="plan7Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan7Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan7Date" class="form-control pull-right" rows="6" id="reservation7" placeholder="Enter ..." value="<%=rs3("plan7Date")%>">
+							 <input type="text" name="plan7Date" class="form-control pull-right" rows="5" id="reservation7" placeholder="请输入 ..." value="<%=rs3("plan7Date")%>">
 						<%else%>
-							 <input type="text" name="plan7Date" class="form-control pull-right" rows="6"  id="reservation7" placeholder="Enter ...">		
+							 <input type="text" name="plan7Date" class="form-control pull-right" rows="5"  id="reservation7" placeholder="请输入 ...">		
 						<%end if%>		
 				</div>
 				</td>
@@ -434,25 +435,25 @@ set rs = nothing
 				<td>阶段8、回归测试</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan8Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan8Task")%></textarea>					
+						 <textarea  name="plan8Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan8Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan8Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan8Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan8Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan8Work")%></textarea>					
+						 <textarea  name="plan8Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan8Work")%></textarea>					
 					<%else%>
-						 <textarea  name="plan8Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan8Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan8Date" class="form-control pull-right" rows="6" id="reservation8" placeholder="Enter ..." value="<%=rs3("plan8Date")%>">
+							 <input type="text" name="plan8Date" class="form-control pull-right" rows="5" id="reservation8" placeholder="请输入 ..." value="<%=rs3("plan8Date")%>">
 						<%else%>
-							 <input type="text" name="plan8Date" class="form-control pull-right" rows="6"  id="reservation8" placeholder="Enter ...">		
+							 <input type="text" name="plan8Date" class="form-control pull-right" rows="5"  id="reservation8" placeholder="请输入 ...">		
 						<%end if%>			
 				</div>
 				</td>
@@ -461,25 +462,25 @@ set rs = nothing
 				<td>阶段9、自动化测试</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan9Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan9Task")%></textarea>					
+						 <textarea  name="plan9Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan9Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan9Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan9Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan9Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan9Work")%></textarea>					
+						 <textarea  name="plan9Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan9Work")%></textarea>					
 					<%else%>
-						 <textarea  name="plan9Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan9Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan9Date" class="form-control pull-right" rows="6" id="reservation9" placeholder="Enter ..." value="<%=rs3("plan9Date")%>">
+							 <input type="text" name="plan9Date" class="form-control pull-right" rows="5" id="reservation9" placeholder="请输入 ..." value="<%=rs3("plan9Date")%>">
 						<%else%>
-							 <input type="text" name="plan9Date" class="form-control pull-right" rows="6"  id="reservation9" placeholder="Enter ...">		
+							 <input type="text" name="plan9Date" class="form-control pull-right" rows="5"  id="reservation9" placeholder="请输入 ...">		
 						<%end if%>
 				</div>		
 				</td>
@@ -488,25 +489,25 @@ set rs = nothing
 				<td>阶段10、其他测试</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan10Task" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan10Task")%></textarea>					
+						 <textarea  name="plan10Task" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan10Task")%></textarea>					
 					<%else%>
-						 <textarea  name="plan10Task" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan10Task" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="plan10Work" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("plan10Work")%></textarea>					
+						 <textarea  name="plan10Work" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("plan10Work")%></textarea>					
 					<%else%>
-						 <textarea  name="plan10Work" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+						 <textarea  name="plan10Work" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</td>
 				<td>
 				<div class="input-group">
 					<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
 						<%if request("planId")<>0 then%>
-							 <input type="text" name="plan10Date" class="form-control pull-right" rows="6" id="reservation10" placeholder="Enter ..." value="<%=rs3("plan10Date")%>">
+							 <input type="text" name="plan10Date" class="form-control pull-right" rows="5" id="reservation10" placeholder="请输入 ..." value="<%=rs3("plan10Date")%>">
 						<%else%>
-							 <input type="text" name="plan10Date" class="form-control pull-right" rows="6"  id="reservation10" placeholder="Enter ...">		
+							 <input type="text" name="plan10Date" class="form-control pull-right" rows="5"  id="reservation10" placeholder="请输入 ...">		
 						<%end if%>		
 				</div>
 				</td>
@@ -522,49 +523,49 @@ set rs = nothing
 			<div class="col-md-4">
 				<h4>3.1 接口测试阶段</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planInterface" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("planInterface")%></textarea>					
+					 <textarea  name="planInterface" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planInterface")%></textarea>					
 				<%else%>
-					 <textarea  name="planInterface" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planInterface" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			</div>
 			<div class="col-md-4">			
 				<h4>3.2 功能测试阶段</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planFunc" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("planFunc")%></textarea>					
+					 <textarea  name="planFunc" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planFunc")%></textarea>					
 				<%else%>
-					 <textarea  name="planFunc" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planFunc" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			</div>
 			<div class="col-md-4">
 				<h4>3.3 系统测试阶段</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planSystem" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("planSystem")%></textarea>					
+					 <textarea  name="planSystem" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planSystem")%></textarea>					
 				<%else%>
-					 <textarea  name="planSystem" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planSystem" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			</div>
 			<div class="col-md-4"><br>
 				<h4>3.4 性能测试阶段</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planPerformance" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("planPerformance")%></textarea>					
+					 <textarea  name="planPerformance" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planPerformance")%></textarea>					
 				<%else%>
-					 <textarea  name="planPerformance" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planPerformance" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			</div>
 			<div class="col-md-4"><br>
 				<h4>3.5 兼容测试阶段</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planCompatible" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("planCompatible")%></textarea>					
+					 <textarea  name="planCompatible" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planCompatible")%></textarea>					
 				<%else%>
-					 <textarea  name="planCompatible" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planCompatible" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			</div>
 				<div class="col-md-4"><br>
 				<h4>3.6 自动化测试</h4>
 					<%if request("planId")<>0 then%>
-						 <textarea  name="planAuto" class="form-control" rows="6" placeholder="Enter ..."><%=rs3("planAuto")%></textarea>					
+						 <textarea  name="planAuto" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planAuto")%></textarea>					
 					<%else%>
-					 	 <textarea  name="planAuto" class="form-control" rows="6" placeholder="Enter ..."></textarea>		
+					 	 <textarea  name="planAuto" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 					<%end if%>
 				</div>
 			</div>
@@ -576,25 +577,25 @@ set rs = nothing
 			<div class="col-md-4">
 				<h4>4.1 缺陷优先级</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planDefect" class="form-control" rows="12" placeholder="Enter ..."><%=rs3("planDefect")%></textarea>					
+					 <textarea  name="planDefect" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planDefect")%></textarea>					
 				<%else%>
-					 <textarea  name="planDefect" class="form-control" rows="12" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planDefect" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			</div>
 			<div class="col-md-4">
 				<h4>4.2 测试方法/策略</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planWay" class="form-control" rows="12" placeholder="Enter ..."><%=rs3("planWay")%></textarea>					
+					 <textarea  name="planWay" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planWay")%></textarea>					
 				<%else%>
-					 <textarea  name="planWay" class="form-control" rows="12" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planWay" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			</div>
 			<div class="col-md-4">
 				<h4>4.3 测试约束条件</h4>
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planLimit" class="form-control" rows="12" placeholder="Enter ..."><%=rs3("planLimit")%></textarea>					
+					 <textarea  name="planLimit" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planLimit")%></textarea>					
 				<%else%>
-					 <textarea  name="planLimit" class="form-control" rows="12" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planLimit" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>
 			</div>
 		</div> 
@@ -604,9 +605,9 @@ set rs = nothing
 		<div class="row">
 			<div class="col-md-12">		
 				<%if request("planId")<>0 then%>
-					 <textarea  name="planRisk" class="form-control" rows="10" placeholder="Enter ..."><%=rs3("planRisk")%></textarea>					
+					 <textarea  name="planRisk" class="form-control" rows="5" placeholder="请输入 ..."><%=rs3("planRisk")%></textarea>					
 				<%else%>
-					 <textarea  name="planRisk" class="form-control" rows="10" placeholder="Enter ..."></textarea>		
+					 <textarea  name="planRisk" class="form-control" rows="5" placeholder="请输入 ..."></textarea>		
 				<%end if%>	
 			</div> 						
 		</div>
@@ -618,7 +619,8 @@ set rs = nothing
 					
 		<div class="col-md-12">		
 			<br>  
-			<div align="center"><button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交 测试计划</button></div>
+			<hr>
+			<div align="center"><button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button></div>
 
 		</div>
 		
@@ -632,7 +634,7 @@ set rs = nothing
 </div>
 		<div class="row">
 			<div class="col-md-12" align="right">	
-				<hr>
+				
 				<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
 				<a id='DD'></a>		
 			</div>
@@ -649,6 +651,7 @@ set rs = nothing
 
 
 
+
 <!-- jQuery 2.1.4 -->
 <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
@@ -660,6 +663,7 @@ set rs = nothing
 <script src="/dist/js/app.min.js"></script>
 <script>
 $(function () {
+  $(".select2").select2();   
 //Date range picker
 $('#reservation1').daterangepicker();
 $('#reservation2').daterangepicker();
@@ -675,6 +679,13 @@ $('#reservation10').daterangepicker();
 
 </script>
 
-
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();   
+  });
+</script>
 </body>
 </html>

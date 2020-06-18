@@ -149,33 +149,32 @@ if request("action") = "submit" then
 	
 	response.Redirect("sltReportShow.asp?pjtId="&pjtId&"&platformId="&platformId&"")
 end if 
+		
+
+
+
+pjtId = request("pjtId")
+platformId = request("platformId")
+
+set rs = server.createobject("adodb.recordset")
+set rs2 = server.createobject("adodb.recordset")
+rs.open "select * from tbl_project where pjtId="&pjtId&" order by pjtId desc",conn,3,3
+pjtName = rs("pjtName")
+
+rs2.open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" order by platformId desc",conn,3,3
+pjtRedmine = rs2("platformRedmine")
+platformName = rs2("platformName")
+rs2.close
+rs.close
+set rs2 = nothing
+set rs = nothing
+
+set rs1 = server.createobject("adodb.recordset")
+rs1.open "select * from tbl_platform where platformId="&platformId&" order by platformId desc",conn,3,3
+platformName = rs1("platformName")
+platformRedmine = rs1("platformRedmine")
+rs1.close
 %>
-
-  
-
-		
-		<% pjtId = request("pjtId")
-		platformId = request("platformId")
-
-		set rs = server.createobject("adodb.recordset")
-		set rs2 = server.createobject("adodb.recordset")
-		rs.open "select * from tbl_project where pjtId="&pjtId&" order by pjtId desc",conn,3,3
-		pjtName = rs("pjtName")
-
-		rs2.open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" order by platformId desc",conn,3,3
-		pjtRedmine = rs2("platformRedmine")
-		platformName = rs2("platformName")
-		rs2.close
-		rs.close
-		set rs2 = nothing
-		set rs = nothing
-		
-		set rs1 = server.createobject("adodb.recordset")
-		rs1.open "select * from tbl_platform where platformId="&platformId&" order by platformId desc",conn,3,3
-		platformName = rs1("platformName")
-		platformRedmine = rs1("platformRedmine")
-		rs1.close
-		%>
 
    
 <div class="content-wrapper">
@@ -185,33 +184,45 @@ end if
 	</div>
 	
 	<div class="card">	
+		<form  action="sltReportCreateSubmit.html" method="post"  name="addForm" onSubmit="return CheckPost()" >		
+
+	
 		<div class="row">
 			<div class="col-md-12">
 				<div class="nav-tabs-custom">
+														 
+					<div class="row">					
+						<div class="col-md-8" align="left"><h3 class="box-title"><%=pjtName%><%=platformName%> 测试报告</h3>
+						</div>				
 					
-						<div class="row" align="center">
-							<h3> <%=pjtName%> - <%=platformName%></h3>
-						 </div>
-					
-						<div class="row">
-						   <div class="col-md-9"></div>
-						   <div class="col-md-2">				 
-							  <% set rs66 = server.createobject("adodb.recordset")
-								rs66.open "select * from tbl_report where rptAuthor='"&session("userName")&"' and rptStatus='done' order by rptId desc ",conn,3,3 %>
-								<select name="caseErrorType(<%=varcount%>)" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
-								<option value="0"  selected="selected">< 请导入报告模板 ></option>
-								<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >无</option>
-								<% do while not rs66.eof%>
-									<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-<%=rs66("rptId")%>.html" ><%=rs66("rptNo")%></option>
-									<%rs66.movenext
-								loop
-								rs66.close
-								set rs66 = nothing %>
-								</select>										
-							</div>
+						<div class="col-md-2" align="center">	 
+							<% set rs66 = server.createobject("adodb.recordset")
+							rs66.open "select * from tbl_report where rptAuthor='"&session("userName")&"' and rptStatus='done' order by rptId desc ",conn,3,3 %>
+							<select name="caseErrorType(<%=varcount%>)" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
+							<option value="0"  selected="selected">可导入的报告模板</option>
+							<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >无</option>
+							<% do while not rs66.eof%>
+							<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-<%=rs66("rptId")%>.html" ><%=rs66("rptNo")%></option>
+							<%rs66.movenext
+							loop
+							rs66.close
+							set rs66 = nothing %>
+							</select>									
 						</div>
+							
+							
+					
+					<div class="col-md-2" align="right">
+					<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button>	
+					<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
+					</div>	
+					</div>
+					
+					<hr>
+					
+			
 
-					<form  action="sltReportCreateSubmit.html" method="post"  name="addForm" onSubmit="return CheckPost()" >		
+					
 
 					<h3 class="box-title">测试概要</h3>
 					
@@ -222,91 +233,97 @@ end if
 						<div class="row">  		
 							<div class="col-md-4">
 								<div class="form-group">
-								<label>模板名称</label>
+								<h4 class="box-title"> 模板名称</h4>
 								<%if request("rptId")<>0 then%>
-									<input type="text" name="rptNo" class="form-control" maxlength="20"  placeholder="Enter ..." value="<%=rs8("rptNo")%>">
+									<textarea type="text" name="rptNo" class="form-control" rows="5" maxlength="20"  placeholder="请输入 ..." value="<%=rs8("rptNo")%>"></textarea>
 								<%else%>
-									<input type="text" name="rptNo" class="form-control" maxlength="20"  placeholder="Enter ..." value="<%=pjtName%><%=platformName%>">
+									<textarea type="text" name="rptNo" class="form-control" rows="5" maxlength="20"  placeholder="请输入 ..." value="<%=pjtName%><%=platformName%>"></textarea>
 								<%end if%>	
 								</div>	
 							</div>			
 							<div class="col-md-4">      
 								<div class="form-group">
-								<label>交付周期</label>
+								
+								<h4 class="box-title"> 交付周期</h4>
 								<%if request("rptId")<>0 then%>
-									<textarea  name="rptPeriod" class="form-control" rows="3" placeholder="Enter ..." ><%=rs8("rptPeriod")%></textarea>
+									<textarea  name="rptPeriod" class="form-control" rows="5" placeholder="请输入 ..." ><%=rs8("rptPeriod")%></textarea>
 								<%else%>
-									<textarea  name="rptPeriod" class="form-control" rows="3" placeholder="开始 - 结束日期"></textarea>
+									<textarea  name="rptPeriod" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 								<%end if%>
 								
 								</div>				
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>参与人员</label>
+								
+									<h4 class="box-title"> 参与人员</h4>
 									<%if request("rptId")<>0 then%>
-										<textarea  name="rptMember" class="form-control" rows="3" placeholder="Enter ..."><%=rs8("rptMember")%></textarea>
+										<textarea  name="rptMember" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptMember")%></textarea>
 									<%else%>
-										<textarea  name="rptMember" class="form-control" rows="3" placeholder="所有参与人员名单"></textarea>
+										<textarea  name="rptMember" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 									<%end if%>
 									
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-								<label>环境说明</label>
+				
+									<h4 class="box-title"> 环境说明</h4>
 									<%if request("rptId")<>0 then%>
-										<textarea  name="rptBasis" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptBasis")%></textarea>
+										<textarea  name="rptBasis" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptBasis")%></textarea>
 									<%else%>
-										<textarea  name="rptBasis" class="form-control" rows="6" placeholder="如：测试环境地址、jenkins、生产环境等。"></textarea>
+										<textarea  name="rptBasis" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 									<%end if%>
 							
 								</div>
 							</div>									          						
 							<div class="col-md-4">
 								<div class="form-group">
-								  <label>相关平台</label>
+								
+									<h4 class="box-title"> 相关平台</h4>
 								  	<%if request("rptId")<>0 then%>
-										<textarea  name="rptTerminal" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptTerminal")%></textarea>
+										<textarea  name="rptTerminal" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptTerminal")%></textarea>
 									<%else%>
-										<textarea  name="rptTerminal" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+										<textarea  name="rptTerminal" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 									<%end if%>
 							
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-								  <label>风险</label>
+							
+								  	<h4 class="box-title"> 风险</h4>
 								   	<%if request("rptId")<>0 then%>
-										<textarea  name="rptRisk" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptRisk")%></textarea>
+										<textarea  name="rptRisk" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptRisk")%></textarea>
 									<%else%>
-										<textarea  name="rptRisk" class="form-control" rows="6" placeholder="已知问题及潜在风险"></textarea>
+										<textarea  name="rptRisk" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 									<%end if%>
 					
 								</div>
 							</div>
 							
-							<div class="col-md-4"></div>
 							
+							
+							<div class="col-md-4"></div>
+						
 							<div class="col-md-2">							
-								<label>测试环境结果</label><br>
+								 	<h4 class="box-title"> 测试环境结果</h4><br>
 								 <div class="animated-radio-button">					   															
-									<label><input type="radio" name="rptTestResult" value="pass" ><span class="label-text"><i class="fa fa-check"></i>通过</span></label>&nbsp;&nbsp;，	
-									<label><input type="radio" name="rptTestResult" value="failed" checked><span class="label-text"><i class="fa fa-close"></i>不通过</span></label>															
+									<label><input type="radio" name="rptTestResult" value="pass" ><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;	
+									<label><input type="radio" name="rptTestResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>															
 							
 								</div>
 							</div>
 								
 							<div class="col-md-6">					
-								<label>生产环境结果</label><br>
+								<h4 class="box-title"> 生产环境结果</h4><br>
 								<div class="animated-radio-button">
 							
-									<label><input type="radio" name="rptOnlineResult" value="pass"><span class="label-text"><i class="fa fa-check"></i>通过</span></label>&nbsp;&nbsp;，	
-									<label><input type="radio" name="rptOnlineResult" value="failed" checked><span class="label-text"><i class="fa fa-close"></i>不通过</span></label>									
+									<label><input type="radio" name="rptOnlineResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;	
+									<label><input type="radio" name="rptOnlineResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>									
 							
 								</div>
-							</div>	
-					
+							</div>						
 																						
 						</div>
   
@@ -314,46 +331,50 @@ end if
 	
 						<h3 class="box-title">1、引言</h3>
 					 
-						<div class="col-md-6">
+						<div class="col-md-3">
 							<div class="form-group">
-							<label>1.1 目的</label>
+						
+							 	<h4 class="box-title"> 1.1 目的</h4>
 							   	<%if request("rptId")<>0 then%>
-									<textarea  name="rptGoal" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptGoal")%></textarea>
+									<textarea  name="rptGoal" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptGoal")%></textarea>
 								<%else%>
-									<textarea  name="rptGoal" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+									<textarea  name="rptGoal" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 								<%end if%>
 							
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-3">
 							<div class="form-group">
-							<label>1.2 背景</label>
+					
+								<h4 class="box-title"> 1.2 背景</h4>
 							   	<%if request("rptId")<>0 then%>
-									<textarea  name="rptScene" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptScene")%></textarea>
+									<textarea  name="rptScene" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptScene")%></textarea>
 								<%else%>
-									<textarea  name="rptScene" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+									<textarea  name="rptScene" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 								<%end if%>
 						
 							</div>
 						</div>
-						<div class="col-md-6">				
+						<div class="col-md-3">				
 							<div class="form-group">
-							<label>1.3 软件环境</label>
+
+								<h4 class="box-title"> 1.3 软件环境</h4>
 							  	<%if request("rptId")<>0 then%>
-									<textarea  name="rptSoft" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptSoft")%></textarea>
+									<textarea  name="rptSoft" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptSoft")%></textarea>
 								<%else%>
-									<textarea  name="rptSoft" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+									<textarea  name="rptSoft" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 								<%end if%>
 						
 							</div>
 						</div>
-						<div class="col-md-6">		
+						<div class="col-md-3">		
 							<div class="form-group">
-							<label>1.4 硬件资源</label>
+						
+								<h4 class="box-title"> 1.4 硬件资源</h4>
 								<%if request("rptId")<>0 then%>
-									<textarea  name="rptHard" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptHard")%></textarea>
+									<textarea  name="rptHard" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptHard")%></textarea>
 								<%else%>
-									<textarea  name="rptHard" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+									<textarea  name="rptHard" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 								<%end if%>
 						
 						</div>
@@ -364,9 +385,9 @@ end if
 					<label>1.5 测试进度</label>
 					<table class="table table-bordered">
 					<tr>               
-					<th style="width: 15%">测试类目</th>
-					<th style="width: 20%">开始 - 结束日期</th>				
-					<th style="width: 65%">备注</th>
+					<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试类目</h4></th>
+					<th style="width: 30%" bgcolor="#f1f1f1"><h4 class="box-title"> 开始结束日期</h4></th>				
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 备注</h4></th>
 					</tr>
 					
 					<tr>
@@ -395,9 +416,9 @@ end if
 					<td>
 					<div class="form-group">	
 						<%if request("rptId")<>0 then%>
-							<textarea  name="rptStoryMemo" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptStoryMemo")%></textarea>
+							<textarea  name="rptStoryMemo" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptStoryMemo")%></textarea>
 						<%else%>
-							<textarea  name="rptStoryMemo" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+							<textarea  name="rptStoryMemo" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 						<%end if%>					 
 				
 					</div>
@@ -424,9 +445,9 @@ end if
 					<td>
 					<div class="form-group">
 						<%if request("rptId")<>0 then%>
-							<textarea  name="rptDesignMemo" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptDesignMemo")%></textarea>
+							<textarea  name="rptDesignMemo" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptDesignMemo")%></textarea>
 						<%else%>
-							<textarea  name="rptDesignMemo" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+							<textarea  name="rptDesignMemo" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 						<%end if%>		
 				
 					</div>
@@ -458,9 +479,9 @@ end if
 					<td>
 					<div class="form-group">
 						<%if request("rptId")<>0 then%>
-							<textarea  name="rptExcMemo" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptExcMemo")%></textarea>
+							<textarea  name="rptExcMemo" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptExcMemo")%></textarea>
 						<%else%>
-							<textarea  name="rptExcMemo" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+							<textarea  name="rptExcMemo" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 						<%end if%>		
 					
 					</div>
@@ -492,9 +513,9 @@ end if
 					<td>
 					<div class="form-group"> 
 						<%if request("rptId")<>0 then%>
-							<textarea  name="rptBugMemo" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptBugMemo")%></textarea>
+							<textarea  name="rptBugMemo" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptBugMemo")%></textarea>
 						<%else%>
-							<textarea  name="rptBugMemo" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+							<textarea  name="rptBugMemo" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 						<%end if%>	
 				
 					</div>
@@ -505,22 +526,22 @@ end if
 			
 			<div class="col-md-6">
 				<div class="form-group">
-				<label>1.6 定义</label>
+				<div class="box-header"><h4 class="box-title"> 1.6 定义</h3></div>
 				<%if request("rptId")<>0 then%>
-					<textarea  name="rptCaption" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptCaption")%></textarea>
+					<textarea  name="rptCaption" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptCaption")%></textarea>
 				<%else%>
-					<textarea  name="rptCaption" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+					<textarea  name="rptCaption" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 				<%end if%>	
 			
 				</div>
 			</div>
 			<div class="col-md-6">			
 				<div class="form-group">
-				<label>1.7 参考资料</label>
+				<div class="box-header"><h4 class="box-title"> 1.7 参考资料</h3></div>
 				<%if request("rptId")<>0 then%>
-					<textarea  name="rptRef" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptRef")%></textarea>
+					<textarea  name="rptRef" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptRef")%></textarea>
 				<%else%>
-					<textarea  name="rptRef" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+					<textarea  name="rptRef" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 				<%end if%>	
 			
 				</div>
@@ -539,12 +560,12 @@ end if
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
 				<tr>
-				<th>用例ID</th>
-				<th>标签</th>
-				<th>用例标题</th>
-				<th>测试对象</th>
-				<th>测试阶段</th>
-				<th>测试结果</th>
+					<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例编号</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 标签</h4></th>
+				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 标题</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试对象</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试阶段</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试结果</h4></th>
 				</tr>
 				</thead>
 				<tbody>	  
@@ -591,13 +612,13 @@ end if
 					</td>
 				    <td>
 					<% if rs2("caseResult") ="error" then
-					response.write "<font color=red>error</font>"
+					response.write "<font color=red>未通过</font>"
 					elseif rs2("caseResult") = "ok" then
-					response.write "<font color=blue>ok</font>"
+					response.write "<font color=green>通过</font>"
 					elseif rs2("caseStatus") = "3" then
-					response.write "<font color=blue>hang-up</font>"
+					response.write "<font color=black>搁置</font>"
 					elseif rs2("caseStatus") = "2" then
-					response.write "<font color=red>pause</font>"
+					response.write "<font color=blue>暂停</font>"
 					end if %>
 					</td>
 					</tr>
@@ -627,13 +648,13 @@ end if
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
 				<tr>
-				<th>版本</th>
-				<th>标签</th>
-				<th>用例总数</th>
-				<th>已通过数(s)</th>
-				<th>未通过数</th>
-				<th>未测试数(搁置）</th>
-				<th>用例执行覆盖率</th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 版本</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 标签</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例总数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 已通过数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未通过数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未测试数(搁置/暂停）</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例执行覆盖率</h4></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -663,10 +684,10 @@ end if
 								if rs6("caseResult") = "error" then
 								   varErrorSum3 = varErrorSum3 + 1
 								end if 
-								if isnull(rs6("caseResult")) then
+								if rs6("caseResult")="empty" and rs6("caseStatus") = "1" then
 								   varEmptySum3 = varEmptySum3 + 1
 								end if 
-									if rs6("caseStatus") = "3" then
+									if rs6("caseStatus") = "3" or rs6("caseStatus") = "2" then
 								   varEmptySum3 = varEmptySum3 + 1
 								end if 
 							rs6.movenext
@@ -709,33 +730,33 @@ end if
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th>系统平台</th>
-					<th>Bug数 （<a href="<%=platformRedmine%>" target="_blank"> buglist</i></a>）</th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">系统平台</h4></th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">Bug数</h4></th>
 					</tr>
 					</thead>
 					<tbody>
 					<tr>
 					<td>iOS</td>
 					<td><div class="form-group">
-					<input type="text" name="rptIbug" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptIbug" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>android</td>
 					<td><div class="form-group">
-					<input type="text" name="rptAbug" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptAbug" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>数据库/接口类</td>
 					<td><div class="form-group">
-					<input type="text" name="rptSbug" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptSbug" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>web php C/S</td>
 					<td><div class="form-group">
-					<input type="text" name="rptPbug" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptPbug" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					</tbody>
@@ -756,33 +777,33 @@ end if
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th>严重程度</th>
-					<th>Bug数 （<a href="<%=platformRedmine%>" target="_blank"> buglist</i></a>）</th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">严重程度</h4></th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">Bug数</h4></th>
 					</tr>
 					</thead>
 					<tbody>
 					<tr>
 					<td>紧急</td>
 					<td><div class="form-group">
-					<input type="text" name="rptJdegree" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptJdegree" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>高</td>
 					<td><div class="form-group">
-					<input type="text" name="rptGdegree" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptGdegree" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>普通</td>
 					<td><div class="form-group">
-					<input type="text" name="rptPdegree" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptPdegree" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>低</td>
 					<td><div class="form-group">
-					<input type="text" name="rptDdegree" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptDdegree" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					</tbody>
@@ -803,33 +824,33 @@ end if
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th>缺陷状态</th>
-					<th>Bug数 （<a href="<%=platformRedmine%>" target="_blank"> buglist</i></a>）</th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">缺陷状态</h4></th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">Bug数</h4></th>
 					</tr>
 					</thead>
 					<tbody>
 					<tr>
 					<td>未处理(新建)</td>
 					<td><div class="form-group">
-					<input type="text" name="rptWstatus" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptWstatus" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>处理中</td>
 					<td><div class="form-group">
-					<input type="text" name="rptCstatus" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptCstatus" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>已解决</td>
 					<td><div class="form-group">
-					<input type="text" name="rptJstatus" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptJstatus" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>已反馈</td>
 					<td><div class="form-group">
-					<input type="text" name="rptFstatus" class="form-control" placeholder="数量">
+					<input type="text" maxlength="3" name="rptFstatus" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					</tbody>
@@ -840,7 +861,7 @@ end if
 				</div><!-- /.box -->
 			</div><!-- /.col -->
 		
-
+ 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=platformRedmine%>" target="_blank">请参考禅道</i></a>
 			
 			
 			<div class="col-md-12">	
@@ -861,7 +882,7 @@ end if
 			<% x = 0
 			do while not rs4.eof
 				x = x + 1%>
-				<td><input maxlength="3" type="text" name="errStory<%=x%>" class="form-control" ></td>			
+				<td><input maxlength="3" type="text" name="errStory<%=x%>" class="form-control" oninput="value=value.replace(/[^\d]/g,'')"></td>			
 			<%rs4.movenext
 			loop
 			rs4.close%>
@@ -872,22 +893,23 @@ end if
 			
 			<div class="col-md-4">
 				<div class="form-group">
-					<label>3.5 遗留/反馈</label>
+					<h4 class="box-title"> 3.5 遗留问题</h4>
 						<%if request("rptId")<>0 then%>
-							<textarea  name="rptFeedback" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptFeedback")%></textarea>
+							<textarea  name="rptFeedback" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptFeedback")%></textarea>
 						<%else%>
-							<textarea  name="rptFeedback" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+							<textarea  name="rptFeedback" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 						<%end if%>	
 				
 				</div>
 			</div>
 			<div class="col-md-4">			
 				<div class="form-group">
-					<label>3.6 测试交付物</label>
+					
+					<h4 class="box-title"> 3.6 建议</h4>
 						<%if request("rptId")<>0 then%>
-							<textarea  name="rptDelivery" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptDelivery")%></textarea>
+							<textarea  name="rptDelivery" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptAdvice")%></textarea>
 						<%else%>
-							<textarea  name="rptDelivery" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+							<textarea  name="rptDelivery" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 						<%end if%>	
 			
 
@@ -896,11 +918,11 @@ end if
 
 			<div class="col-md-4">					
 				<div class="form-group">
-					<label>3.7 建议</label>
+					<h4 class="box-title"> 3.7 测试交付物</h4>
 						<%if request("rptId")<>0 then%>
-							<textarea  name="rptAdvice" class="form-control" rows="6" placeholder="Enter ..."><%=rs8("rptAdvice")%></textarea>
+							<textarea  name="rptAdvice" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptDelivery")%></textarea>
 						<%else%>
-							<textarea  name="rptAdvice" class="form-control" rows="6" placeholder="Enter ..."></textarea>
+							<textarea  name="rptAdvice" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 						<%end if%>	
 				
 				</div>
@@ -911,47 +933,43 @@ end if
 			<h3 class="box-title">4、测试结论</h3>			
 				<div class="col-md-12">
 					<div class="form-group">				
-					<label>测试结论</label>
+				
 						<%if request("rptId")<>0 then%>
-							<textarea  name="rptConclusion" class="form-control" rows="12" placeholder="Enter ..."><%=rs8("rptConclusion")%></textarea>
+							<textarea  name="rptConclusion" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptConclusion")%></textarea>
 						<%else%>
-							<textarea  name="rptConclusion" class="form-control" rows="12" placeholder="Enter ..."></textarea>
+							<textarea  name="rptConclusion" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
 						<%end if%>	
 				
 					</div>				
 				</div>  <!-- /.col -->
  
-
-			<input name="pjtId" type="hidden" value="<%=pjtId%>" />	
-			<input name="platformId" type="hidden" value="<%=platformId%>" />
-			<input name="rptCreatedDate" type="hidden" value="<%=now%>" />     
-		
+		<div class="row">
 			<div class="col-md-12">			
 				<hr>  
-				<div align="center"><button type="submit" class="btn btn-primary" style="margin-right: 5px;"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交 测试报告</button></div>
+				<div align="center"><button type="submit" class="btn btn-primary" style="margin-right: 5px;"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button></div>
 				<br>
 			</div>
-
-
-
-	</form>
+</div></div>
+</div>
+</div>
+			<input name="pjtId" type="hidden" value="<%=pjtId%>" />	
+			<input name="platformId" type="hidden" value="<%=platformId%>" />
+			<input name="rptCreatedDate" type="hidden" value="<%=now%>" />    
+			
+		</form>
 	
-	
-</div>
-</div>
+			<div class="row">
+				<div class="col-md-12" align="right">					
+					<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
+					<a id='DD'></a>		
+				</div>
+			</div>
 </div>
 </div>
 
 
-	<!-- 两个top按钮 -->
-	<div class="row">
-	<div class="col-md-2">
-	<a href="#top"><button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-arrow-circle-up"></i> 顶部</button></a>
-	</div>
-	<div class="col-md-10" align="right">
-	<a href="#top"><button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-arrow-circle-up"></i> 顶部</button></a>
-	</div>
-	</div>
+
+
 
 
 
