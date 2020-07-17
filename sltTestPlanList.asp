@@ -1,6 +1,7 @@
 <!--#include file="frame.asp"-->
 
-<title><%=cstPlanList%> | <%=cstCompany%></title>
+
+
 
 <% 
 set rs5 = server.createobject("adodb.recordset")
@@ -31,7 +32,7 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 
 %>
 
-
+<title><%=pjtName%><%=platformName%>≤‚ ‘º∆ªÆ_<%=session("userName")%>_<%=year(now)%><%=month(now)%><%=day(now)%></title>
 			
 <div class="content-wrapper">
 	<div class="page-title">

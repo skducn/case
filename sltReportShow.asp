@@ -8,8 +8,12 @@ rs.Open "select * from tbl_project where pjtid="&pjtId&" order by pjtId DESC",co
 set rs1 = server.CreateObject("ADODB.RecordSet")
 rs1.Open "select * from tbl_platform where platformId="&platformId&" order by platformId DESC",conn,3,3
 platformNameTitle = replace(rs1("platformName"),".","")
+pjtName = rs("pjtName")
 %>
-<title><%=rs("pjtName")%><%=platformNameTitle%>测试报告<%=date()%></title>
+
+
+
+<title><%=pjtName%><%=platformName%>测试报告_<%=session("userName")%>_<%=year(now)%><%=month(now)%><%=day(now)%></title>
 <%
 rs1.close
 rs.close
