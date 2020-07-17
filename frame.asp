@@ -30,7 +30,14 @@
           <!-- Navbar Right Menu-->
           <div class="navbar-custom-menu">
             <ul class="top-nav">
-
+				
+				<li class="app-search">																	
+					<!-- search -->           				
+					<form method="POST"  action="sltSearchSearch.html" >
+						<input name="searchName" class="form-search " type="text" placeholder=" 搜一搜"  size="30" maxlength="30">						
+						<button class="app-search__button"><i class="fa fa-search"></i></button>	
+					</form>	  
+				</li>
            
               <!-- User Menu-->
               <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></a>
@@ -63,10 +70,6 @@
           </div>
 		  <%rs.close%>
 	
-		<!-- search -->           				
-	<form method="POST"  action="sltSearchSearch.html" >
-		<input name="searchName" class="form-control form-control-dark w-100" type="text" placeholder="搜索用例" aria-label="Search">		
-	</form>	  
 	
 
 		  
@@ -78,7 +81,7 @@
 			<li class="treeview"><a href="#"><i class="fa fa-edit text-danger">&nbsp;&nbsp;&nbsp;&nbsp;<%=cstNewCase%></i><i class="fa fa-angle-right text-danger"></i></a>
 				<ul class="treeview-menu">
 					<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-					rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtId DESC",conn,3,3 
+					rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
 					if rs1.eof then
 						response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>无项目</i>"
 					else
@@ -121,7 +124,7 @@
 				<li class="treeview"><a href="#"><i class="fa fa-edit text-primary">&nbsp;&nbsp;&nbsp;&nbsp;<%=cstExcCase%></i><i class="fa fa-angle-right text-primary"></i></a>
 				<ul class="treeview-menu">
 					<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-					rs1.Open "select * from tbl_project where pjtStatus='1'  order by pjtId DESC",conn,3,3 
+					rs1.Open "select * from tbl_project where pjtStatus='1'  order by pjtName",conn,3,3 
 					if rs1.eof then
 						response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-green'>无项目</i>"
 					else
@@ -181,7 +184,7 @@
 			<li class="treeview"><a href="#"><i class="fa fa-edit text-warning">&nbsp;&nbsp;&nbsp;&nbsp;<%=cstChangeCase%></i><i class="fa fa-angle-right text-warning"></i></a>
 				<ul class="treeview-menu">
 					<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-					rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtId DESC",conn,3,3 
+					rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
 					if rs1.eof then
 						response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-yellow'>无项目</i>"
 					else
@@ -240,7 +243,7 @@
 						<li class="treeview"><a href="#"><i class="fa fa-edit"></i><span><%=cstNewPlan%></span><i class="fa fa-angle-right"></i></a>
 						<ul class="treeview-menu">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' and pjtIsPlan='off' order by pjtId DESC",conn,3,3 
+						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' and pjtIsPlan='off' order by pjtName ",conn,3,3 
 						if rs1.eof then
 							response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>请新建项目及版本</i>"
 						else
@@ -285,7 +288,7 @@
 						<ul class="treeview-menu">	
 						
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' order by pjtId DESC",conn,3,3 
+						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' order by pjtName",conn,3,3 
 						if not rs1.eof then
 							do while not rs1.eof %>	<!-- 遍历项目 -->																																				
 						
@@ -333,12 +336,9 @@
 						<li class="treeview"><a href="#"><i class="fa fa-list"></i><span><%=cstPlanList%> </span><i class="fa fa-angle-right"></i></a>
 								<ul class="treeview-menu">	
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' order by pjtId DESC",conn,3,3 
+						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' order by pjtName",conn,3,3 
 						if not rs1.eof then
-							do while not rs1.eof %>	<!-- 遍历项目 -->
-																																																		
-															
-							
+							do while not rs1.eof %>	<!-- 遍历项目 -->																																	
 								<li class="treeview"><a href="#"><span><%=rs1("pjtName")%></span><i class="fa fa-angle-right"></i></a>
 								<ul class="treeview-menu">	
 									<%Set rs3 = Server.CreateObject("Adodb.Recordset")
@@ -387,7 +387,7 @@
 			<li class="treeview"><a href="#"><i class="fa fa-book"></i><span> <%=cstReport%> </span><i class="fa fa-angle-right"></i></a>
 					<ul class="treeview-menu text-purpl">	
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtId DESC",conn,3,3 											
+						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 											
 						if rs1.eof then
 							response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color='white'>无项目</font>"
 						else
@@ -542,7 +542,7 @@
 					<ul class="treeview-menu">
 
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtId DESC",conn,3,3 
+						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
 						if rs1.eof then
 							response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-aqua'>无项目</i>"
 						else

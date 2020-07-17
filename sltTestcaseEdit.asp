@@ -152,7 +152,7 @@ set rs2 = nothing
 						
 							<div class="row">
 								<div class="col-md-6" align="left">
-									<h3 class="box-title"><% response.write pjtName + platformName %></h3>						
+									<h3 class="box-title"><% response.write pjtName + " - " + platformName %></h3>						
 								</div>				
 								<div class="col-md-6" align="right">								
 									<button type="submit" class="btn btn-warning " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;Ã·Ωª</button>	

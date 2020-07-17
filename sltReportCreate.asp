@@ -192,15 +192,14 @@ rs1.close
 				<div class="nav-tabs-custom">
 														 
 					<div class="row">					
-						<div class="col-md-8" align="left"><h3 class="box-title"><%=pjtName%><%=platformName%> 测试报告</h3>
-						</div>				
-					
+						<div class="col-md-8" align="left"><h3 class="box-title"><%=pjtName%> - <%=platformName%> 测试报告</h3>
+						</div>									
 						<div class="col-md-2" align="center">	 
 							<% set rs66 = server.createobject("adodb.recordset")
-							rs66.open "select * from tbl_report where rptAuthor='"&session("userName")&"' and rptStatus='done' order by rptId desc ",conn,3,3 %>
+							rs66.open "select * from tbl_report where rptAuthor='"&session("userName")&"' and rpt_pjtId="&request("pjtId")&" order by rptId desc ",conn,3,3 %>
 							<select name="caseErrorType(<%=varcount%>)" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
-							<option value="0"  selected="selected">可导入的报告模板</option>
-							<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >无</option>
+							
+							<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >请选择导入模板</option>
 							<% do while not rs66.eof%>
 							<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-<%=rs66("rptId")%>.html" ><%=rs66("rptNo")%></option>
 							<%rs66.movenext

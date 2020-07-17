@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title>后台-新建版本 | <%=cstCompany%></title>
+<title><%=admVerNew%> | <%=admCompany%></title>
 
 
 <!--  非法输入pjtId，则退出系统 -->
@@ -115,10 +115,9 @@ if request("action") = "submit" then
 
 	response.Write("<script>;alert('版本新建成功，请新建标签！');window.location.href='admLabelAdd-"&pjtId&"-"&platformId&".html';</script>")		
 
-
-
 end if 
 %>
+
 
 <form role="form" action="admPlatformAddSubmit.html" method="post" name="addForm" onSubmit="return CheckPost()" >	
 
@@ -126,8 +125,8 @@ end if
 	<div class="row page-tilte align-items-center">
 		<div class="col-md-auto">
 			<a href="#" class="mt-3 d-md-none float-right toggle-controls"><span class="material-icons">keyboard_arrow_down</span></a>
-			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">filter_1</span>版本管理</h1>
-			<p class="text-muted m-0 desc">Version management</p>
+			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">filter_1</span> <%=admVerPanel%> - <%=admVerNew%></h1>
+			<p class="text-muted m-0 desc">Version Panel</p>
 		</div> 
 		<div class="col controls-wrapper mt-3 mt-md-0 d-none d-md-block ">
 			<div class="controls d-flex justify-content-center justify-content-md-end"></div>
@@ -136,9 +135,9 @@ end if
 
 	<div class="content">
 		<div class="row">
-			<div class="col-lg-6 ">
+			<div class="col-lg-12">
 				<div class="card mb-4">
-					<div class="card-header"><b>新建版本</b></div>
+		
 					<div class="card-body">	
 						<div class="row">									
 							<div class="col-md-6">

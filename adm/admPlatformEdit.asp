@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title>后台-编辑版本 | <%=cstCompany%></title>
+<title><%=admVerEdit%> | <%=admCompany%></title>
 
 <!--  非法输入pjtId，则退出系统 -->
 
@@ -128,8 +128,8 @@ rs.Open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&
 	<div class="row page-tilte align-items-center">
 		<div class="col-md-auto">
 			<a href="#" class="mt-3 d-md-none float-right toggle-controls"><span class="material-icons">keyboard_arrow_down</span></a>
-			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">filter_1</span>版本管理</h1>
-			<p class="text-muted m-0 desc">Version management</p>
+			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">filter_1</span> <%=admVerPanel%> - <%=admVerEdit%></h1>
+			<p class="text-muted m-0 desc">Version Panel</p>
 		</div> 
 		<div class="col controls-wrapper mt-3 mt-md-0 d-none d-md-block ">
 			<div class="controls d-flex justify-content-center justify-content-md-end"></div>
@@ -138,9 +138,8 @@ rs.Open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&
 
 	<div class="content">
 		<div class="row">
-			<div class="col-lg-6 ">
+			<div class="col-lg-12">
 				<div class="card mb-4">
-					<div class="card-header"><b>编辑版本</b></div>
 					<div class="card-body">	
 						<div class="row">	
 						
@@ -165,7 +164,8 @@ rs.Open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&
 									set rs11 = server.CreateObject("ADODB.RecordSet")
 									rs11.Open "select * from tbl_label where lbl_pjtId="&pjtId&" and lbl_platformId="&platformId&" order by lblId",conn,3,3
 									if rs11.recordcount = 1 and rs11("lblName")="业务场景" then %>
-										&nbsp;&nbsp;<a href="admPlatformEditDel-<%=pjtId%>-<%=platformId%>.html" onClick="return confirm('是否删除 <%=rs("platformName")%> 版本号？')" >删除</a>	
+										<!--&nbsp;&nbsp;<a href="admPlatformEditDel-<%=pjtId%>-<%=platformId%>.html" onClick="return confirm('是否删除 <%=rs("platformName")%> 版本号？')" >删除</a>	-->
+										
 								<%end if %>		
 								<input type="text" name="platformName"  class="form-control" value="<%=rs("platformName")%>" >
 								</div>
@@ -223,7 +223,7 @@ rs.Open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&
 								 <input name="pjtId" type="hidden" value="<%=pjtId%>" />	
 								 <input name="platformId" type="hidden" value="<%=platformId%>" /> 
 								<div align="center"><button type="submit" class="btn btn-primary"  href="#">保存</button></div>
-								<br>
+								
 							</div>												
 						</div><!-- /.row -->					
 					</div>

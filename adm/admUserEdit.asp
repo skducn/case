@@ -1,6 +1,9 @@
 <!--#include file="admFrame.asp"-->
 <!--#include file="../md5.asp"-->
-<title><%=cstCompany%> | 编辑用户</title>
+
+<title><%=admUserEdit%> | <%=admCompany%></title>
+
+
 <%userId = request("userId")%>
 
 <!--  获取所有用户的昵称 -->
@@ -95,14 +98,14 @@ end if
 	<div class="row page-tilte align-items-center">
 		<div class="col-md-auto">
 			<a href="#" class="mt-3 d-md-none float-right toggle-controls"><span class="material-icons">keyboard_arrow_down</span></a>
-			<h1 class="weight-300 h3 title">用户管理</h1>
-			<p class="text-muted m-0 desc">User management</p>
+			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">perm_identity</span><%=admUserPanel%> - <%=admUserEdit%></h1>
+			<p class="text-muted m-0 desc">User Panel</p>
 		</div> 
 	</div> 
 
 	<div class="content">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<div class="card mb-4">
 					<div class="card-header">编辑用户</div>
 					<div class="card-body">																

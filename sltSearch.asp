@@ -1,6 +1,7 @@
 <!--#include file="frame.asp"-->
 
 <title>ËÑË÷ÓÃÀý | <%=cstCompany%> </title>
+
 <link href="bootstrap/css/custom.css" rel="stylesheet">
 
 <% if request("action") = "save" then
@@ -246,21 +247,13 @@ end if %>
 </div>
 </div>
 </div>
-
-
-
-
-
 </div>
 
 
 
 <!-- ./wrapper -->
 <script src="bootstrap/js/jquery.js"></script>  
-<!-- jQuery 2.1.4 -->
-<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <!-- Bootstrap 3.3.5 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>

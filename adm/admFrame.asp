@@ -19,8 +19,6 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	
-
-    
 	<script src="../ueditor/ueditor.config.js"></script>
 	<script src="../ueditor/ueditor.all.min.js"></script>	
 	<script src="../ueditor/lang/zh-cn/zh-cn.js"></script> 
@@ -51,13 +49,13 @@
 <section>
 <aside class="sidebar">
 	<nav class="navbar navbar-dark bg-primary">
-	<a class="navbar-brand m-0 py-2 brand-title" href="admMain.html">case 后台</a>
+	<a class="navbar-brand m-0 py-2 brand-title" href="admMain.html"><%=admCompany%></a>
 	<a class="navbar-brand py-2 material-icons toggle-sidebar" href="#">menu</a>
 	</nav>
 	<nav class="navigation" >
 		<ul>
-			<li class="active"><a href="admMain.html" title="Dashboard"><span class="nav-icon material-icons">dashboard</span> 项目清单</a></li>
-			<li title="Theme Settings"><a href="theme-setting.html"><span class="nav-icon material-icons ">color_lens</span>主题背景</a></li>				  				                 
+			<li class="active"><a href="admMain.html" title="Dashboard"><span class="nav-icon material-icons">dashboard</span><%=admDashboard%></a></li>
+			<li title="Theme Settings"><a href="theme-setting.html"><span class="nav-icon material-icons ">color_lens</span><%=admTheme%></a></li>				  				                 
 		</ul>
 
 
@@ -65,7 +63,7 @@
 		
 		<ul class="sub-nav">		
 			<li >
-				<a href="#" title=""><span class="nav-icon material-icons ">message</span>消息管理 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+				<a href="#" title="Message"><span class="nav-icon material-icons ">message</span><%=admMessagePanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">	
 					<li><a href="admTaskAdd.html"><span class="nav-icon material-icons">add</span>新增消息</a></li>
 					<li class="Form Stuff">
@@ -97,14 +95,14 @@
 		
 		<ul class="sub-nav">		
 			<li >
-				<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span>项目管理 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+				<a href="#" title="Project"><span class="nav-icon material-icons ">table_chart</span><%=admProjectPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">	
 					<li><a href="admProjectAdd.html"><span class="nav-icon material-icons">add</span>新建项目</a></li>
 					<li class="Form Stuff">
 						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑项目 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">			
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-							rs1.Open "select * from tbl_project order by pjtId DESC",conn,3,3 
+							rs1.Open "select * from tbl_project order by pjtName",conn,3,3 
 							if rs1.eof then
 								%><a href="admProjectAdd.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>请新建项目</i></a><%
 							else
@@ -129,7 +127,7 @@
 						<a href="#" title=""><span class="nav-icon material-icons ">list</span>项目列表 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">	
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-							rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtId DESC",conn,3,3 
+							rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
 							if rs1.eof then
 								%><a href="admProjectAdd.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>请新建项目</i></a><%
 							else
@@ -153,15 +151,15 @@
 		<!-- 版本管理 -->
 		
 		<ul class="sub-nav">		
-			<li >
-				<a href="#" title=""><span class="nav-icon material-icons ">filter_1</span>版本管理 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+			<li>
+				<a href="#" title="Version"><span class="nav-icon material-icons ">filter_1</span><%=admVerPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">	
 					<!-- 新建版本 -->
 					<li class="Form Stuff">
 						<a href="#" title=""><span class="nav-icon material-icons ">add</span>新建版本 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">	
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-							rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtId DESC",conn,3,3 
+							rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
 							if rs1.eof then
 								%><a href="admProjectAdd.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>请新建项目</i></a><%
 							else
@@ -183,7 +181,7 @@
 						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑版本 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">	
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-							rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtId DESC",conn,3,3 
+							rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
 							if rs1.eof then
 								%><a href="admProjectAdd.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>请新建项目</i></a><%
 							else
@@ -230,15 +228,15 @@
 		<!-- 标签管理 -->
 		
 		<ul class="sub-nav">		
-			<li >
-				<a href="#" title=""><span class="nav-icon material-icons ">notes</span>标签管理 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+			<li>
+				<a href="#" title="Label"><span class="nav-icon material-icons ">notes</span><%=admLabelPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">	
 					<!-- 新建标签 -->
 					<li class="Form Stuff">
 						<a href="#" title=""><span class="nav-icon material-icons ">add</span>新建标签 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtId DESC",conn,3,3 
+						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
 						if rs1.eof then
 							%><a href="admProjectAdd.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>请新建项目</i></a><%
 						else						
@@ -275,7 +273,7 @@
 						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑标签 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtId DESC",conn,3,3 
+						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
 						if rs1.eof then
 							%><a href="admProjectAdd.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>请新建项目</i></a><%
 						else
@@ -333,15 +331,15 @@
 		<!-- 计划管理 -->
 		
 		<ul class="sub-nav">		
-			<li >
-				<a href="#" title=""><span class="nav-icon material-icons ">date_range</span>计划管理 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+			<li>
+				<a href="#" title="Plan"><span class="nav-icon material-icons ">date_range</span><%=admPlanPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">	
 					<!-- 新建标签 -->
 					<li class="Form Stuff">
 						<a href="#" title=""><span class="nav-icon material-icons ">add</span>新建计划 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 				<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-				rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' and pjtIsPlan='off'  order by pjtId DESC",conn,3,3 
+				rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' and pjtIsPlan='off'  order by pjtName",conn,3,3 
 				if rs1.eof then
 					%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>请新建项目及版本</i><%
 				else
@@ -381,7 +379,7 @@
 						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑计划 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 				<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-				rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' order by pjtId DESC",conn,3,3 
+				rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' order by pjtName",conn,3,3 
 				if not rs1.eof then
 					
 					do while not rs1.eof %>	<!-- 遍历项目 -->																																				
@@ -429,7 +427,7 @@
 					<a href="#" title=""><span class="nav-icon material-icons ">list</span>计划列表 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 					<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on'  order by pjtId DESC",conn,3,3 
+						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on'  order by pjtName",conn,3,3 
 						if not rs1.eof then
 					
 					do while not rs1.eof %>	<!-- 遍历项目 -->																																				
@@ -474,10 +472,10 @@
 		<!-- 计划管理 over-->
 		
 		
-		<!-- 测试报告管理 -->
+		<!-- 报告管理 -->
 		<ul class="sub-nav">		
-			<li >
-				<a href="#" title=""><span class="nav-icon material-icons ">book</span>报告管理 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+			<li>
+				<a href="#" title="Report"><span class="nav-icon material-icons ">book</span><%=admReportPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">	
 					<li class="Form Stuff">
 						<a href="#" title=""><span class="nav-icon material-icons ">bookmarks</span>审核报告 
@@ -493,7 +491,7 @@
 				
 					<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsReport='on' order by pjtId DESC",conn,3,3 
+						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsReport='on' order by pjtName",conn,3,3 
 						if rs1.eof then
 							%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-red'>请新建项目及版本</i><%
 						else
@@ -505,11 +503,9 @@
 								rs5.Open "select * from tbl_report where rptStatus='undone' and rpt_pjtId="&rs1("pjtId")&" order by rptId DESC",conn,3,3 
 								noAudit = rs5.recordcount 
 								rs5.close 
-								if noAudit > 0 then%>
+								%>
 									<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
-								<%else%>
-									<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
-								<%end if %>
+							
 							
 								<!-- 平台名 -->
 								<ul class="sub-nav">	
@@ -554,15 +550,15 @@
 		
 		<!-- 用户管理 -->
 		
-		<li >
-			<a href="#" title=""><span class="nav-icon material-icons ">perm_identity</span>用户管理 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+		<li>
+			<a href="#" title="User"><span class="nav-icon material-icons ">perm_identity</span><%=admUserPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 			<ul class="sub-nav">	
 				<li><a href="admUserAdd.html"><span class="nav-icon material-icons">add</span>新增用户</a></li>
 				<li class="Form Stuff">
 					<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑用户 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 					<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_user order by userId DESC",conn,3,3 
+						rs1.Open "select * from tbl_user order by userName",conn,3,3 
 						if rs1.eof then
 							response.write "无用户"
 						else

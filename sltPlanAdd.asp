@@ -1,6 +1,6 @@
 <!--#include file="frame.asp"-->
 
-<title>新建计划 | <%=cstCompany%></title>
+<title><%=cstNewPlan%> | <%=cstCompany%></title>
 
 <script language="javascript">     
 function CheckPost()
@@ -126,23 +126,22 @@ set rs = nothing
 			<form role="form" action="sltPlanAddSubmit.html" method="post" name="addForm" onSubmit="return CheckPost()" >																
 	<div class="row">
 		<div class="col-md-8" align="left">
-			<h3> <%=pjtName%> <%=platformName%></h3>
+			<h3> <%=pjtName%> - <%=platformName%></h3>
 		</div>
 		
 		<!--  导入计划模板 -->			
 		<div class="col-md-2"  align="center">				
 			 <% set rs66 = server.createobject("adodb.recordset")
-			rs66.open "select * from tbl_plan where planAuthor='"&session("userName")&"' order by planId desc ",conn,3,3 %>
+			rs66.open "select * from tbl_plan where planAuthor='"&session("userName")&"' and plan_pjtId="&pjtId&" order by planId desc ",conn,3,3 %>
 			<select name="testplan" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
-			<option value="0"  selected="selected">请选择计划模板</option>
-			<option value="sltPlanAdd-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >无</option>				
+			<option value="sltPlanAdd-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >请选择导入模板</option>				
 			<% do while not rs66.eof
 				  set rs67 = server.createobject("adodb.recordset")
 				  rs67.open "select * from tbl_project where pjtId="&rs66("plan_pjtId")&"  order by pjtId desc ",conn,3,3 
 				  set rs68 = server.createobject("adodb.recordset")
 				  rs68.open "select * from tbl_platform where plat_pjtId="&rs66("plan_pjtId")&" and platformId="&rs66("plan_platformId")&" order by platformId desc ",conn,3,3 
 				  if rs67("pjtStatus") = "1" then %>
-				<option value="sltPlanAdd-<%=request("pjtId")%>-<%=request("platformId")%>-<%=rs66("planId")%>.html" ><%=rs67("pjtName")%>-<%=rs68("platformName")%> </option>	
+					<option value="sltPlanAdd-<%=request("pjtId")%>-<%=request("platformId")%>-<%=rs66("planId")%>.html"><%=rs67("pjtName")%>-<%=rs68("platformName")%> </option>	
 				<% end if 
 				rs68.close
 				rs67.close

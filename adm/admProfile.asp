@@ -8,7 +8,7 @@
 
 <%=bMain%>
 
-<title><%=cstCompany%> | 个人账号</title>        
+<title><%=admProfile%> | <%=admCompany%></title>   
 
 
 <!--  获取所有用户的昵称 -->
@@ -137,7 +137,7 @@ end if
 	<div class="row page-tilte align-items-center">
 	  <div class="col-md-auto">
 		<a href="#" class="mt-3 d-md-none float-right toggle-controls"><span class="material-icons">keyboard_arrow_down</span></a>
-		<h1 class="weight-300 h3 title">个人账号</h1>
+		<h1 class="weight-300 h3 title"><%=admProfile%></h1>
 		<p class="text-muted m-0 desc">Tell about your self here</p>
 	  </div> 
 	  <div class="col controls-wrapper mt-3 mt-md-0 d-none d-md-block ">

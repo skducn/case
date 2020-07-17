@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
-<title>后台-项目列表 | <%=cstCompany%></title>
 
+<title><%=admProjectList%> | <%=admCompany%></title>
 
 <!--  非法输入pjtId，则退出系统 -->
 
@@ -20,8 +20,8 @@ end if
 	<div class="row page-tilte align-items-center">
 		<div class="col-md-auto">
 			<a href="#" class="mt-3 d-md-none float-right toggle-controls"><span class="material-icons">keyboard_arrow_down</span></a>
-			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">table_chart</span>项目管理</h1>
-			<p class="text-muted m-0 desc">Project management</p>
+			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">table_chart</span> <%=admProjectPanel%> - <%=admProjectList%></h1>
+			<p class="text-muted m-0 desc">Project Panel</p>
 		</div> 
 		<div class="col controls-wrapper mt-3 mt-md-0 d-none d-md-block ">
 			<div class="controls d-flex justify-content-center justify-content-md-end"></div>
@@ -30,9 +30,9 @@ end if
 
 	<div class="content">
 		<div class="row">
-			<div class="col-lg-6 ">
+			<div class="col-lg-12">
 				<div class="card mb-4">
-					<div class="card-header"><b>项目列表</b></div>
+			
 					<div class="card-body">	
 						<div class="row">						
 							<div class="col-md-6">
@@ -44,7 +44,7 @@ end if
 							
 							<div class="col-md-6">
 								<div class="form-group">					
-									<label>默认测试对象</label>
+									<label>测试对象</label>
 									<div class="checkbox">
 									<%if Instr(rs("pjtObject"), "web")>0 then%>
 										<label><input type="checkbox" name="checkbox1" checked="checked"><i class="fa fa-windows"></i> B/S（web平台）</label>

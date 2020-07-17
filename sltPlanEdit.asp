@@ -1,6 +1,6 @@
 <!--#include file="frame.asp"-->
 
-<title>±à¼­¼Æ»® | <%=cstCompany%></title>
+<title><%=cstEditPlan%> | <%=cstCompany%></title>
 
 <script language="javascript">  
 function CheckPost()
@@ -426,13 +426,8 @@ x = rs3.recordcount
 <script src="731/dist/js/jquery-2.1.4.min.js"></script>
 <script src="731/dist/js/bootstrap.min.js"></script>
 <script src="731/dist/js/plugins/pace.min.js"></script>
-
-
 <script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
 <script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
-
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 <script src="/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- AdminLTE App -->

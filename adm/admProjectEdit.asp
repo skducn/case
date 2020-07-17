@@ -1,5 +1,7 @@
 <!--#include file="admFrame.asp"-->
-<title>后台-编辑项目 | <%=cstCompany%></title>
+
+
+<title><%=admProjectEdit%> | <%=admCompany%></title>
 
 
 <!--  非法输入pjtId，则退出系统 -->
@@ -121,6 +123,8 @@ set rs = server.CreateObject("ADODB.RecordSet")
 rs.Open "select * from tbl_project where pjtId="&pjtId&"",conn,3,3
 %>
 
+
+
 <form role="form" action="admProjectEditSave.html" method="post" name="addForm" onSubmit="return CheckPost()" >	
 
 
@@ -128,8 +132,8 @@ rs.Open "select * from tbl_project where pjtId="&pjtId&"",conn,3,3
 	<div class="row page-tilte align-items-center">
 		<div class="col-md-auto">
 			<a href="#" class="mt-3 d-md-none float-right toggle-controls"><span class="material-icons">keyboard_arrow_down</span></a>
-			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">table_chart</span>项目管理</h1>
-			<p class="text-muted m-0 desc">Project management</p>
+			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">table_chart</span> <%=admProjectPanel%> - <%=admProjectEdit%></h1>
+			<p class="text-muted m-0 desc">Project Panel</p>
 		</div> 
 		<div class="col controls-wrapper mt-3 mt-md-0 d-none d-md-block ">
 			<div class="controls d-flex justify-content-center justify-content-md-end"></div>
@@ -138,9 +142,8 @@ rs.Open "select * from tbl_project where pjtId="&pjtId&"",conn,3,3
 
 	<div class="content">
 		<div class="row">
-			<div class="col-lg-6 ">
+			<div class="col-lg-12">
 				<div class="card mb-4">
-					<div class="card-header"><b>编辑项目</b></div>
 					<div class="card-body">	
 						<div class="row">	
 							<div class="col-md-6">
