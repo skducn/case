@@ -81,7 +81,7 @@ do while not rs7.eof
 					<div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
 						<div class="media align-items-center">
 							<%if var1 <> 100 then%>
-								<span class="material-icons text-danger mr-4 circle p-3 border border-danger bg-danger-light25">subject</span>									  
+								<span class="material-icons text-red mr-4 circle p-3 border border-red bg-red-light25">apps</span>									  
 							<%else		
 								set rs19 = server.createobject("adodb.recordset")
 								rs19.open "select * from tbl_report where rpt_pjtId="&rs("pjtId")&" and rpt_platformId="&rs1("platformId")&" order by rptId desc",conn,3,3 
@@ -89,9 +89,11 @@ do while not rs7.eof
 									<span class="material-icons text-warning mr-4 circle p-3 border border-warning bg-warning-light25">subject</span>	<%								
 								else
 									if rs19("rptStatus") = "undone" then %>
-										<span class="material-icons text-warning mr-4 circle p-3 border border-warning bg-warning-light35">edit</span>								
+										<span class="material-icons text-primary mr-4 circle p-3 border border-primary bg-primary-light35">edit</span>	
+									<%elseif rs19("rptStatus") = "reject" then %>						
+										<span class="material-icons text-danger mr-4 circle p-3 border border-danger bg-danger-light25">close</span>																	
 									<%else%>
-										<span class="material-icons text-info mr-4 circle p-3 border border-info bg-info-light25">book</span>							
+										<span class="material-icons text-black mr-4 circle p-3 border border-dark bg-dark-light25">done</span>							
 									<%end if 
 								end if %>
 							<%end if %>
@@ -113,7 +115,7 @@ do while not rs7.eof
 			response.write "完成日期：<br>" 
 		%>
 		
-		<a href="admExcTestcaseTa-<%=rs("pjtId")%>-<%=rs1("platformId")%>-<%=rs70("lblId")%>-1-<%=rs7("userName")%>.html" class="text-black"><span class="nav-icon material-icons ">edit</span> 执行用例 </a> 
+<i>进行中 ...</i>
 		<%end if %>
 		<%elseif rs79.recordcount > 0 then%>
 		<% if var1 <> 100 then
@@ -154,11 +156,11 @@ do while not rs7.eof
 						%><span class="nav-icon material-icons ">report_off</span>测试报告(未创建)<%																	
 					else
 						if rs9("rptStatus") = "undone" then 			
-							%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-yellow"><span class="nav-icon material-icons ">edit</span> 测试报告(待审核)</a><%																	
+							%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-yellow">测试报告(待审核)</a><%																	
 						elseif rs9("rptStatus") = "reject" then 			
-							%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-red"><font color="red"><span class="nav-icon material-icons ">edit</span> 测试报告(已拒绝)</font></a><%																	
+							%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-red"><font color="red">测试报告(已拒绝)</font></a><%																	
 						else
-							%><a href="../sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" target="_blank"><font color="black"><span class="nav-icon material-icons ">done</span> 测试报告(已完成)</font></a><%	
+							%><a href="../sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" target="_blank"><font color="black">测试报告(已完成)</font></a><%	
 						end if 
 				end if 
 			end if 
@@ -194,6 +196,7 @@ do while not rs7.eof
 					
 					
 					<div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					
 									
 <!-- 按项目，显示项目清单（规则：当100%时可点击创建测试报告） -->	
 <%set rs47 = server.createobject("adodb.recordset")
@@ -233,18 +236,20 @@ do while not rs47.eof
 					<div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
 						<div class="media align-items-center">
 							<%if var1 <> 100 then%>
-								<span class="material-icons text-danger mr-4 circle p-3 border border-danger bg-danger-light25">subject</span>									  
+								<span class="material-icons text-red mr-4 circle p-3 border border-red bg-red-light25">apps</span>								  
 							<%else
 								set rs19 = server.createobject("adodb.recordset")
 								rs19.open "select * from tbl_report where rpt_pjtId="&rs("pjtId")&" and rpt_platformId="&rs1("platformId")&" order by rptId desc",conn,3,3 
 								if rs19.eof then
-									%><span class="material-icons text-warning mr-4 circle p-3 border border-warning bg-warning-light25">subject</span>	<%
+									%><span class="material-icons text-primary mr-4 circle p-3 border border-primary bg-primary-light25">subject</span>	<%
 								
 								else
 									if rs19("rptStatus") = "undone" then %>
-										<span class="material-icons text-warning mr-4 circle p-3 border border-warning bg-warning-light35">edit</span>								
+										<span class="material-icons text-primary mr-4 circle p-3 border border-primary bg-primary-light35">edit</span>		
+									<%elseif rs19("rptStatus") = "reject" then %>						
+										<span class="material-icons text-danger mr-4 circle p-3 border border-danger bg-danger-light25">close</span>																	
 									<%else%>
-										<span class="material-icons text-info mr-4 circle p-3 border border-info bg-info-light25">book</span>							
+										<span class="material-icons text-black mr-4 circle p-3 border border-dark bg-dark-light25">done</span>							
 									<%end if 
 								end if %>								
 							<%end if %>
@@ -264,7 +269,7 @@ do while not rs47.eof
 				response.write "编辑日期：<br>"		
 				response.write "完成日期：<br>" 
 				%>
-			<a href="admExcTestcaseTa-<%=rs("pjtId")%>-<%=rs1("platformId")%>-<%=rs70("lblId")%>-1-<%=rs7("userName")%>.html" class="text-black"><span class="nav-icon material-icons ">edit</span> 执行用例 </a> 
+<i>进行中 ...</i>
 			<%	
 				end if 
 		elseif rs79.recordcount > 0 then
@@ -310,9 +315,9 @@ do while not rs47.eof
 				if rs9("rptStatus") = "undone" then 			
 					%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-yellow"> 测试报告(待审核)</a><%																	
 				elseif rs9("rptStatus") = "reject" then 			
-					%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-red"><font color="red"><span class="nav-icon material-icons ">edit</span> 测试报告(已拒绝)</font></a><%																	
+					%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-red"><font color="red">测试报告(已拒绝)</font></a><%																	
 				else
-				%><a href="../sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" target="_blank"><font color="black"><span class="nav-icon material-icons ">done</span> 测试报告(已完成)</font></a><%	
+				%><a href="../sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" target="_blank"><font color="black"><b>测试报告(已完成)</b></font></a><%	
 				end if 
 			end if 
 		

@@ -75,18 +75,15 @@ if request("action") = "submit" then
 		rs("rpt_pjtId") = pjtId
 		rs("rpt_platformId") = platformId
 		rs("rptStatus") = "undone"
-		rs("rptTestResult") = request("rptTestResult")
-		rs("rptOnlineResult") = request("rptOnlineResult")
+		
 		rs("rptNo") = request("rptNo")
-		rs("rptMember") = request("rptMember")
-		rs("rptPeriod") = request("rptPeriod")
-		rs("rptTerminal") = request("rptTerminal")
-		rs("rptBasis") = request("rptBasis")
-		rs("rptRisk") = request("rptRisk")
 		rs("rptGoal") = request("rptGoal")
+		rs("rptCaption") = request("rptCaption")
+		rs("rptRef") = request("rptRef")
+
+		rs("rptTestObject") = request("rptTestObject")
 		rs("rptScene") = request("rptScene")
-		rs("rptSoft")= request("rptSoft")
-		rs("rptHard")= request("rptHard")
+		rs("rptTestGoal") = request("rptTestGoal")
 		rs("rptStoryDate") = request("rptStoryDate")
 		rs("rptStoryMemo") = request("rptStoryMemo")
 		rs("rptDesignDate") = request("rptDesignDate")
@@ -95,15 +92,24 @@ if request("action") = "submit" then
 		rs("rptExcMemo") = request("rptExcMemo")
 		rs("rptBugDate") = request("rptBugDate")
 		rs("rptBugMemo") = request("rptBugMemo")
-		rs("rptCaption") = request("rptCaption")
-		rs("rptRef") = request("rptRef")
+				
+		rs("rptMember") = request("rptMember")
+		rs("rptBasis") = request("rptBasis")
+		rs("rptSoft")= request("rptSoft")
+		rs("rptHard")= request("rptHard")
+		rs("rptTerminal") = request("rptTerminal")
+		rs("rptTestWay") = request("rptTestWay")
+
 		rs("rptBugQty") = rptBugQty
 		rs("rptBugDegree") = rptBugDegree
 		rs("rptBugStatus") = rptBugStatus 
+		rs("rptTestResult") = request("rptTestResult")
+		rs("rptOnlineResult") = request("rptOnlineResult")
 		rs("rptFeedback") = request("rptFeedback")
-		rs("rptDelivery") = request("rptDelivery")
+		rs("rptRisk") = request("rptRisk")
+		rs("rptConclusion") = request("rptConclusion")		
 		rs("rptAdvice") = request("rptAdvice")
-		rs("rptConclusion") = request("rptConclusion")
+
 		rs("rptVedioPrefix") = request("rptVedioPrefix")	
 		currentPath = server.mappath(Request.ServerVariables("SCRIPT_NAME"))
         currentPath = split(currentPath,"sltReport")(0) + "mp4"
@@ -184,6 +190,7 @@ rs1.close
 	</div>
 	
 	<div class="card">	
+	
 		<form  action="sltReportCreateSubmit.html" method="post"  name="addForm" onSubmit="return CheckPost()" >		
 
 	
@@ -192,25 +199,11 @@ rs1.close
 				<div class="nav-tabs-custom">
 														 
 					<div class="row">					
-						<div class="col-md-8" align="left"><h3 class="box-title"><%=pjtName%> - <%=platformName%> 测试报告</h3>
+						<div class="col-md-10" align="left"><h3 class="box-title"><%=pjtName%> - <%=platformName%> 测试报告</h3>
 						</div>									
-						<div class="col-md-2" align="center">	 
-							<% set rs66 = server.createobject("adodb.recordset")
-							rs66.open "select * from tbl_report where rptAuthor='"&session("userName")&"' and rpt_pjtId="&request("pjtId")&" order by rptId desc ",conn,3,3 %>
-							<select name="caseErrorType(<%=varcount%>)" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
+						
 							
-							<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >请选择导入模板</option>
-							<% do while not rs66.eof%>
-							<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-<%=rs66("rptId")%>.html" ><%=rs66("rptNo")%></option>
-							<%rs66.movenext
-							loop
-							rs66.close
-							set rs66 = nothing %>
-							</select>									
-						</div>
-							
-							
-					
+			
 					<div class="col-md-2" align="right">
 					<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button>	
 					<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
@@ -218,170 +211,120 @@ rs1.close
 					</div>
 					
 					<hr>
+															
 					
+<% set rs8 = server.createobject("adodb.recordset")
+rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rptId desc ",conn,3,3 %>
+
+<div class="row">  
+	<div class="col-md-2">
+		<div class="form-group">
+			<h4 class="box-title">默认模板名</h4>
 			
-
-					
-
-					<h3 class="box-title">测试概要</h3>
-					
-					 <% set rs8 = server.createobject("adodb.recordset")
-						rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rptId desc ",conn,3,3 %>
-								
-					<div class="box-body">
-						<div class="row">  		
-							<div class="col-md-4">
-								<div class="form-group">
-								<h4 class="box-title"> 模板名称</h4>
-								<%if request("rptId")<>0 then%>
-									<textarea type="text" name="rptNo" class="form-control" rows="5" maxlength="20"  placeholder="请输入 ..." value="<%=rs8("rptNo")%>"></textarea>
-								<%else%>
-									<textarea type="text" name="rptNo" class="form-control" rows="5" maxlength="20"  placeholder="请输入 ..." value="<%=pjtName%><%=platformName%>"></textarea>
-								<%end if%>	
-								</div>	
-							</div>			
-							<div class="col-md-4">      
-								<div class="form-group">
-								
-								<h4 class="box-title"> 交付周期</h4>
-								<%if request("rptId")<>0 then%>
-									<textarea  name="rptPeriod" class="form-control" rows="5" placeholder="请输入 ..." ><%=rs8("rptPeriod")%></textarea>
-								<%else%>
-									<textarea  name="rptPeriod" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-								<%end if%>
-								
-								</div>				
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-								
-									<h4 class="box-title"> 参与人员</h4>
-									<%if request("rptId")<>0 then%>
-										<textarea  name="rptMember" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptMember")%></textarea>
-									<%else%>
-										<textarea  name="rptMember" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-									<%end if%>
-									
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-				
-									<h4 class="box-title"> 环境说明</h4>
-									<%if request("rptId")<>0 then%>
-										<textarea  name="rptBasis" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptBasis")%></textarea>
-									<%else%>
-										<textarea  name="rptBasis" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-									<%end if%>
-							
-								</div>
-							</div>									          						
-							<div class="col-md-4">
-								<div class="form-group">
-								
-									<h4 class="box-title"> 相关平台</h4>
-								  	<%if request("rptId")<>0 then%>
-										<textarea  name="rptTerminal" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptTerminal")%></textarea>
-									<%else%>
-										<textarea  name="rptTerminal" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-									<%end if%>
-							
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-							
-								  	<h4 class="box-title"> 风险</h4>
-								   	<%if request("rptId")<>0 then%>
-										<textarea  name="rptRisk" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptRisk")%></textarea>
-									<%else%>
-										<textarea  name="rptRisk" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-									<%end if%>
-					
-								</div>
-							</div>
-							
-							
-							
-							<div class="col-md-4"></div>
-						
-							<div class="col-md-2">							
-								 	<h4 class="box-title"> 测试环境结果</h4><br>
-								 <div class="animated-radio-button">					   															
-									<label><input type="radio" name="rptTestResult" value="pass" ><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;	
-									<label><input type="radio" name="rptTestResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>															
-							
-								</div>
-							</div>
-								
-							<div class="col-md-6">					
-								<h4 class="box-title"> 生产环境结果</h4><br>
-								<div class="animated-radio-button">
-							
-									<label><input type="radio" name="rptOnlineResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;	
-									<label><input type="radio" name="rptOnlineResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>									
-							
-								</div>
-							</div>						
-																						
-						</div>
-  
-         
+			<input type="text" name="rptNo" class="form-control" size="5" maxlength="20"  placeholder="请输入 ..." value="<%=pjtName%><%=platformName%>"></input>
+			
+		</div>	
+	</div>
 	
-						<h3 class="box-title">1、引言</h3>
-					 
-						<div class="col-md-3">
-							<div class="form-group">
-						
-							 	<h4 class="box-title"> 1.1 目的</h4>
-							   	<%if request("rptId")<>0 then%>
-									<textarea  name="rptGoal" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptGoal")%></textarea>
-								<%else%>
-									<textarea  name="rptGoal" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-								<%end if%>
-							
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-					
-								<h4 class="box-title"> 1.2 背景</h4>
-							   	<%if request("rptId")<>0 then%>
-									<textarea  name="rptScene" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptScene")%></textarea>
-								<%else%>
-									<textarea  name="rptScene" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-								<%end if%>
-						
-							</div>
-						</div>
-						<div class="col-md-3">				
-							<div class="form-group">
+	<div class="col-md-2">	 
+		<h4 class="box-title">导入模板</h4>
+		<% set rs66 = server.createobject("adodb.recordset")
+		rs66.open "select * from tbl_report where rptAuthor='"&session("userName")&"' and rpt_pjtId="&request("pjtId")&" order by rptId desc ",conn,3,3 %>		
+		<select name="caseErrorType(<%=varcount%>)" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
+		<% if request("rptId") = "0" then%>
+			<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >请选择 ...</option>
+		<%else%>
+			<% set rs266 = server.createobject("adodb.recordset")
+			rs266.open "select * from tbl_report where rptId="&request("rptId")&" order by rptId desc ",conn,3,3 %>		
+			<option value="" ><%=rs266("rptNo")%></option>
+			<%rs266.close%>
+		<%end if %>
+		<% do while not rs66.eof%>
+		<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-<%=rs66("rptId")%>.html" ><%=rs66("rptNo")%></option>
+		<%rs66.movenext
+		loop
+		rs66.close
+		set rs66 = nothing %>
+		</select>									
+	</div>
+</div>
 
-								<h4 class="box-title"> 1.3 软件环境</h4>
-							  	<%if request("rptId")<>0 then%>
-									<textarea  name="rptSoft" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptSoft")%></textarea>
-								<%else%>
-									<textarea  name="rptSoft" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-								<%end if%>
-						
-							</div>
-						</div>
-						<div class="col-md-3">		
-							<div class="form-group">
-						
-								<h4 class="box-title"> 1.4 硬件资源</h4>
-								<%if request("rptId")<>0 then%>
-									<textarea  name="rptHard" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptHard")%></textarea>
-								<%else%>
-									<textarea  name="rptHard" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-								<%end if%>
-						
-						</div>
-					</div>
-				
-				
-				<div class="form-group">
-					<label>1.5 测试进度</label>
+<h3 class="box-title">第1章 引言</h3>
+					
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 1.1 目的</h4><i>说明这份测试分析报告的具体编写目的及相关预期的读者范围。</i>
+				<%if request("rptId")<>0 then%>
+				<textarea  name="rptGoal" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptGoal")%></textarea>
+				<%else%>
+				<textarea  name="rptGoal" class="form-control" rows="5" placeholder="XXX软件项目的测试报告，目的在于总结测试阶段的测试情况以及分析测试结果，描述系统是否符合需求（或达到XXX功能目标）并对测试质量进行分析。作为测试质量参考文档提供给用户、测试人员、开发人员、项目管理者、其他质量管理人员和需要阅读本报告的高层经理阅读。请输入 ..."></textarea>
+				<%end if%>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 1.2 名词解释</h4>
+				<%if request("rptId")<>0 then%>
+				<textarea  name="rptCaption" class="form-control" rows="5" placeholder="缩写词或术语（中文/英文）。请输入 ..."><%=rs8("rptCaption")%></textarea>
+				<%else%>
+				<textarea  name="rptCaption" class="form-control" rows="5" placeholder="缩写词或术语（中文/英文）。请输入 ..."></textarea>
+				<%end if%>
+			</div>
+		</div>
+								
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 1.3 参考及引用资料 </h4>
+				<%if request("rptId")<>0 then%>
+				<textarea  name="rptRef" class="form-control" rows="5" placeholder="与之相关的文档和参考文献。请输入 ..."><%=rs8("rptRef")%></textarea>
+				<%else%>
+				<textarea  name="rptRef" class="form-control" rows="5" placeholder="与之相关的文档和参考文献。请输入 ..."></textarea>
+				<%end if%>
+			</div>
+		</div>
+		
+<h3 class="box-title">第2章 测试概述</h3>
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 2.1 测试对象</h4>
+				<%if request("rptId")<>0 then%>
+				<textarea  name="rptTestObject" class="form-control" rows="5" placeholder="简要说明测试的软件。请输入 ..."><%=rs8("rptTestObject")%></textarea>
+				<%else%>
+				<textarea  name="rptTestObject" class="form-control" rows="5" placeholder="简要说明测试的软件。请输入 ..."></textarea>
+				<%end if%>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 2.2 项目背景 </h4>
+				<%if request("rptId")<>0 then%>
+				<textarea  name="rptScene" class="form-control" rows="5" placeholder="简要说明及简史，参考需求、招标文件等。请输入 ..."><%=rs8("rptScene")%></textarea>
+				<%else%>
+				<textarea  name="rptScene" class="form-control" rows="5" placeholder="简要说明及简史，参考需求、招标文件等。请输入 ..."></textarea>
+				<%end if%>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 2.3 测试目的</h4>
+				<%if request("rptId")<>0 then%>
+				<textarea  name="rptTestGoal" class="form-control" rows="5" placeholder="简要说明软件的测试目的（要点、范围）。请输入 ..."><%=rs8("rptTestGoal")%></textarea>
+				<%else%>
+				<textarea  name="rptTestGoal" class="form-control" rows="5" placeholder="简要说明软件的测试目的（要点、范围）。请输入 ..."></textarea>
+				<%end if%>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 2.4 测试进度表</h4>
+					<div class="form-group">
+
 					<table class="table table-bordered">
 					<tr>               
 					<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试类目</h4></th>
@@ -522,36 +465,29 @@ rs1.close
 					</tr>
 					</table>
 				</div>
-			
-			<div class="col-md-6">
-				<div class="form-group">
-				<div class="box-header"><h4 class="box-title"> 1.6 定义</h3></div>
-				<%if request("rptId")<>0 then%>
-					<textarea  name="rptCaption" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptCaption")%></textarea>
-				<%else%>
-					<textarea  name="rptCaption" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-				<%end if%>	
-			
-				</div>
 			</div>
-			<div class="col-md-6">			
-				<div class="form-group">
-				<div class="box-header"><h4 class="box-title"> 1.7 参考资料</h3></div>
-				<%if request("rptId")<>0 then%>
-					<textarea  name="rptRef" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptRef")%></textarea>
-				<%else%>
-					<textarea  name="rptRef" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-				<%end if%>	
-			
-				</div>
-			</div>
-		</div> <!-- .col --> 	 
+		</div>
+		
 	
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 2.5 参与人员</h4>
+				<%if request("rptId")<>0 then%>
+					<textarea  name="rptMember" class="form-control" rows="5" placeholder="如项目经理、产品、设计、开发、测试、实施等。请输入 ..."><%=rs8("rptMember")%></textarea>
+				<%else%>
+					<textarea  name="rptMember" class="form-control" rows="5" placeholder="如项目经理、产品、设计、开发、测试、实施等。请输入 ..."></textarea>
+				<%end if%>
+			</div>
+		</div>
 
 
-			<h3 class="box-title">2、测试用例</h3>		
+<h3 class="box-title">第3章 测试概要</h3>
+
+
+			
 		
         	<div class="col-md-12">
+			<h4 class="box-title">3.1 测试用例</h3>	
 			<% set rs1 = server.createobject("adodb.recordset")
 			rs1.open "select * from tbl_platform where platformId="&platformId&"",conn,3,3 
 			do while not rs1.eof %>
@@ -559,12 +495,13 @@ rs1.close
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
 				<tr>
-					<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例编号</h4></th>
+					<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 编号</h4></th>
 				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 标签</h4></th>
-				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 标题</h4></th>
+				<th style="width: 40%" bgcolor="#f1f1f1"><h4 class="box-title"> 标题</h4></th>
 				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试对象</h4></th>
 				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试阶段</h4></th>
 				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试结果</h4></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">创建/执行者</h4></th>
 				</tr>
 				</thead>
 				<tbody>	  
@@ -620,6 +557,19 @@ rs1.close
 					response.write "<font color=blue>暂停</font>"
 					end if %>
 					</td>
+					<td>
+						<%set rs4 = server.createobject("adodb.recordset")
+						rs4.open "select * from tbl_user where userName='"&rs2("caseCreateUser")&"' order by userId ",conn,3,3 
+						response.write rs4("userNickname")
+						rs4.close%>
+/
+					<%if rs2("caseExcUser") <> "" then
+						set rs5 = server.createobject("adodb.recordset")
+						rs5.open "select * from tbl_user where userName='"&rs2("caseExcUser")&"' order by userId ",conn,3,3 
+						response.write rs5("userNickname")
+						rs5.close
+					end if%>
+					</td>
 					</tr>
 				<%rs2.movenext
 				loop
@@ -633,16 +583,67 @@ rs1.close
 			loop
 			rs1.close %> 
 			</div><!-- /.col -->
-	
 
 
-			<h3 class="box-title">3、测试分析</h3>
-	
-		
-   
-			<div class="col-md-12">
-				<div class="box-header">
-				<h3 class="box-title">3.1  测试覆盖率</h3>
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 3.2 测试环境</h4>
+					<%if request("rptId")<>0 then%>
+						<textarea  name="rptBasis" class="form-control" rows="5" placeholder="依据项目情况，可能还需要其他环境描述。请输入 ..."><%=rs8("rptBasis")%></textarea>
+					<%else%>
+						<textarea  name="rptBasis" class="form-control" rows="5" placeholder="依据项目情况，可能还需要其他环境描述。请输入 ..."></textarea>
+					<%end if%>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 3.3 软件/硬件说明</h4>
+					<%if request("rptId")<>0 then%>
+						<textarea  name="rptSoft" class="form-control" rows="5" placeholder="测试软件/其他工具。请输入 ..."><%=rs8("rptSoft")%></textarea>
+					<%else%>
+						<textarea  name="rptSoft" class="form-control" rows="5" placeholder="测试软件/其他工具。请输入 ..."></textarea>
+					<%end if%>
+					<br>
+					<%if request("rptId")<>0 then%>
+						<textarea  name="rptHard" class="form-control" rows="5" placeholder="服务器硬件。请输入 ..."><%=rs8("rptHard")%></textarea>
+					<%else%>
+						<textarea  name="rptHard" class="form-control" rows="5" placeholder="服务器硬件。请输入 ..."></textarea>
+					<%end if%>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 3.4 测试终端/设备</h4>
+				<%if request("rptId")<>0 then%>
+				<textarea  name="rptTerminal" class="form-control" rows="5" placeholder="测试硬件，如PC，ipad，扫描仪等。请输入 ..."><%=rs8("rptTerminal")%></textarea>
+				<%else%>
+				<textarea  name="rptTerminal" class="form-control" rows="5" placeholder="测试硬件，如PC，ipad，扫描仪等。请输入 ..."></textarea>
+				<%end if%>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 3.5 测试方法</h4>
+				<%if request("rptId")<>0 then%>
+				<textarea  name="rptTestWay" class="form-control" rows="5" placeholder="黑盒测试（等价类划分法、边界值分析法、错误推测法、因果图法、判定表驱动法、正交试验设计法、功能图法、场景法等），白盒测试（代码检査法、静态结构分析法、静态质量度量法、逻辑覆盖法、基本路径测试法、域测试、符号测试、路径覆盖和程序变异），静态测试（MT），动态测试（DT），人工测试（MT），自动化测试（AT）。请输入 ..."><%=rs8("rptTestWay")%></textarea>
+				<%else%>
+				<textarea  name="rptTestWay" class="form-control" rows="5" placeholder="黑盒测试（等价类划分法、边界值分析法、错误推测法、因果图法、判定表驱动法、正交试验设计法、功能图法、场景法等），白盒测试（代码检査法、静态结构分析法、静态质量度量法、逻辑覆盖法、基本路径测试法、域测试、符号测试、路径覆盖和程序变异），静态测试（MT），动态测试（DT），人工测试（MT），自动化测试（AT）。请输入 ..."></textarea>
+				<%end if%>
+			</div>
+		</div>
+
+
+
+<h3 class="box-title">第4章 测试结果分析</h3>
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 4.2 测试用例覆盖率</h4>
+				
 				</div>
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
@@ -653,7 +654,7 @@ rs1.close
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 已通过数</h4></th>
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未通过数</h4></th>
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未测试数(搁置/暂停）</h4></th>
-				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例执行覆盖率</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 通过覆盖率</h4></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -718,11 +719,16 @@ rs1.close
                 </tfoot>
                 </table>
 			</div><!-- /.col -->
-			
-			<div class="col-md-4">
+		
+
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 4.3 缺陷统计表（<a href="<%=platformRedmine%>" target="_blank">禅道</i></a>）</h4>
+				<div class="col-md-4">
           		<div class="box">
 					<div class="box-header">
-					<h3 class="box-title">3.2 缺陷平台统计</h3> 
+					<h4 class="box-title">4.3.1 缺陷平台</h4> 
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
@@ -769,7 +775,7 @@ rs1.close
 			<div class="col-md-4">
           		<div class="box">
 					<div class="box-header">
-					<h3 class="box-title">3.3 缺陷严重程度</h3>
+					<h4 class="box-title">4.3.2 缺陷严重程度</h4>
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
@@ -816,7 +822,7 @@ rs1.close
 			<div class="col-md-4">
           		<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">3.4 缺陷状态统计</h3>
+						<h4 class="box-title">4.3.3 缺陷状态</h4>
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
@@ -859,12 +865,14 @@ rs1.close
 					</div> <!-- /.box-body -->
 				</div><!-- /.box -->
 			</div><!-- /.col -->
-		
- 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=platformRedmine%>" target="_blank">请参考禅道</i></a>
-			
-			
-			<div class="col-md-12">	
-		<div class="box-header"><h3 class="box-title"> 需求缺陷统计</h3></div>
+			</div>
+		</div>
+
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 4.4 需求缺陷统计表</h4>
+				
 		<div class="box-body">
 			<table id="example2" class="table table-bordered table-hover"><thead><tr>
 			<%
@@ -888,59 +896,89 @@ rs1.close
 		
 			</tr></tbody></table>
 		</div>
-	</div>
-			
-			<div class="col-md-4">
-				<div class="form-group">
-					<h4 class="box-title"> 3.5 遗留问题</h4>
-						<%if request("rptId")<>0 then%>
-							<textarea  name="rptFeedback" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptFeedback")%></textarea>
-						<%else%>
-							<textarea  name="rptFeedback" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-						<%end if%>	
-				
-				</div>
 			</div>
-			<div class="col-md-4">			
-				<div class="form-group">
+		</div>
+
+
+<h3 class="box-title">第5章 测试总结与建议</h3>
+
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 5.1 软件质量</h4>
+				
+<div class="col-md-2">							
+<h4 class="box-title"> 测试环境结果</h4><br>
+<div class="animated-radio-button">					   															
+<label><input type="radio" name="rptTestResult" value="pass" ><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;	
+<label><input type="radio" name="rptTestResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>															
+</div>
+</div>
+<div class="col-md-6">					
+<h4 class="box-title"> 生产环境结果</h4><br>
+<div class="animated-radio-button">
+<label><input type="radio" name="rptOnlineResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;	
+<label><input type="radio" name="rptOnlineResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>									
+</div>
+</div>	
+			</div>
+		</div>
+		
+
+		<div class="col-md-12">
+			<div class="form-group">
+			<br>
+				<h4 class="box-title"> 5.2 遗留问题</h4>
+				<%if request("rptId")<>0 then%>
+					<textarea  name="rptFeedback" class="form-control" rows="5" placeholder="本次软件迭代未能处理及未解决的已知问题。请输入 ..."><%=rs8("rptFeedback")%></textarea>
+				<%else%>
+					<textarea  name="rptFeedback" class="form-control" rows="5" placeholder="本次软件迭代未能处理及未解决的已知问题。请输入 ..."></textarea>
+				<%end if%>	
+			</div>
+		</div>
+		
+		
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 5.3 软件风险</h4>
+				   	<%if request("rptId")<>0 then%>
+						<textarea  name="rptRisk" class="form-control" rows="5" placeholder="分析遗留问题（已知风险）及其他（未知风险，如网络，服务器断电，涉及第三方数据源等）。请输入 ..."><%=rs8("rptRisk")%></textarea>
+					<%else%>
+						<textarea  name="rptRisk" class="form-control" rows="5" placeholder="分析遗留问题（已知风险）及其他（未知风险，如网络，服务器断电，涉及第三方数据源等）。请输入 ..."></textarea>
+					<%end if%>
+			</div>
+		</div>
+		
+		
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 5.4 测试结论</h4><i>本次软件迭代的测试总结，应包含测试范围、缺陷范围、与测试计划是否相符、是否达到发布标准，是否可发布</i>
+				<%if request("rptId")<>0 then%>
+							<textarea  name="rptConclusion" class="form-control" rows="5" placeholder="如：经过两个阶段的多轮测试，虽遗留了一些缺陷没有解决，但系统功能已趋于稳定，且项目确定的范围、策略和测试计划均已实现，项目测试暂且结束， XXXX项目符合发布标准。请输入 ..."><%=rs8("rptConclusion")%></textarea>
+					<%else%>
+							<textarea  name="rptConclusion" class="form-control" rows="5" placeholder="如：经过两个阶段的多轮测试，虽遗留了一些缺陷没有解决，但系统功能已趋于稳定，且项目确定的范围、策略和测试计划均已实现，项目测试暂且结束， XXXX项目符合发布标准。请输入 ..."></textarea>
+					<%end if%>	
+			</div>
+		</div>
+
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<h4 class="box-title"> 5.5 测试建议</h4>
+					<%if request("rptId")<>0 then%>
+							<textarea  name="rptAdvice" class="form-control" rows="5" placeholder="对软件各缺陷的改进建议，如 项目管理、遗留缺陷、产品设计、变更控制、版本控制、环境接口、用户体验建议等。请输入 ..."><%=rs8("rptAdvice")%></textarea>
+						<%else%>
+							<textarea  name="rptAdvice" class="form-control" rows="5" placeholder="对软件各缺陷的改进建议，如 项目管理、遗留缺陷、产品设计、变更控制、版本控制、环境接口、用户体验建议等。请输入 ..."></textarea>
+						<%end if%>	
 					
-					<h4 class="box-title"> 3.6 建议</h4>
-						<%if request("rptId")<>0 then%>
-							<textarea  name="rptDelivery" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptAdvice")%></textarea>
-						<%else%>
-							<textarea  name="rptDelivery" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-						<%end if%>	
+			</div>						
+		</div>
+			
+		
+		</div> <!-- .col --> 	 
 			
 
-				</div>
-			</div>
-
-			<div class="col-md-4">					
-				<div class="form-group">
-					<h4 class="box-title"> 3.7 测试交付物</h4>
-						<%if request("rptId")<>0 then%>
-							<textarea  name="rptAdvice" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptDelivery")%></textarea>
-						<%else%>
-							<textarea  name="rptAdvice" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-						<%end if%>	
-				
-				</div>
-			</div><!-- /.col -->
-
-
- 
-			<h3 class="box-title">4、测试结论</h3>			
-				<div class="col-md-12">
-					<div class="form-group">				
-				
-						<%if request("rptId")<>0 then%>
-							<textarea  name="rptConclusion" class="form-control" rows="5" placeholder="请输入 ..."><%=rs8("rptConclusion")%></textarea>
-						<%else%>
-							<textarea  name="rptConclusion" class="form-control" rows="5" placeholder="请输入 ..."></textarea>
-						<%end if%>	
-				
-					</div>				
-				</div>  <!-- /.col -->
+		 <!-- /.col -->
  
 		<div class="row">
 			<div class="col-md-12">			
@@ -965,10 +1003,6 @@ rs1.close
 			</div>
 </div>
 </div>
-
-
-
-
 
 
 

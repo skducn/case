@@ -87,41 +87,40 @@ end if %>
 		<span class="progress-description">
 		<%
 		if var1 <> 100 then 
-		Set rs70 = Server.CreateObject("Adodb.Recordset")
-		Set rs78 = Server.CreateObject("Adodb.Recordset")
-		Set rs79 = Server.CreateObject("Adodb.Recordset")
-		rs70.Open "select * from tbl_label where lbl_pjtId="&rs("pjtId")&" and lbl_platformId="&rs1("platformId")&" order by lblId asc",conn,3,3 
-		rs78.Open "select * from tbl_case where case_pjtId="&rs("pjtId")&" and case_platformId="&rs1("platformId")&" and caseCreateUser='"&session("userName")&"' and caseStage=1 order by caseId asc",conn,3,3 
-		rs79.Open "select * from tbl_case where case_pjtId="&rs("pjtId")&" and case_platformId="&rs1("platformId")&" and caseCreateUser='"&session("userName")&"' and caseStage=2 order by caseId asc",conn,3,3 
-		if rs78.recordcount > 0 then %>
-		<a href="excTestcase-<%=rs("pjtId")%>-<%=rs1("platformId")%>-<%=rs70("lblId")%>-1.html" class="text-black"><i class="fa fa-edit"></i> 执行用例</a> 
-		<%elseif rs79.recordcount > 0 then%>
-		<a href="excTestcase-<%=rs("pjtId")%>-<%=rs1("platformId")%>-<%=rs70("lblId")%>-2.html" class="text-black"><i class="fa fa-edit"></i> 执行用例</a>												
-		<%else%>
-		<a href="excTestcase-<%=rs("pjtId")%>-<%=rs1("platformId")%>-<%=rs70("lblId")%>-3.html" class="text-black"><i class="fa fa-edit"></i> 执行用例</a>
-		<% end if 	 
+			Set rs70 = Server.CreateObject("Adodb.Recordset")
+			Set rs78 = Server.CreateObject("Adodb.Recordset")
+			Set rs79 = Server.CreateObject("Adodb.Recordset")
+			rs70.Open "select * from tbl_label where lbl_pjtId="&rs("pjtId")&" and lbl_platformId="&rs1("platformId")&" order by lblId asc",conn,3,3 
+			rs78.Open "select * from tbl_case where case_pjtId="&rs("pjtId")&" and case_platformId="&rs1("platformId")&" and caseCreateUser='"&session("userName")&"' and caseStage=1 order by caseId asc",conn,3,3 
+			rs79.Open "select * from tbl_case where case_pjtId="&rs("pjtId")&" and case_platformId="&rs1("platformId")&" and caseCreateUser='"&session("userName")&"' and caseStage=2 order by caseId asc",conn,3,3 
+			if rs78.recordcount > 0 then %>
+			<a href="excTestcase-<%=rs("pjtId")%>-<%=rs1("platformId")%>-<%=rs70("lblId")%>-1.html" class="text-black"><i class="fa fa-edit"></i> 执行用例</a> 
+			<%elseif rs79.recordcount > 0 then%>
+			<a href="excTestcase-<%=rs("pjtId")%>-<%=rs1("platformId")%>-<%=rs70("lblId")%>-2.html" class="text-black"><i class="fa fa-edit"></i> 执行用例</a>												
+			<%else%>
+			<a href="excTestcase-<%=rs("pjtId")%>-<%=rs1("platformId")%>-<%=rs70("lblId")%>-3.html" class="text-black"><i class="fa fa-edit"></i> 执行用例</a>
+			<% end if 	 
 		else
-		set rs03 = server.CreateObject("ADODB.RecordSet")
-		rs03.Open "select * from tbl_case where case_pjtId="&rs("pjtId")&" and case_platformId="&rs1("platformId")&" and caseResult='empty' and caseStatus='1' ",conn,3,3
-		if rs03.recordcount = 0 then
-		set rs13 = server.CreateObject("ADODB.RecordSet")
-		rs13.Open "select * from tbl_report where rpt_pjtId="&rs("pjtId")&" and rpt_platformId="&rs1("platformId")&"",conn,3,3
-		if rs13.recordcount = 0 then
-		%>									
-		<a href="sltReportCreate-<%=rs("pjtId")%>-<%=rs1("platformId")%>-0.html" class="text-black" ><i class="fa fa-edit"></i> 新建测试报告</a>
-		
-		<%
-		else
-		if rs13("rptStatus") = "undone" then														
-		%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="blue"><i class="fa fa-edit"></i> 测试报告 - 待审核</font></a><%
-		elseif rs13("rptStatus") = "reject" then	
-		%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="red"><i class="fa fa-edit"></i> 测试报告 - 已拒绝</font></a><%
-		else
-		%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><i class="fa fa-book"></i> 测试报告 - 已完成</a><%
-		end if 
-		end if
-		rs13.close
-		end if    
+			set rs03 = server.CreateObject("ADODB.RecordSet")
+			rs03.Open "select * from tbl_case where case_pjtId="&rs("pjtId")&" and case_platformId="&rs1("platformId")&" and caseResult='empty' and caseStatus='1' ",conn,3,3
+			if rs03.recordcount = 0 then
+				set rs13 = server.CreateObject("ADODB.RecordSet")
+				rs13.Open "select * from tbl_report where rpt_pjtId="&rs("pjtId")&" and rpt_platformId="&rs1("platformId")&"",conn,3,3
+				if rs13.recordcount = 0 then
+					%>									
+						<a href="sltReportCreate-<%=rs("pjtId")%>-<%=rs1("platformId")%>-0.html" class="text-black" ><i class="fa fa-edit"></i> 新建测试报告</a>		
+					<%
+				else
+					if rs13("rptStatus") = "undone" then														
+					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="blue"><i class="fa fa-edit"></i> 测试报告 - 待审核</font></a><%
+					elseif rs13("rptStatus") = "reject" then	
+					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="red"><i class="fa fa-edit"></i> 测试报告 - 已拒绝</font></a><%
+					else
+					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><i class="fa fa-book"></i> 测试报告 - 已完成</a><%
+					end if 
+				end if
+				rs13.close
+			end if    
 		end if %>
 		</span>
 		</div><!-- /.info-box-content -->
@@ -395,7 +394,7 @@ end if %>
 					%>
 					<tr>
 					<td><%=rs("rptId")%></td>
-					<td><a href="sltReportShow-<%=rs("rpt_pjtId")%>-<%=rs("rpt_platformId")%>.html" target="_blank"><%=rs1("pjtName")%></a></td>
+					<td><%=rs1("pjtName")%></td>
 					<td><a href="sltReportShow-<%=rs("rpt_pjtId")%>-<%=rs("rpt_platformId")%>.html" target="_blank"><%=rs2("platformName")%></a></td>
 					<td><%if rs("rptTestResult") = "pass" then %>
 					<i class="fa fa-check text-green"></i>&nbsp;通过
@@ -410,8 +409,14 @@ end if %>
 					</td>
 					<td><% if rs("rptStatus") = "done" then
 					response.write "已完成"
+					elseif rs("rptStatus") = "reject" then
+					response.write "<font color='red'>"
+					response.write "已拒绝"
+					response.write "</font>"
 					else
+					response.write "<font color='blue'>"
 					response.write "待审核"
+					response.write "</font>"
 					end if %></td>
 					<td><%=rs("rptCreatedDate")%></td>
 					</tr>
@@ -596,7 +601,7 @@ type: "success"
 } );</script>	
 <script type="text/javascript">$('#sampleTable6').DataTable({
 //跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
-"order": [[ 3, "desc" ]],
+"order": [[ 5, "desc" ]],
 "aLengthMenu": [[10, 20, 50], [10, 20, 50]],
 "oLanguage": {
 "sSearch": "搜索：",

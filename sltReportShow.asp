@@ -12,7 +12,6 @@ pjtName = rs("pjtName")
 %>
 
 
-
 <title><%=pjtName%><%=platformName%>测试报告_<%=session("userName")%>_<%=year(now)%><%=month(now)%><%=day(now)%></title>
 <%
 rs1.close
@@ -59,207 +58,92 @@ platformRedmine = rs1("platformRedmine")
 rs1.close
 
 set rs = server.createobject("adodb.recordset")
-rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" ",conn,3,3
+rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&"",conn,3,3
 if rs.eof then
 response.Redirect("index.html")
 end if 
 %>
 
 <div class="content-wrapper">
-	<div class="page-title">
-		<div><h1><i class="fa fa-edit"></i> 测试报告</h1><p>testReport</p></div>
-		<div><ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">测试报告</a></li></ul></div>
-	</div>	
-								
+	
+
+												
 	<div class="card">		
-		<div class="row">
-			<div class="col-md-6" align="left">
-				<h3 class="box-title"><% if rs("rptStatus") = "undone" then%>
-					<%=pjtName%> <%=platformName%> （待审核）
-					<% elseif rs("rptStatus") = "reject" then%>
-					<%=pjtName%> <%=platformName%> （已拒绝）
-					<% else %>
-					<%=pjtName%> <%=platformName%> (已完成)
-					<% end if %></h3>						
-			</div>				
-			<div class="col-md-6" align="right">
-				<% if rs("rptStatus") <> "done" then%>
-					<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="编辑"><i class='fa fa-edit'></i></a>	
-					
-				<%end if %>	
-				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
-			</div>							
-		</div>
-		
 		<div class="row">
 			<div class="col-md-12" align="left">
 			<% if rs("rptRejectReason") <> "" then%>		
-				反馈：<%=replace(rs("rptRejectReason"),chr(13),"<BR>")%>
+				<b>拒绝理由：</b><%=replace(rs("rptRejectReason"),chr(13),"<BR>")%>
 			<%end if %>
 			</div>
 		</div>
-	
-		<hr>
 		
 		<div class="row">
 			<div class="col-md-12">
-				<h3 class="box-title">概要</h3>
-				<div class="row">
-					<div class="col-md-12">							
-						<table id="example2" class="table table-bordered table-hover">
-						<thead>
-						<tr>
-						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 模板名称</h4></div></th>
-						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 交付周期</h4></div></th>
-						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 参与人员</h4></div></th>
-						</tr>
-						</thead>
-						<tbody>	  
-						<tr>
-						<td><%=replace(rs("rptNo"),chr(13),"<BR>")%></td>
-						<td><%=replace(rs("rptPeriod"),chr(13),"<BR>")%></td>
-						<td><%=replace(rs("rptMember"),chr(13),"<BR>")%></td>																
-						</tr>
-						</tbody>					
-						</table>
-					</div>	
+				<div align="center"><h1>
+				<% if rs("rptStatus") = "undone" and rs("rptAuthor")=session("userName") then%>
+				<%=pjtName%> <%=platformName%> 测试报告（待审核）
+				<% if rs("rptStatus") <> "done" then%>
+	<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="编辑"><i class='fa fa-edit'></i></a>						
+	<%end if %>	
+				<% elseif rs("rptStatus") = "reject" and rs("rptAuthor")=session("userName") then%>
+				<%=pjtName%> <%=platformName%> 测试报告（已拒绝）
+				<% if rs("rptStatus") <> "done" then%>
+	<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="编辑"><i class='fa fa-edit'></i></a>						
+	<%end if %>	
+				<% else %>
+				<%=pjtName%> <%=platformName%> 测试报告
+				<% if rs("rptStatus") = "done" and rs("rptAuthor")=session("userName") then%>
+	<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="编辑"><i class='fa fa-edit'></i></a>						
+	<%end if %>	
+				<% end if %></h1>	
+				</div>						
 					
-					<div class="col-md-12">							
-						<table id="example2" class="table table-bordered table-hover">
-						<thead>
-						<tr>
-						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 相关平台</h4></div></th>	
-						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 环境配置</h4></div></th>		
-						<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title"> 风险</h4></div></th>						
-						</tr>
-						</thead>
-						<tbody>	  
-						<tr>
-						<td><%=replace(rs("rptTerminal"),chr(13),"<BR>")%></td>		
-							<td><%=replace(rs("rptBasis"),chr(13),"<BR>")%></td>						
-						<td><%=replace(rs("rptRisk"),chr(13),"<BR>")%></td>												
-						</tr>
-						</tbody>					
-						</table>
-					</div>
-					
-		
-					
-					<div class="col-md-12">	
-					<h3 class="box-title">测试结果</h3>
-					测试环境：
-					<% if rs("rptTestResult") = "pass" then %>
-							&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font>
-						<%else%>							
-							&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
-						<%end if %>					 
-					<br>
-					生产环境：
-						<% if rs("rptOnlineResult") = "pass" then %>
-							&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font>
-						<%else%>
-							&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
-						<%end if %>  
-					</div>
-										        
-				</div><!-- /.row -->
 				
-				<br>
-  
-				<div class="row">	 
-					<div class="col-md-4">
-						<div class="box box-default">
-							<div class="box-header with-border">			
-								<h3 class="box-title">缺陷平台统计</h3>
-							</div>
-							<div class="box-body">
-								<div id="graph" style="height: 300px;"></div>
-							</div><!-- /.box-body-->			
-						</div><!-- /.box -->
-					</div><!-- /.col -->
-		
-
-					<div class="col-md-4">
-						<div class="box box-default">
-							<div class="box-header with-border">
-								<h3 class="box-title">缺陷程度统计</h3>
-							</div>
-								<div class="box-body">
-								<div id="graph1" style="height: 300px;"></div>
-							</div><!-- /.box-body-->
-						</div><!-- /.box -->
-					</div><!-- /.col -->
-		
-					<div class="col-md-4">
-						<div class="box box-default">
-							<div class="box-header with-border">
-								<h3 class="box-title">缺陷状态统计</h3>
-							</div>		
-							<div class="col-md-4">
-								<ul class="chart-legend clearfix">
-								<li><i class="fa fa-circle-o text-red"></i> 未处理</li>
-								<li><i class="fa fa-circle-o text-aqua"></i> 处理中</li>
-								<li><i class="fa fa-circle-o text-green"></i> 已解决</li>
-								<li><i class="fa fa-circle-o text-yellow"></i> 已反馈</li>              
-								</ul>
-							</div>							
-							<div class="box-body">
-								<div id="donut-chart3" style="height: 300px;"></div>
-							</div><!-- /.box-body-->
-						</div><!-- /.box -->
-					</div><!-- /.col -->
-				</div>
-
-				<br> <br> <br> 
-				
-				<div class="col-md-12">
-					<div class="box box-default">
-						<div class="box-header with-border">						
-							<h3 class="box-title">需求问题统计</h3>
-						</div>
-							<div class="box-body">
-							<div id="graph2" style="height: 300px;"></div>
-						</div><!-- /.box-body-->
-					</div><!-- /.box -->
-				</div><!-- /.col -->		
-			</div>
-			</div>				  			
-		
-			<br><br><br>
-			
-			<h3 class="box-title">1、引言</h3>
-									
-			<div class="row">			
-				<div class="col-md-12">							
-					<table id="example2" class="table table-bordered table-hover">
-					<thead>
-					<tr>
-					<th style="width: 25%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.1 目的</h4></div></th>
-					<th style="width: 25%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.2 背景</h4></div></th>
-					<th style="width: 25%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.3 软件软件</h4></div></th>
-					<th style="width: 25%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.4 硬件资源</h4></div></th>
-					</tr>
-					</thead>
-					<tbody>	  
-					<tr>
-					<td><%=replace(rs("rptGoal"),chr(13),"<BR>")%></td>
-					<td><%=replace(rs("rptScene"),chr(13),"<BR>")%></td>
-					<td><%=replace(rs("rptSoft"),chr(13),"<BR>")%></td>
-					<td><%=replace(rs("rptHard"),chr(13),"<BR>")%></td>
-					</tr>
-					</tbody>					
-					</table>
+				<h1 >第1章 引言 </h1>
+													
+				<div class="col-md-12">	
+					<h3 class="box-title"> 1.1 目的</h3>						
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptGoal"),chr(13),"<BR>")%></p>				
 				</div>	
-	
-			</div>					
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 1.2 名称解释</h3>						
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptCaption"),chr(13),"<BR>")%></p>				
+				</div>	
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 1.3 参考及引用资料</h3>						
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptRef"),chr(13),"<BR>")%></p>				
+				</div>	
+								
+				
+				<br><h1 >第2章 测试概述 </h1>
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 2.1 测试对象</h3>
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptTestObject"),chr(13),"<BR>")%></p>				
+				</div>	
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 2.2 项目背景</h3>
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptScene"),chr(13),"<BR>")%></p>
+				</div>	
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 2.3 测试目的</h3>
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptTestGoal"),chr(13),"<BR>")%></p>					
+				</div>	
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 2.4 测试进度表</h3>
 			
-			<div class="box-header"><h4 class="box-title">1.5 测试进度</h4></div>
+						
 			<div class="form-group">
 				<table class="table table-bordered">
 				<tr>               
-				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title">测试类目</h4></th>
-				<th style="width: 30%" bgcolor="#f1f1f1"><h4 class="box-title">开始结束日期</h4></th>
-				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title">备注</h4></th>
+				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title">分类</h4></th>
+				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title">开始 - 结束日期</h4></th>
+				<th style="width: 60%" bgcolor="#f1f1f1"><h4 class="box-title">备注</h4></th>
 				</tr>					
 				<tr>
 				<td>需求文档分析</td>
@@ -323,33 +207,24 @@ end if
 				</td>
 				</tr>
 				</table>
-			</div>
-			
-			<div class="row">	
-				<div class="col-md-12">							
-					<table id="example2" class="table table-bordered table-hover">
-					<thead>
-					<tr>
-					<th style="width: 50%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.6 定义</h4></div></th>		
-					<th style="width: 50%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">1.7 参考资料</h4></div></th>		
-					</tr>
-					</thead>
-					<tbody>	  
-					<tr>
-					<td><%=replace(rs("rptCaption"),chr(13),"<BR>")%></td>						
-					<td><%=replace(rs("rptRef"),chr(13),"<BR>")%></td>						
-					</tr>
-					</tbody>					
-					</table>
-				</div>
-			</div>
-					
+			</div>			
+				</div>	
 				
-			<h3 class="box-title">2、测试用例</h3>
-	
-			<div class="row">
-        		<div class="col-md-12">
-				<% set rs1 = server.createobject("adodb.recordset")
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 2.5 测试人员</h3>
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptMember"),chr(13),"<BR>")%></p>					
+				</div>	
+				
+		
+				
+			
+<br><h1 >第3章 测试方法 </h1>
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 3.1 测试用例</h3>
+				
+					<% set rs1 = server.createobject("adodb.recordset")
 				rs1.open "select * from tbl_platform where platformId="&platformId&"",conn,3,3 
 				do while not rs1.eof %>
 				
@@ -419,8 +294,6 @@ end if
 						response.write "<font color=blue>暂停</font>"
 					end if %>
 					</td>
-				
-						
 					<td>
 						<%set rs4 = server.createobject("adodb.recordset")
 						rs4.open "select * from tbl_user where userName='"&rs2("caseCreateUser")&"' order by userId ",conn,3,3 
@@ -446,16 +319,41 @@ end if
 				</table>
 			<% rs1.movenext
 			loop
-			rs1.close %> 
-			</div><!-- /.col -->
-			</div><!-- /.row -->	  
+			rs1.close %> 				
+				</div>	
+				
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 3.2 测试环境</h3>
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptBasis"),chr(13),"<BR>")%></p>					
+				</div>	
+				
+					<div class="col-md-12">	
+					<h3 class="box-title"> 3.3 软件/硬件说明</h3>
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptSoft"),chr(13),"<BR>")%></p>		
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptHard"),chr(13),"<BR>")%></p>				
+				</div>	
+					<div class="col-md-12">	
+					<h3 class="box-title"> 3.4 测试终端/设备</h3>
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptTerminal"),chr(13),"<BR>")%></p>					
+				</div>	
+					<div class="col-md-12">	
+					<h3 class="box-title">3.5 测试方法</h3>
+					<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptTestWay"),chr(13),"<BR>")%></p>					
+				</div>	
+				
+				
+	
 
-			<h3 class="box-title">3、测试分析</h3>
-		
-		
-			<div class="row">
-			<div class="col-md-12">
-				<div class="box-header"><h4 class="box-title">3.1 测试覆盖率</h4></div>
+<br><h1>第4章 测试结果及缺陷分析 </h1>
+				
+						
+				
+				<div class="col-md-12">	
+					<h3 class="box-title"> 4.1 测试用例覆盖率</h3>
+						
+					
+				
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
 				<tr>
@@ -465,7 +363,7 @@ end if
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">已通过数</h4></th>
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">未通过数</h4></th>
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">未测试数(搁置/暂停）</h4></th>
-				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">用例执行覆盖率</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">通过覆盖率</h4></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -542,12 +440,16 @@ end if
                 </tbody>
                 <tfoot>            
                 </tfoot>
-                </table>
-			</div><!-- /.col -->
-			
-			<div class="col-md-4">
+                </table>		
+				</div>		
+					
+				<div class="col-md-12">	
+					<h3 class="box-title"> 4.2 缺陷统计</h3><br>
+				
+					
+					<div class="col-md-4">
           		<div class="box">
-					<div class="box-header"><h4 class="box-title">3.2 缺陷平台统计</h4></div>
+					<div class="box-header"><h4 class="box-title">4.2.1 缺陷平台统计</h4></div>
 					<div class="box-body">
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
@@ -595,7 +497,7 @@ end if
 			
 			<div class="col-md-4">
           		<div class="box">
-					<div class="box-header"><h4 class="box-title">3.3 缺陷严重程度</h4></div>
+					<div class="box-header"><h4 class="box-title">4.2.2 缺陷严重程度</h4></div>
 					<!-- /.box-header -->
 					<div class="box-body">
 					<table id="example2" class="table table-bordered table-hover">
@@ -640,7 +542,7 @@ end if
 			
 			<div class="col-md-4">
           		<div class="box">
-					<div class="box-header"><h4 class="box-title">3.4 缺陷状态统计</h4></div>
+					<div class="box-header"><h4 class="box-title">4.2.3 缺陷状态统计</h4></div>
 					<div class="box-body">
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
@@ -681,69 +583,123 @@ end if
 					</div> <!-- /.box-body -->
 				</div><!-- /.box -->					
 			</div><!-- /.col -->
-			</div>
-			
-			<div class="row">
-						
-				<div class="col-md-12">							
-					<table id="example2" class="table table-bordered table-hover">
-					<thead>
-					<tr>
-					<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">3.5 遗留问题</h4></div></th>	
-					<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">3.6 建议</h4></div></th>		
-					<th style="width: 33%" bgcolor="#f1f1f1"><div class="box-header"><h4 class="box-title">3.7 测试交付物</h4></div></th>		
-					</tr>
-					</thead>
-					<tbody>	  
-					<tr>
-					<td><%=replace(rs("rptFeedback"),chr(13),"<BR>")%></td>	
-					<td><%=replace(rs("rptAdvice"),chr(13),"<BR>")%></td>						
-					<td><%=replace(rs("rptDelivery"),chr(13),"<BR>")%></td>						
-					</tr>
-					</tbody>					
-					</table>
-				</div>
-			</div>
-					
-					
-							
-	
 
-		<h3 class="box-title">4、测试结论</h3>
-				
-		<div class="row">			
-			<div class="col-md-12">							
-				<table id="example2" class="table table-bordered table-hover">
-				<thead>
-				<tr>
-				<td><%=replace(rs("rptConclusion"),chr(13),"<BR>")%>	</td>
-	
-				</tr>
-				</thead>
-								
-				</table>
-			</div>	
-		</div>	
-			
-
+					<div class="col-md-4">
+						<div class="box box-default">
+							<div class="box-header with-border">			
+								<h3 class="box-title">缺陷平台统计</h3>
+							</div>
+							<div class="box-body">
+								<div id="graph" style="height: 300px;"></div>
+							</div><!-- /.box-body-->			
+						</div><!-- /.box -->
+					</div><!-- /.col -->
 		
 
+					<div class="col-md-4">
+						<div class="box box-default">
+							<div class="box-header with-border">
+								<h3 class="box-title">缺陷程度统计</h3>
+							</div>
+							<div class="box-body">
+								<div id="graph1" style="height: 300px;"></div>
+							</div><!-- /.box-body-->
+						</div>
+					</div>
+		
+					<div class="col-md-4">
+						<div class="box box-default">
+							<div class="box-header with-border">
+								<h3 class="box-title">缺陷状态统计</h3>
+							</div>		
+							<div class="col-md-4">
+								<ul class="chart-legend clearfix">
+								<li><i class="fa fa-circle-o text-red"></i> 未处理</li>
+								<li><i class="fa fa-circle-o text-aqua"></i> 处理中</li>
+								<li><i class="fa fa-circle-o text-green"></i> 已解决</li>
+								<li><i class="fa fa-circle-o text-yellow"></i> 已反馈</li>              
+								</ul>
+							</div>							
+							<div class="box-body">
+								<div id="donut-chart3" style="height: 200px;"></div>
+								<br><br>
+							</div><!-- /.box-body-->
+						</div><!-- /.box -->
+					</div><!-- /.col -->							
+				</div>
+				
+				
+				
+				<div class="col-md-12"><br><br><br>
+					<div class="box box-default">
+						<div class="box-header with-border">						
+							<h3 class="box-title">4.3 需求问题统计</h3>
+						</div>
+						<div class="box-body">
+							<div id="graph2" style="height: 300px;"></div>
+						</div><!-- /.box-body-->
+					</div><!-- /.box -->
+				</div><!-- /.col -->	
+		
+				
+				
+		<div class="row"></div><br><br><br>
+				
+				
+				
+<h1>第5章 测试总结与建议</h1>
+
+									
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.1 软件质量</h3>
+	测试环境：
+	<% if rs("rptTestResult") = "pass" then %>
+	&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font><br>
+	<%else%>							
+	&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
+	<%end if %>					 
+	<br>
+	生产环境：
+	<% if rs("rptOnlineResult") = "pass" then %>
+	&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font><br>
+	<%else%>
+	&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
+	<%end if %>  
+	<br>
+	</div>	
+				
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.2 遗留问题</h3>	
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptFeedback"),chr(13),"<BR>")%></p>
+	</div>	
+	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.3 软件风险</h3>
+	
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptRisk"),chr(13),"<BR>")%></p>
+	</div>		
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.4 测试结论</h3>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptConclusion"),chr(13),"<BR>")%></p>
+	
+	</div>			
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.5 测试建议</h3>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptAdvice"),chr(13),"<BR>")%></p>
+	</div>	
+				
+				
 		<div class="row">
 			<div class="col-md-12" align="right">	
-			
 				<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
 				<a id='DD'></a>		
 			</div>
 		</div>
 		
 	</div>
-
-	
-	
-
-</div><!-- ./wrapper -->
-
-
 
 
 

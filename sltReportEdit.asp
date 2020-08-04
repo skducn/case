@@ -105,18 +105,13 @@ if request("action") = "save" then
 	rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" order by rptId desc",conn,3,3
 	if not rs.eof then
 		rs("rptStatus") = "undone"
-		rs("rptTestResult") = request("rptTestResult")
-		rs("rptOnlineResult") = request("rptOnlineResult")
 		rs("rptNo") = request("rptNo")
-		rs("rptMember") = request("rptMember")
-		rs("rptPeriod") = request("rptPeriod")
-		rs("rptTerminal") = request("rptTerminal")
-		rs("rptBasis") = request("rptBasis")
-		rs("rptRisk") = request("rptRisk")
 		rs("rptGoal") = request("rptGoal")
+		rs("rptCaption") = request("rptCaption")
+		rs("rptRef") = request("rptRef")
+		rs("rptTestObject") = request("rptTestObject")
 		rs("rptScene") = request("rptScene")
-		rs("rptSoft")= request("rptSoft")
-		rs("rptHard")= request("rptHard")
+		rs("rptTestGoal") = request("rptTestGoal")
 		rs("rptStoryDate") = request("rptStoryDate")
 		rs("rptStoryMemo") = request("rptStoryMemo")
 		rs("rptDesignDate") = request("rptDesignDate")
@@ -125,15 +120,25 @@ if request("action") = "save" then
 		rs("rptExcMemo") = request("rptExcMemo")
 		rs("rptBugDate") = request("rptBugDate")
 		rs("rptBugMemo") = request("rptBugMemo")
-		rs("rptCaption") = request("rptCaption")
-		rs("rptRef") = request("rptRef")
+		rs("rptMember") = request("rptMember")
+		rs("rptBasis") = request("rptBasis")
+		rs("rptSoft")= request("rptSoft")
+		rs("rptHard")= request("rptHard")
+		rs("rptTerminal") = request("rptTerminal")
+		rs("rptTestWay") = request("rptTestWay")
+		rs("rptFeedback") = request("rptFeedback")
+		rs("rptRisk") = request("rptRisk")
+		rs("rptConclusion") = request("rptConclusion")
+		rs("rptAdvice") = request("rptAdvice")
+		
+		rs("rptTestResult") = request("rptTestResult")
+		rs("rptOnlineResult") = request("rptOnlineResult")		
+		
 		rs("rptBugQty") = rptBugQty
 		rs("rptBugDegree") = rptBugDegree
 		rs("rptBugStatus") = rptBugStatus 
-		rs("rptFeedback") = request("rptFeedback")
-		rs("rptDelivery") = request("rptDelivery")
-		rs("rptAdvice") = request("rptAdvice")
-		rs("rptConclusion") = request("rptConclusion")
+	
+		
 		rs("rptVedioPrefix") = request("rptVedioPrefix")
 		'rs("rptVedioPath") = getFolderSlt + "mp4" 
 		rs("rptVedioPath") = "\mp4" 
@@ -165,6 +170,14 @@ if request("action") = "save" then
 	end if 
 	rs.close
 	set rs = nothing
+	
+	set rs = server.createobject("adodb.recordset")
+	rs.open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" order by platformId desc",conn,3,3
+	rs("verIsReport") = "undone"
+	rs.update
+	rs.close
+	set rs = nothing
+	
 	response.Redirect("sltReportShow-"&pjtId&"-"&platformId&".html")
 end if 
 %>
@@ -183,8 +196,10 @@ platformName = rs2("platformName")
 rs1.close
 rs2.close
 set rs = server.createobject("adodb.recordset")
-rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" order by rptId desc",conn,3,3
-
+rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" and rptAuthor='"&session("userName")&"' order by rptId desc",conn,3,3
+if rs.eof then
+response.Redirect("index.html")
+end if 
 %>
   
   
@@ -204,7 +219,13 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 		
 		<div class="row">
 			<div class="col-md-6" align="left">
-				<h3 class="box-title"><%=pjtName%><%=platformName%> 测试报告（待审核）</h3>						
+				<%if rs("rptStatus") = "done" then%>			
+					<h3 class="box-title"><%=pjtName%><%=platformName%> 测试报告（已完成）</h3>						
+				<%elseif rs("rptStatus") = "undone" then%>
+					<h3 class="box-title"><%=pjtName%><%=platformName%> 测试报告（待审核）</h3>						
+				<%else%>
+					<h3 class="box-title"><%=pjtName%><%=platformName%> 测试报告（已拒绝）</h3>																	
+				<%end if %>											
 			</div>				
 			<div class="col-md-6" align="right">
 				<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button>	
@@ -214,81 +235,46 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 
 		<hr>
 										
-		<h3 class="box-title">测试概要</h3>		
+		<h3 class="box-title">第1章 引言</h3>		
 							     
 		<div class="row">
-			<div class="col-md-4">
-			<div class="box-header"><h4 class="box-title"> 模板名称</h4></div>
-			<div class="form-group"><textarea  name="rptNo" class="form-control" rows="5"><%=rs("rptNo")%></textarea></div></div>
-			<div class="col-md-4">
-			<div class="box-header"><h4 class="box-title"> 交付周期</h4></div>
-			<div class="form-group"><textarea  name="rptPeriod" class="form-control" rows="5"><%=rs("rptPeriod")%></textarea></div></div>
-			<div class="col-md-4">
-			<div class="box-header"><h4 class="box-title"> 参与人员</h4></div>
-			<div class="form-group"><textarea  name="rptMember" class="form-control" rows="5"><%=rs("rptMember")%></textarea></div></div>					
-			<div class="col-md-4">
-			<div class="box-header"><h4 class="box-title"> 相关平台</h4></div>
-			<div class="form-group"><textarea  name="rptTerminal" class="form-control" rows="5"><%=rs("rptTerminal")%></textarea></div></div>			
-			<div class="col-md-4">
-			<div class="box-header"><h4 class="box-title"> 环境配置</h4></div>
-			<div class="form-group"><textarea name="rptBasis" class="form-control" rows="5"><%=rs("rptBasis")%></textarea></div></div>
-			<div class="col-md-4">
-			<div class="box-header"><h4 class="box-title"> 已知风险</h4></div>
-			<div class="form-group"><textarea  name="rptRisk" class="form-control" rows="5"><%=rs("rptRisk")%></textarea></div></div>						
+			
+			<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title"> 1.1 目标</h4></div>
+			<div class="form-group"><textarea  name="rptGoal" class="form-control" rows="5"><%=rs("rptGoal")%></textarea></div></div>
+			<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title"> 1.2 名词解释</h4></div>
+			<div class="form-group"><textarea  name="rptCaption" class="form-control" rows="5"><%=rs("rptCaption")%></textarea></div></div>					
+			<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title"> 1.3 参考及引用资料</h4></div>
+			<div class="form-group"><textarea  name="rptRef" class="form-control" rows="5"><%=rs("rptRef")%></textarea></div></div>										
 		</div>		
 					
 		<br>					
 					
-		<div class="col-md-4"></div>						  
-		<div class="col-md-2">							
-			<h4 class="box-title"> 测试环境结果</h4><br>
-			 <div class="animated-radio-button">
-			<%if rs("rptTestResult") = "pass" then%>									
-				<label><input type="radio" name="rptTestResult" value="pass" checked><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;	
-				<label><input type="radio" name="rptTestResult" value="failed"><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>															
-			<%else%>
-				<label><input type="radio" name="rptTestResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;
-				<label><input type="radio" name="rptTestResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>									
-			<%end if %>								
-			</div>
-		</div>						
-		<div class="col-md-6">					
-			<h4 class="box-title"> 生产环境结果</h4><br>
-			<div class="animated-radio-button">
-			<% if rs("rptOnlineResult") = "pass" then%>
-				<label><input type="radio" name="rptOnlineResult" value="pass" checked><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>	&nbsp;&nbsp;
-				<label><input type="radio" name="rptOnlineResult" value="failed"><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>															
-			<%else%>
-				<label><input type="radio" name="rptOnlineResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;
-				<label><input type="radio" name="rptOnlineResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>									
-			<%end if %>	
-			</div>
-		</div>				    
+			    
          
 		<br>
 		 
-		<h3 class="box-title">1、引言</h3>
+<h3 class="box-title">第2章 测试概述</h3>
 
 		<div class="row">
-			<div class="col-md-3">
-				<div class="box-header"><h4 class="box-title"> 1.1 目的</h4></div>
-				<div class="form-group"><textarea  name="rptGoal" class="form-control" rows="5"><%=rs("rptGoal")%></textarea></div>
+			<div class="col-md-12">
+				<div class="box-header"><h4 class="box-title"> 2.1 测试对象</h4></div>
+				<div class="form-group"><textarea  name="rptTestObject" class="form-control" rows="5"><%=rs("rptTestObject")%></textarea></div>
 			</div>
-			<div class="col-md-3">
-				<div class="box-header"><h4 class="box-title"> 1.2 背景</h4></div>
+			<div class="col-md-12">
+				<div class="box-header"><h4 class="box-title"> 2.2 项目背景</h4></div>
 				<div class="form-group"><textarea  name="rptScene" class="form-control" rows="5"><%=rs("rptScene")%></textarea></div>
 			</div>
-			<div class="col-md-3">
-				<div class="box-header"><h4 class="box-title"> 1.3 软件环境</h4></div>
-				<div class="form-group"><textarea  name="rptSoft" class="form-control" rows="5"><%=rs("rptSoft")%></textarea></div>
+			<div class="col-md-12">
+				<div class="box-header"><h4 class="box-title"> 2.3 测试目的</h4></div>
+				<div class="form-group"><textarea  name="rptTestGoal" class="form-control" rows="5"><%=rs("rptTestGoal")%></textarea></div>
 			</div>
-			<div class="col-md-3">
-				<div class="box-header"><h4 class="box-title"> 1.4 硬件资源</h4></div>
-				<div class="form-group"><textarea  name="rptHard" class="form-control" rows="5"><%=rs("rptHard")%></textarea></div>
-			</div>						
+						
 	
 			<div class="col-md-12">
-				<div class="box-header"><h4 class="box-title"> 1.5 测试进度</h3></div>
+				<div class="box-header"><h4 class="box-title"> 2.4 测试进度表</h3></div>
 				<div class="form-group">
 				<table class="table table-bordered"><tr>
 				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试类目</h4></th>
@@ -317,17 +303,14 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 				</div>
 			</div>
 			
-			<div class="col-md-6">
-				<div class="box-header"><h4 class="box-title"> 1.6 定义</h3></div>
-				<div class="form-group"><textarea  name="rptCaption" class="form-control" rows="5"><%=rs("rptCaption")%></textarea></div>
+			<div class="col-md-12">
+				<div class="box-header"><h4 class="box-title">2.5 测试人员</h3></div>
+				<div class="form-group"><textarea  name="rptMember" class="form-control" rows="5"><%=rs("rptMember")%></textarea></div>
 			</div>
-			<div class="col-md-6">
-				<div class="box-header"><h4 class="box-title"> 1.7 参考资料</h3></div>
-				<div class="form-group"><textarea  name="rptRef" class="form-control" rows="5"><%=rs("rptRef")%></textarea></div>
-			</div>						
+							
 		</div>					 
 
-		<h3 class="box-title">2、测试用例</h3>
+<h3 class="box-title">第3章 测试方法</h3>
 					   
 		<div class="row">
 			<div class="col-md-12">
@@ -391,12 +374,36 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 				</tbody></table>				
 			</div>
 		</div>  
+		
+		<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title"> 3.2 测试环境</h4></div>
+			<div class="form-group"><textarea  name="rptBasis" class="form-control" rows="5" ><%=rs("rptBasis")%></textarea></div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title">3.3 软件/硬件说明</h4></div>
+			<div class="form-group"><textarea  name="rptSoft" class="form-control" rows="5" ><%=rs("rptSoft")%></textarea></div>
+			<br>
+			<div class="form-group"><textarea  name="rptHard" class="form-control" rows="5" ><%=rs("rptHard")%></textarea></div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title">3.4 测试终端/设备</h4></div>
+			<div class="form-group"><textarea  name="rptTerminal" class="form-control" rows="5" ><%=rs("rptTerminal")%></textarea></div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title"> 3.5 测试方法</h4></div>
+			<div class="form-group"><textarea  name="rptTestWay" class="form-control" rows="5" ><%=rs("rptTestWay")%></textarea></div>
+		</div>
+		
+		
 
-		<h3 class="box-title">3、测试分析</h3>
+<h3 class="box-title">第4章 测试结果分析</h3>
 					 
 		<div class="row">
 			<div class="col-md-12">
-				<div class="box-header"><h4 class="box-title">3.1  测试覆盖率</h4></div>
+				<div class="box-header"><h4 class="box-title">4.1  测试覆盖率</h4></div>
 				<table id="example2" class="table table-bordered table-hover"><thead><tr>
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 版本</h4></th>
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 标签</h4></th>
@@ -484,7 +491,7 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			</div>
 
 			<div class="col-md-4">
-				<div class="box"><div class="box-header"><h4 class="box-title">3.2 缺陷平台统计</h4></div>
+				<div class="box"><div class="box-header"><h4 class="box-title">4.2 缺陷平台统计</h4></div>
 				<div class="box-body"><table id="example2" class="table table-bordered table-hover"><thead><tr>
 				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 系统平台</h4></th>
 				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> Bug数</h4></th></tr></thead><tbody><tr> 
@@ -496,7 +503,7 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			</div>
 
 			<div class="col-md-4">
-				<div class="box"><div class="box-header"><h4 class="box-title">3.3 缺陷严重程度统计</h4></div>
+				<div class="box"><div class="box-header"><h4 class="box-title">4.3 缺陷严重程度统计</h4></div>
 				<div class="box-body"><table id="example2" class="table table-bordered table-hover"><thead><tr>
 				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 严重程度</h4></th>
 				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> Bug数</h4></th></tr></thead><tbody><tr>
@@ -507,7 +514,7 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			</div>
 
 			<div class="col-md-4">
-				<div class="box"><div class="box-header"><h4 class="box-title">3.4 缺陷状态统计</h4></div>
+				<div class="box"><div class="box-header"><h4 class="box-title">4.4 缺陷状态统计</h4></div>
 				<div class="box-body"><table id="example2" class="table table-bordered table-hover"><thead><tr>
 				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> 缺陷状态</h4></th>
 				<th style="width: 50%" bgcolor="#f1f1f1"><h4 class="box-title"> Bug数</h4></th></tr></thead><tbody><tr>
@@ -522,7 +529,7 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=platformRedmine%>" target="_blank">请参考禅道</i></a>
 
 		<div class="col-md-12">	
-			<div class="box-header"><h3 class="box-title"> 需求缺陷统计</h3></div>
+			<div class="box-header"><h3 class="box-title">4.5 需求缺陷统计</h3></div>
 			<div class="box-body">
 				<table id="example2" class="table table-bordered table-hover"><thead><tr>
 				<%
@@ -546,31 +553,62 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			
 				</tr></tbody></table>
 			</div>
-		</div>	
+		
+	
 
-		<div class="col-md-4">
-			<div class="box-header"><h4 class="box-title"> 3.5 遗留问题</h4></div>
+<h3 class="box-title">第5章 测试总结与建议</h3>
+
+
+			<div class="col-md-12">
+					<h4 class="box-title"> 5.1 软件质量</h4>					  
+		<div class="col-md-2">							
+			<h4 class="box-title"> 测试环境结果</h4><br>
+			 <div class="animated-radio-button">
+			<%if rs("rptTestResult") = "pass" then%>									
+				<label><input type="radio" name="rptTestResult" value="pass" checked><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;	
+				<label><input type="radio" name="rptTestResult" value="failed"><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>															
+			<%else%>
+				<label><input type="radio" name="rptTestResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;
+				<label><input type="radio" name="rptTestResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>									
+			<%end if %>								
+			</div>
+		</div>						
+		<div class="col-md-6">					
+			<h4 class="box-title"> 生产环境结果</h4><br>
+			<div class="animated-radio-button">
+			<% if rs("rptOnlineResult") = "pass" then%>
+				<label><input type="radio" name="rptOnlineResult" value="pass" checked><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>	&nbsp;&nbsp;
+				<label><input type="radio" name="rptOnlineResult" value="failed"><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>															
+			<%else%>
+				<label><input type="radio" name="rptOnlineResult" value="pass"><span class="label-text"><font color="green"><i class="fa fa-check"></i>通过</font></span></label>&nbsp;&nbsp;
+				<label><input type="radio" name="rptOnlineResult" value="failed" checked><span class="label-text"><font color="red"><i class="fa fa-close"></i>不通过</font></span></label>									
+			<%end if %>	
+			</div>
+		</div>	
+		</div>
+		
+		
+		<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title"> 5.2 遗留问题</h4></div>
 			<div class="form-group"><textarea  name="rptFeedback" class="form-control" rows="5" ><%=rs("rptFeedback")%></textarea></div>
 		</div>
-		<div class="col-md-4">
-			<div class="box-header"><h4 class="box-title"> 3.6 建议</h4></div>
-			<div class="form-group"><textarea  name="rptAdvice" class="form-control" rows="5" ><%=rs("rptAdvice")%></textarea></div>
+		<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title"> 5.3 软件风险</h4></div>
+			<div class="form-group"><textarea  name="rptRisk" class="form-control" rows="5" ><%=rs("rptRisk")%></textarea></div>
 		</div>
-		<div class="col-md-4">
-			<div class="box-header"><h4 class="box-title"> 3.7 测试交付物</h4></div>
-			<div class="form-group"><textarea  name="rptDelivery" class="form-control" rows="5" ><%=rs("rptDelivery")%></textarea></div>
+		<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title"> 5.4 测试结论</h4></div>
+			<div class="form-group"><textarea  name="rptConclusion" class="form-control" rows="5" ><%=rs("rptConclusion")%></textarea></div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="box-header"><h4 class="box-title"> 5.5 测试建议</h4></div>
+			<div class="form-group"><textarea  name="rptAdvice" class="form-control" rows="5" ><%=rs("rptAdvice")%></textarea></div>
 		</div>
 		
 	</div><!-- /.row -->	  
 	
 
-		<h3 class="box-title">4、测试结论</h3>
-			
-		<div class="row">
-			<div class="col-md-12">
-				<div class="form-group"><textarea  name="rptConclusion" class="form-control" rows="5" ><%=rs("rptConclusion")%></textarea></div>
-			</div>
-		</div>
 
 		<div class="row">
 			<div class="col-md-12">	
@@ -579,6 +617,8 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			</div>
 		</div>
 		
+
+		
 		<input name="pjtId" type="hidden" value="<%=pjtId%>" />
 		<input name="platformId" type="hidden" value="<%=platformId%>" />
 		<input name="rptLatestdDate" type="hidden" value="<%=now%>" />
@@ -586,6 +626,12 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 		</form>
 			
 			
+		
+		
+		
+	</div>
+
+
 		<div class="row">
 			<div class="col-md-12" align="right">				
 			<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
@@ -593,10 +639,7 @@ rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="
 			</div>
 		</div>
 		
-		
-	</div>
 </div>
-
 
 <!-- jQuery 2.1.4 -->
 <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>

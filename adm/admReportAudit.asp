@@ -73,8 +73,6 @@ if request("action") = "noAudit" then
 	response.Redirect("admMain.html")
 end if %>
 
-
-
 <% 
 
 set rs1 = server.createobject("adodb.recordset")
@@ -88,44 +86,24 @@ platformRedmine = rs1("platformRedmine")
 platformName = rs1("platformName")
 rs1.close
 
-
 %>
 
   
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">	
-      <h1>
-		<small>
+<div class="content-wrapper">
+	<div class="row page-tilte align-items-center">
+		<div class="col-md-auto">
+			<a href="#" class="mt-3 d-md-none float-right toggle-controls"><span class="material-icons">keyboard_arrow_down</span></a>
+			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">filter_1</span> 报告管理 </h1>
+			<p class="text-muted m-0 desc">Report Panel</p>
+		</div> 
+		<div class="col controls-wrapper mt-3 mt-md-0 d-none d-md-block ">
+			<div class="controls d-flex justify-content-center justify-content-md-end"></div>
+		</div>
+	</div> 
 	
-		</small>
-      </h1>
- 
-    </section>
-
-
-<!-- Main content -->
-<section class="content">     
-	<form role="form" action="admReportAuditNoaudit-<%=pjtId%>-<%=platformId%>.html" method="post" name="addForm" onSubmit="return CheckPost()" >	
-			<% if rs("rptStatus") <> "done" then%>
-			<div class="row">
-				<div class="col-md-12" align="center">
-					<a href="admReportAuditAudit-<%=pjtId%>-<%=platformId%>.html" onClick="return confirm('是否审核通过，确定吗？')">
-					<button type="button" class="btn btn-info pull-left" style="margin-right: 5px;"  href="#" >审核通过</button></a>										
-					<button type="submit" class="btn btn-danger"  href="#">审核不通过</button> 
-			
-				</div>
-
-				<div class="col-md-12" align="center">
-				<br>
-				<textarea name="rejectReason" cols="100" rows="5" maxlength="100"  placeholder="请填写反馈信息"><%=rs("rptRejectReason")%></textarea>
-				</div>
-			</div>		
-						
-				
-			<% end if %>
-		</form>
+<div class="content">
+<div class="card mb-4">				
+<div class="card-body">		 
 
  
 		<% if rs("rptStatus") = "undone" then%>
@@ -135,275 +113,81 @@ rs1.close
 		<% else %>
 			<h1 align="center"><%=pjtName%> <%=platformName%> 测试报告(已审核)</h1>
 		<%end if %>
-	 
-	<!-- SELECT2 EXAMPLE -->
-	<div class="box box-default">
-		<div class="box-header with-border">
-			<h3 class="box-title">概要</h3>
-			<div class="box-tools pull-right">
-			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-			<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-			</div>
-		</div>
 		
-        <!-- /.box-header -->
-        <div class="box-body">
-		
-				<div class="row">
-					<div class="col-md-12">							
-						<table id="example2" class="table table-bordered table-hover">
-						<thead>
-						<tr>
-						<th style="width: 33%">模板名称</th>
-						<th style="width: 33%">交付周期</th>
-						<th style="width: 33%">参与人员</th>						
-						</tr>
-						</thead>
-						<tbody>	  
-						<tr>
-						<td><textarea  name="rptNo" class="form-control" rows="3"  disabled><%=rs("rptNo")%></textarea></td>
-						<td><textarea  name="rptPeriod" class="form-control" rows="3" disabled><%=rs("rptPeriod")%></textarea></td>
-						<td><textarea  name="rptMember" class="form-control" rows="3" disabled><%=rs("rptMember")%></textarea></td>													
-						</tr>
-						</tbody>					
-						</table>
-					</div>	
-					
-					<div class="col-md-12">							
-						<table id="example2" class="table table-bordered table-hover">
-						<thead>
-						<tr>
-						<th style="width: 33%">环境配置</th>
-						<th style="width: 33%">相关平台</th>	
-						<th style="width: 33%">风险</th>
-						</tr>
-						</thead>
-						<tbody>	  
-						<tr>
-						<td><textarea name="rptBasis" class="form-control" rows="5" disabled><%=rs("rptBasis")%></textarea></td>
-						<td><textarea  name="rptTerminal" class="form-control" rows="5" disabled><%=rs("rptTerminal")%></textarea></td>	
-						<td> <textarea  name="rptRisk" class="form-control" rows="5" disabled><%=rs("rptRisk")%></textarea></td>
-						
-						</tr>
-						</tbody>					
-						</table>
-					</div>	
-					
-					<div class="col-md-12">	
-					<label>测试环境结果：</label>
-					<% if rs("rptTestResult") = "pass" then %>
-							&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font>
-						<%else%>							
-							&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
-						<%end if %> 
-					<br>
-					<label>生产环境结果：</label>
-						<% if rs("rptOnlineResult") = "pass" then %>
-							&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font>
-						<%else%>
-							&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
-						<%end if %>  
-					</div>
-												        
-				</div><!-- /.row -->
-				
-				
-				
+		<br>
 	
-		</div> <!-- /.body -->
-	</div><!-- /.box-default -->
-  
-         
-	<!-- SELECT2 EXAMPLE -->
-	<div class="box box-default">
-		<div class="box-header with-border">
-			<h3 class="box-title">1、引言</h3>
-			<div class="box-tools pull-right">
-			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-			<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-			</div>
-        </div>
-		
-        <!-- /.box-header -->
-        <div class="box-body">
-		
-			<div class="row">			
-				<div class="col-md-12">							
-						<table id="example2" class="table table-bordered table-hover">
-						<thead>
-						<tr>
-						<th style="width: 25%">1.1 目的</th>
-						<th style="width: 25%">1.2 背景</th>
-						<th style="width: 25%">1.3 软件软件</th>
-						<th style="width: 25%">1.4 硬件资源</th>
-						</tr>
-						</thead>
-						<tbody>	  
-						<tr>
-						<td><% if rs("rptGoal") = "" then
-						response.write "无"
-			  		else%>
-						<textarea  name="rptPurpose" class="form-control" rows="5" disabled><%=rs("rptGoal")%></textarea>
-					<%end if %></td>
-						<td>	<% if rs("rptScene") = "" then
-							response.write "无"
-					   else %> 
-							<textarea  name="rptScene" class="form-control" rows="5" disabled><%=rs("rptScene")%></textarea>
-					<%end if %></td>
-						<td><textarea  name="rptSoft" class="form-control" rows="5" disabled><%=rs("rptSoft")%></textarea></td>
-						<td><textarea  name="rptHard" class="form-control" rows="5" disabled><%=rs("rptHard")%></textarea></td>
-						</tr>
-						</tbody>					
-						</table>
-				</div>		
-			</div>	
-			
-			<div class="row">
-            <div class="col-md-12">
-
-			
 	
-				
-				
-				<div class="form-group">
-					<label>1.5 测试进度</label>
-					<table class="table table-bordered">
-					<tr>               
-					<th style="width: 15%">测试类目</th>
-					<th style="width: 15%">开始结束日期</th>
-					<th style="width: 70%">备注</th>
-					</tr>
-					
-					<tr>
-					<td>需求文档分析</td>
-					<td>					
-		
-					 <!-- Date start -->
-					<div class="form-group">
-						<div class="input-group">
-						<%=rs("rptStoryDate")%> 
-						</div><!-- /.input group -->
-					</div><!-- /.form group -->
-					</td>
+<h1 >第1章 引言 </h1>
 	
-					<td>
-					<div class="form-group">						 
-					<textarea  name="rptStoryMemo" class="form-control" rows="5" disabled><%=rs("rptStoryMemo")%></textarea>
-					</div>
-					</td>
-					</tr>
+	<div class="col-md-12">	
+	<h3 class="box-title"> 1.1 目的</h3>						
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptGoal"),chr(13),"<BR>")%></p>				
+	</div>	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 1.2 名称解释</h3>						
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptCaption"),chr(13),"<BR>")%></p>				
+	</div>	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 1.3 参考及引用资料</h3>						
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptRef"),chr(13),"<BR>")%></p>				
+	</div>	
 				
-					<tr>
-					<td>设计编写用例</td>
-					<td> 
-					
-					<!-- Date start -->
-					<div class="form-group">
-					<div class="input-group">
-					<%=rs("rptDesignDate")%>
-					</div><!-- /.input group -->
-					</div><!-- /.form group -->
-					</td>
-				
-					
-					<td>
-					<div class="form-group">
-					<textarea  name="rptDesignMemo" class="form-control" rows="5" disabled><%=rs("rptDesignMemo")%></textarea> 
-					</div>
-					</td>
-					</tr>
-					
-					<tr>
-					<td>执行测试用例</td>
-					<td> 
-					
-					<!-- Date start -->
-					<div class="form-group">
-					<div class="input-group">
-					<%=rs("rptExcDate")%>
-					</div><!-- /.input group -->
-					</div><!-- /.form group -->
-					</td>
-				
+				     
 
-					<td>
-					<div class="form-group">
-					<textarea  name="rptExcMemo" class="form-control" rows="5" disabled><%=rs("rptExcMemo")%></textarea>
-					</div>
-					</td>
-					</tr>
-					
-					<tr>
-					<td>bug验证回归</td>
-					<td> 
-					
-					<!-- Date start -->
-					<div class="form-group">
-					<div class="input-group">
-					<%=rs("rptBugDate")%>
-					</div><!-- /.input group -->
-					</div><!-- /.form group -->
-					</td>
-									
-					<td>
-					<div class="form-group"> 
-					<textarea  name="rptBugMemo" class="form-control" rows="5" disabled><%=rs("rptBugMemo")%></textarea>
-					</div>
-					</td>
-					</tr>
-					</table>
-				</div>
+<br><h1>第2章 测试概述 </h1>
+
+	<div class="col-md-12">	
+	<h3 class="box-title"> 2.1 测试对象</h3>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptTestObject"),chr(13),"<BR>")%></p>				
+	</div>	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 2.2 项目背景</h3>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptScene"),chr(13),"<BR>")%></p>
+	</div>	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 2.3 测试目的</h3>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptTestGoal"),chr(13),"<BR>")%></p>					
+	</div>	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 2.4 测试进度表</h3><br>								
+	<div class="form-group">
+	<table class="table table-bordered"><tr>               
+	<th style="width: 20%" bgcolor="#f1f1f1"><h5>测试类目</h5></th>
+	<th style="width: 20%" bgcolor="#f1f1f1"><h5>开始结束日期</h5></th>
+	<th style="width: 60%" bgcolor="#f1f1f1"><h5>备注</h5></th>
+	</tr>
+	<tr><td>需求文档分析</td><td><div class="form-group"><div class="input-group"><%=rs("rptStoryDate")%> </div></div></td>
+	<td><div class="form-group"><textarea  name="rptStoryMemo" class="form-control" rows="5" disabled><%=rs("rptStoryMemo")%></textarea></div></td></tr>
+	<tr><td>设计编写用例</td><td> <div class="form-group"><div class="input-group"><%=rs("rptDesignDate")%></div></div></td>
+	<td><div class="form-group"><textarea  name="rptDesignMemo" class="form-control" rows="5" disabled><%=rs("rptDesignMemo")%></textarea> </div></td></tr>
+	<tr><td>执行测试用例</td><td> <div class="form-group"><div class="input-group"><%=rs("rptExcDate")%></div></div></td>
+	<td><div class="form-group"><textarea  name="rptExcMemo" class="form-control" rows="5" disabled><%=rs("rptExcMemo")%></textarea></div></td></tr>	
+	<tr><td>bug验证回归</td><td><div class="form-group"><div class="input-group"><%=rs("rptBugDate")%></div></div></td>			
+	<td><div class="form-group"> <textarea  name="rptBugMemo" class="form-control" rows="5" disabled><%=rs("rptBugMemo")%></textarea></div></td></tr>
+	</table>
+	</div>
 			
 			
-			</div> <!-- .col --> 	 
-			</div>  <!-- .row -->    
+	<div class="col-md-12">	
+	<h3 class="box-title"> 2.5 测试人员</h3><br>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptMember"),chr(13),"<BR>")%></p>					
+	</div>	
+				
+		
+				
 			
-						<div class="row">			
-				<div class="col-md-12">							
-					<table id="example2" class="table table-bordered table-hover">
-					<thead>
-					<tr>
-					<th style="width: 50%">1.6 定义</th>
-					<th style="width: 50%">1.7 参考资料</th>
+<br><h1 >第3章 测试方法 </h1>
+			
 		
-					</tr>
-					</thead>
-					<tbody>	  
-					<tr>
-					<td>	<% if rs("rptCaption") = "" then
-						  response.write "无"
-					   else%>
-						  <textarea  name="rptCaption" class="form-control" rows="5" disabled><%=rs("rptCaption")%></textarea>
-					  <%end if %></td>
-					<td>	<% if rs("rptRef") = "" then
-						  response.write "无"
-					   else%>
-						  <textarea  name="rptRef" class="form-control" rows="5" disabled><%=rs("rptRef")%></textarea>
-					 <%end if %></td>
-		
-					</tr>
-					</tbody>					
-					</table>
-				</div>	
-			</div>	
-		</div> <!-- .body -->
-	</div><!-- .body default -->
+<div class="col-md-12">
 
-
-	<!-- SELECT2 EXAMPLE -->
-	<div class="box box-default">
-		<div class="box-header with-border">
-			<h3 class="box-title">2、测试用例</h3>
-			<div class="box-tools pull-right">
-			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-			<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-			</div>
-        </div>
-		
-        <!-- /.box-header -->
-        <div class="box-body">
-			<div class="row">
-        	<div class="col-md-12">
+	<h3 class="box-title"> 3.1 测试用例</h3><br>
+        	
 			<% set rs1 = server.createobject("adodb.recordset")
 			rs1.open "select * from tbl_platform where platformId="&platformId&"",conn,3,3 
 			do while not rs1.eof %>
@@ -411,12 +195,13 @@ rs1.close
 				<table id="example2" class="table table-bordered table-hover">
 				<thead>
 				<tr>
-				<th style="width: 10%">用例编号</th>
-				<th style="width: 10%">标签</th>
-				<th style="width: 50%">标题</th>
-				<th style="width: 10%">测试对象</th>
-				<th style="width: 10%">测试阶段</th>
-				<th style="width: 10%">测试结果</th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h5>编号</h5></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h5>标签</h5></th>
+				<th style="width: 40%" bgcolor="#f1f1f1"><h5>标题</h5></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h5>测试对象</h5></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h5>测试阶段</h5></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h5>测试结果</h5></th>
+				<th style="width: 10%" bgcolor="#f1f1f1"><h5>创建/执行者</h5></th>
 				</tr>
 				</thead>
 				<tbody>	  
@@ -472,6 +257,19 @@ rs1.close
 					response.write "<font color=blue>暂停</font>"
 					end if %>
 					</td>
+							<td>
+						<%set rs4 = server.createobject("adodb.recordset")
+						rs4.open "select * from tbl_user where userName='"&rs2("caseCreateUser")&"' order by userId ",conn,3,3 
+						response.write rs4("userNickname")
+						rs4.close%>
+/
+					<%if rs2("caseExcUser") <> "" then
+						set rs5 = server.createobject("adodb.recordset")
+						rs5.open "select * from tbl_user where userName='"&rs2("caseExcUser")&"' order by userId ",conn,3,3 
+						response.write rs5("userNickname")
+						rs5.close
+					end if%>
+					</td>
 					</tr>
 				<%rs2.movenext
 				loop
@@ -485,134 +283,146 @@ rs1.close
 			loop
 			rs1.close %> 
 			</div><!-- /.col -->
-			</div><!-- /.row -->	  
-		</div><!-- /.body -->
-	</div><!-- /.body default-->
-
-
-
-	<!-- SELECT2 EXAMPLE -->
-	<div class="box box-default">
-		<div class="box-header with-border">
-			<h3 class="box-title">3、测试分析</h3>
-			<div class="box-tools pull-right">
-			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-			<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-			</div>
-        </div>
-		
-        <!-- /.box-header -->
-        <div class="box-body">
-			<div class="row">
-			<div class="col-md-12">
-				<div class="box-header">
-				<h3 class="box-title">3.1  测试覆盖率</h3>
-				</div>
-				<table id="example2" class="table table-bordered table-hover">
-				<thead>
-				<tr>
-				<th style="width: 14.28%">版本</th>
-				<th style="width: 14.28%">标签</th>
-				<th style="width: 14.28%">用例总数</th>
-				<th style="width: 14.28%">已通过数</th>
-				<th style="width: 14.28%">未通过数</th>
-				<th style="width: 14.28%">未测试数(搁置/暂停）</th>
-				<th style="width: 14.28%">用例执行覆盖率</th>
-				</tr>
-				</thead>
-				<tbody>
-				<% set rs4 = server.createobject("adodb.recordset")
-				rs4.open "select * from tbl_platform where platformId="&platformId&" order by platformId asc",conn,3,3 
-				do while not rs4.eof 
-					set rs5 = server.createobject("adodb.recordset")
-					rs5.open "select * from tbl_label where lbl_pjtId="&pjtId&" and lbl_platformId="&platformId&" order by lblId asc",conn,3,3 
-					do while not rs5.eof
-						set rs6 = server.createobject("adodb.recordset")
-						rs6.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" and case_lblId="&rs5("lblId")&" order by caseId asc",conn,3,3 %>
-						<tr>
-						<td><%=rs4("platformName")%></td>
-						<td><%=rs5("lblName")%></td>
-					
-						<td><% if rs("rptCaseTotal") <>"" then
-						
-								response.write rs6.recordcount
-							end if %>
-					
-						</td>
-						<td><%
-						varOkSum3 = 0
-						varErrorSum3 = 0
-						varEmptySum3 = 0
-							do while not rs6.eof
-								if rs6("caseResult") = "ok" then
-								   varOkSum3 = varOkSum3 + 1
-								end if 
-								if rs6("caseResult") = "error" then
-								   varErrorSum3 = varErrorSum3 + 1
-								end if 
-								if rs6("caseResult")="empty" and rs6("caseStatus") = "1" then
-								   varEmptySum3 = varEmptySum3 + 1
-								end if 
-									if rs6("caseStatus") = "3" or rs6("caseStatus") = "2" then
-								   varEmptySum3 = varEmptySum3 + 1
-								end if 
-							rs6.movenext
-							loop
-							
-						if rs("rptCasePass") <>"" then
-						
-							response.write varOkSum3
-						end if %>							
-						</td>
-						<td>
-						<% if rs("rptNoPass") <>"" then
-							
-							response.write varErrorSum3
-						end if %>
-						
-						</td>
-						<td>
-						<%  if rs("rptNoTest") <>"" then
-						
-							response.write varEmptySum3
-						end if %>
-						
-						</td>
-						<td>
-						<%  if rs("rptCaseCoverage") <>"" then
-						
-							varFGL = int((varOkSum3+varErrorSum3)/rs6.recordcount*100)
-							response.write cstr(varFGL) + "%"
-						end if  
-						
-				
-						rs6.close%>
-						</td>
-						</tr>
-					<% rs5.movenext
-					loop
-					rs5.close
-				rs4.movenext
-				loop
-				rs4.close %>	       
-                </tbody>
-                <tfoot>            
-                </tfoot>
-                </table>
-			</div><!-- /.col -->
 			
+			
+	<div class="col-md-12">	
+	<h3 class="box-title"> 3.2 测试环境</h3><br>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptBasis"),chr(13),"<BR>")%></p>					
+	</div>	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 3.3 软件/硬件说明</h3><br>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptSoft"),chr(13),"<BR>")%></p>		
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptHard"),chr(13),"<BR>")%></p>				
+	</div>	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 3.4 测试终端/设备</h3><br>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptTerminal"),chr(13),"<BR>")%></p>					
+	</div>	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title">3.5 测试方法</h3><br>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptTestWay"),chr(13),"<BR>")%></p>					
+	</div>	
+
+		
+			
+		  
+	
+
+
+<br><h1>第4章 测试结果及缺陷分析 </h1>
+		
+	<div class="col-md-12">
+	<h3 class="box-title"> 4.1 测试用例覆盖率</h3>
+	<table id="example2" class="table table-bordered table-hover">
+	<thead>
+	<tr> 
+	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>版本</h5></th>
+	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>标签</h5></th>
+	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>用例总数</h5></th>
+	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>已通过数</h5></th>
+	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>未通过数</h5></th>
+	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>未测试数(搁置/暂停）</h5></th>
+	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>用例执行覆盖率</h5></th>
+	</tr>
+	</thead>
+	<tbody>
+	<% set rs4 = server.createobject("adodb.recordset")
+	rs4.open "select * from tbl_platform where platformId="&platformId&" order by platformId asc",conn,3,3 
+	do while not rs4.eof 
+		set rs5 = server.createobject("adodb.recordset")
+		rs5.open "select * from tbl_label where lbl_pjtId="&pjtId&" and lbl_platformId="&platformId&" order by lblId asc",conn,3,3 
+		do while not rs5.eof
+			set rs6 = server.createobject("adodb.recordset")
+			rs6.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" and case_lblId="&rs5("lblId")&" order by caseId asc",conn,3,3 %>
+			<tr>
+			<td><%=rs4("platformName")%></td>
+			<td><%=rs5("lblName")%></td>
+		
+			<td><% if rs("rptCaseTotal") <>"" then
+					response.write rs6.recordcount
+				end if %>
+		
+			</td>
+			<td><%
+			varOkSum3 = 0
+			varErrorSum3 = 0
+			varEmptySum3 = 0
+				do while not rs6.eof
+					if rs6("caseResult") = "ok" then
+					   varOkSum3 = varOkSum3 + 1
+					end if 
+					if rs6("caseResult") = "error" then
+					   varErrorSum3 = varErrorSum3 + 1
+					end if 
+					if rs6("caseResult")="empty" and rs6("caseStatus") = "1" then
+					   varEmptySum3 = varEmptySum3 + 1
+					end if 
+						if rs6("caseStatus") = "3" or rs6("caseStatus") = "2" then
+					   varEmptySum3 = varEmptySum3 + 1
+					end if 
+				rs6.movenext
+				loop
+				
+			if rs("rptCasePass") <>"" then
+				response.write varOkSum3
+			end if %>							
+			</td>
+			<td>
+			<% if rs("rptNoPass") <>"" then
+				response.write varErrorSum3
+			end if %>
+			</td>
+			<td>
+			<%  if rs("rptNoTest") <>"" then
+				response.write varEmptySum3
+			end if %>
+			</td>
+			<td>
+			<%  if rs("rptCaseCoverage") <>"" then
+					varFGL = int((varOkSum3+varErrorSum3)/rs6.recordcount*100)
+					response.write cstr(varFGL) + "%"
+			end if  
+			rs6.close%>
+			</td>
+			</tr>
+		<% rs5.movenext
+		loop
+		rs5.close
+	rs4.movenext
+	loop
+	rs4.close %>	       
+	</tbody>
+	<tfoot>            
+	</tfoot>
+	</table>
+	</div>
+		
+			
+		
+
+		<div class="col-md-12">
+		<h3 class="box-title"> 4.2 缺陷统计（<a href="<%=platformRedmine%>" target="_blank">禅道</i></a>）</h3>
+				
+		<br>
+		
+
+		<div class="row">	
+				
 			<div class="col-md-4">
           		<div class="box">
 					<div class="box-header">
-					<h3 class="box-title">3.2 缺陷平台统计</h3> 
+					<h3 class="box-title">4.2.1 缺陷平台统计</h3> 
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th style="width: 50%">系统平台</th>
-					<th style="width: 50%">Bug数量</th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h5>系统平台</h5></th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h5>Bug数量</h5></th>
 					</tr>
 					</thead>
 					<tbody>
@@ -651,15 +461,15 @@ rs1.close
 			<div class="col-md-4">
           		<div class="box">
 					<div class="box-header">
-					<h3 class="box-title">3.3 缺陷严重程度</h3>
+					<h3 class="box-title">4.2.2 缺陷严重程度</h3>
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th style="width: 50%">严重程度</th>
-					<th style="width: 50%">Bug数量</th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h5>严重程度</h5></th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h5>Bug数量</h5></th>
 					</tr>
 					</thead>
 					<tbody>
@@ -698,15 +508,15 @@ rs1.close
 			<div class="col-md-4">
           		<div class="box">
 					<div class="box-header">
-					<h3 class="box-title">3.4 缺陷状态统计</h3>
+					<h3 class="box-title">4.2.3 缺陷状态统计</h3>
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
 					<table id="example2" class="table table-bordered table-hover">
 					<thead>
 					<tr>
-					<th style="width: 50%">缺陷状态</th>
-					<th style="width: 50%">Bug数量</th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h5>缺陷状态</h5></th>
+					<th style="width: 50%" bgcolor="#f1f1f1"><h5>Bug数量</h5></th>
 					</tr>
 					</thead>
 					<tbody>
@@ -741,35 +551,86 @@ rs1.close
 					</div> <!-- /.box-body -->
 				</div><!-- /.box -->					
 			</div><!-- /.col -->
+			</div>
 			
-			<div class="col-md-12">
-				<a href="<%=platformRedmine%>" target="_blank">请登录禅道查看</i></a>
-				<br>
+			</div>
+			
+			<div class="col-md-12">	
+				<div class="box-header"><h3 class="box-title">4.3 需求缺陷统计</h3></div>
+				<div class="box-body">
+				<table id="example2" class="table table-bordered table-hover"><thead><tr>
+				<%
+				set rs4 = server.createobject("adodb.recordset")
+				rs4.open "select * from tbl_errortype ",conn,3,3
+				do while not rs4.eof%>			
+					<th bgcolor="#f1f1f1"><%=rs4("errorName")%></th>
+				<%						
+				rs4.movenext
+				loop
+				rs4.movefirst
+				%>		
+				</tr></thead><tbody><tr>
+				<% x = 0
+				do while not rs4.eof
+					x = x + 1%>
+					<td><input maxlength="3" type="text" name="errStory<%=x%>" class="form-control" value="<%=split(rs("rptErrStory"),",")(x-1)%>"></td>			
+				<%rs4.movenext
+				loop
+				rs4.close%>
+			
+				</tr></tbody></table>
 			</div>
 			
 				<!--  上传redmine截图 --> 
 				<% if  instr(rs("rptRedminePic"),"upload") then%>						
 						<img src=<%="../"&rs("rptRedminePic")%> /><br><br>			
 				<% end if %>
+				
+				
+				
+
+<br><h1>第5章 测试总结与建议</h1>
+
 			
-			<div class="col-md-12">							
-				<table id="example2" class="table table-bordered table-hover">
-				<thead>
-				<tr>
-				<th style="width: 33%">3.5 遗留/反馈</th>
-				<th style="width: 33%">3.6 测试交付物</th>
-				<th style="width: 33%">3.7 建议</th>		
-				</tr>
-				</thead>
-				<tbody>	  
-				<tr>
-				<td><textarea  name="rptFeedback" class="form-control" rows="5" disabled><%=rs("rptFeedback")%></textarea></td>
-				<td><textarea  name="rptDelivery" class="form-control" rows="5" disabled><%=rs("rptDelivery")%></textarea></td>
-				<td><textarea  name="rptAdvice" class="form-control" rows="5" disabled><%=rs("rptAdvice")%></textarea></td>		
-				</tr>
-				</tbody>					
-				</table>
-			</div>
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.1 软件质量</h3>
+	<label>测试环境结果：</label>
+	<% if rs("rptTestResult") = "pass" then %>
+	&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font>
+	<%else%>							
+	&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
+	<%end if %> 
+	<br>
+	<label>生产环境结果：</label>
+	<% if rs("rptOnlineResult") = "pass" then %>
+	&nbsp;&nbsp;<font color="green"><i class="fa fa-check"></i>&nbsp;通过</font>
+	<%else%>
+	&nbsp;&nbsp;<font color="red"><i class="fa fa-close (alias)"></i>&nbsp;不通过</font>
+	<%end if %>  
+	</div>
+								
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.2 遗留问题</h3>		
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptFeedback"),chr(13),"<BR>")%></p>
+	</div>	
+	
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.3 软件风险</h3>	
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptRisk"),chr(13),"<BR>")%></p>
+	</div>		
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.4 测试结论</h3>
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptConclusion"),chr(13),"<BR>")%></p>
+	
+	</div>			
+	
+	<div class="col-md-12">	
+	<h3 class="box-title"> 5.5 测试建议</h3>	
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptAdvice"),chr(13),"<BR>")%></p>
+	</div>					
+	
 				
 
 			</div><!-- /.row -->	  
@@ -777,31 +638,25 @@ rs1.close
 	</div><!-- /.body default-->
   
 
- 	<!-- SELECT2 EXAMPLE -->
-	<div class="box box-default">
-		<div class="box-header with-border">
-			<h3 class="box-title">4、测试结论</h3>
-			<div class="box-tools pull-right">
-			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-			<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-			</div>
-		</div>
-		
-        <!-- /.box-header -->
-        <div class="box-body">
+	<form role="form" action="admReportAuditNoaudit-<%=pjtId%>-<%=platformId%>.html" method="post" name="addForm" onSubmit="return CheckPost()" >	
+			<% if rs("rptStatus") <> "done" then%>
 			<div class="row">
-				<div class="col-md-12">
-					<div class="form-group">				
-						<% if rs("rptConclusion")="" then
-							response.write "<br>暂不评论，保留意见"
-						else%>
-							<textarea  name="rptConclusion" class="form-control" rows="6" disabled><%=rs("rptConclusion")%></textarea>
-						<%end if %>
-					</div>				
-				</div>  <!-- /.col -->
-			</div><!-- /.row -->
-		</div> <!-- /.body -->
-	</div><!-- /.box-default -->     
+				<div class="col-md-12" align="center">
+					<a href="admReportAuditAudit-<%=pjtId%>-<%=platformId%>.html" onClick="return confirm('是否审核通过，确定吗？')">
+					<button type="button" class="btn btn-info pull-left" style="margin-right: 5px;"  href="#" >审核通过</button></a>										
+					<button type="submit" class="btn btn-danger"  href="#">审核不通过</button> 
+			
+				</div>
+
+				<div class="col-md-12" align="center">
+				<br>
+				<textarea name="rejectReason" cols="200" rows="5" maxlength="300"  placeholder="请填写反馈信息"><%=rs("rptRejectReason")%></textarea>
+				</div>
+			</div>		
+						
+				
+			<% end if %>
+		</form>
      
 
    
