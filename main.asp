@@ -148,7 +148,7 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable1">
 					<thead><tr>
 					<th style="white-space: nowrap; width: 10%;">编号</th>
-					<th style="white-space: nowrap; width: 20%;">项目/版本</th>
+					<th style="white-space: nowrap; width: 20%;">项目 / 版本</th>
 					<th style="white-space: nowrap; width: 50%;">用例标题</th>
 					<th style="white-space: nowrap; width: 20%;">创建日期</th>
 					</tr></thead><tbody>
@@ -163,7 +163,7 @@ end if %>
 						do while not rs11.eof%>
 						<tr>
 						<td><%=rs("caseId")%></td>
-						<td style="white-space: nowrap;"><%=rs11("pjtName")%>/<%=rs22("platformName")%></td> 
+						<td style="white-space: nowrap;"><%=rs11("pjtName")%> / <%=rs22("platformName")%></td> 
 						<td><a href="sltTestcaseEdit-<%=rs("caseId")%>.html" target="_blank"><%=rs("caseTitle")%></a></td>
 						<td><%=rs("caseCreateDate")%></td>
 						</tr>
@@ -191,7 +191,7 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable2">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 20%;">项目/版本</th>
+					<th style="white-space: nowrap;width: 20%;">项目 / 版本</th>
 					<th style="white-space: nowrap;width: 50%;">用例标题</th>
 					<th style="white-space: nowrap;width: 20%;">执行日期</th>
 					</tr></thead><tbody>
@@ -206,7 +206,7 @@ end if %>
 						do while not rs11.eof%>
 						<tr>
 						<td><%=rs("caseId")%></td>
-						<td style="white-space: nowrap;"><%=rs11("pjtName")%>/<%=rs22("platformName")%></td> 
+						<td style="white-space: nowrap;"><%=rs11("pjtName")%> / <%=rs22("platformName")%></td> 
 						<td><a href="excTestcaseEdit-<%=rs("caseId")%>.html" target="_blank"><%=rs("caseTitle")%></a></td>
 						<td><%=rs("caseExcDate")%></td>
 						</tr>
@@ -238,7 +238,7 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable3">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 20%;">项目/版本</th>
+					<th style="white-space: nowrap;width: 20%;">项目 / 版本</th>
 					<th style="white-space: nowrap;width: 50%;">用例标题</th>
 					<th style="white-space: nowrap;width: 20%;">变更日期</th>
 					</tr></thead><tbody>
@@ -253,7 +253,7 @@ end if %>
 						do while not rs11.eof%>
 						<tr>
 						<td><%=rs("caseId")%></td>
-						<td style="white-space: nowrap;"><%=rs11("pjtName")%>/<%=rs22("platformName")%></td> 
+						<td style="white-space: nowrap;"><%=rs11("pjtName")%> / <%=rs22("platformName")%></td> 
 						<td><a href="excTestcaseEdit-<%=rs("caseId")%>.html" target="_blank"><%=rs("caseTitle")%></a></td>
 						<td><%=rs("caseLatestDate")%></td>
 						</tr>
@@ -281,7 +281,7 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable4">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 20%;">项目/版本</th>
+					<th style="white-space: nowrap;width: 20%;">项目 / 版本</th>
 					<th style="white-space: nowrap;width: 50%;">用例标题</th>
 					<th style="white-space: nowrap;width: 20%;">执行日期</th>
 
@@ -297,7 +297,7 @@ end if %>
 						do while not rs11.eof%>
 						<tr>
 						<td><%=rs("caseId")%></td>
-						<td style="white-space: nowrap;"><%=rs11("pjtName")%>/<%=rs22("platformName")%></td> 
+						<td style="white-space: nowrap;"><%=rs11("pjtName")%> / <%=rs22("platformName")%></td> 
 						<td><a href="excTestcaseEdit-<%=rs("caseId")%>.html" target="_blank"><%=rs("caseTitle")%></a></td>
 						<td><%=rs("caseExcDate")%></td>
 						</tr>
@@ -329,10 +329,9 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable5">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 22.5%;">项目</th>
-					<th style="white-space: nowrap;width: 22.5%;">版本</th>
-					<th style="white-space: nowrap;width: 22.5%;">创建日期</th>
-					<th style="white-space: nowrap;width: 22.5%;">变更日期</th>
+					<th style="white-space: nowrap;width: 50%;">项目 / 版本</th>
+					<th style="white-space: nowrap;width: 20%;">创建日期</th>
+					<th style="white-space: nowrap;width: 20%;">变更日期</th>
 					</tr></thead><tbody>
 					<% 									
 						set rs11 = Server.CreateObject("ADODB.recordset")
@@ -346,8 +345,7 @@ end if %>
 								%>
 								<tr>
 								<td><%=rs11("planId")%></td>
-								<td><%=rs22("pjtName")%></td> 
-								<td><a href="sltTestPlanList-<%=rs11("planId")%>.html" target="_blank"><%=rs33("platformName")%></a></td>
+								<td><%=rs22("pjtName")%> / <a href="sltTestPlanList-<%=rs11("planId")%>.html" target="_blank"><%=rs33("platformName")%></a></td>
 								<td><%=rs11("planCreatedDate")%></td>
 								<td><%=rs11("planLatestDate")%></td>							
 								</tr>
@@ -375,10 +373,9 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable6">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 20%;">项目</th>
-					<th style="white-space: nowrap;width: 20%;">版本</th>
-					<th style="white-space: nowrap;width: 20%;">测试/生产结果</th>
-					<th style="white-space: nowrap;width: 10%;">报告状态</th>
+					<th style="white-space: nowrap;width: 30%;">项目 / 版本</th>
+					<th style="white-space: nowrap;width: 20%;">测试 / 生产结果</th>
+					<th style="white-space: nowrap;width: 20%;">报告状态</th>
 					<th style="white-space: nowrap;width: 20%;">创建日期</th>
 					
 					</tr></thead><tbody>
@@ -394,8 +391,7 @@ end if %>
 					%>
 					<tr>
 					<td><%=rs("rptId")%></td>
-					<td><%=rs1("pjtName")%></td>
-					<td><a href="sltReportShow-<%=rs("rpt_pjtId")%>-<%=rs("rpt_platformId")%>.html" target="_blank"><%=rs2("platformName")%></a></td>
+					<td><%=rs1("pjtName")%> / <a href="sltReportShow-<%=rs("rpt_pjtId")%>-<%=rs("rpt_platformId")%>.html" target="_blank"><%=rs2("platformName")%></a></td>
 					<td><%if rs("rptTestResult") = "pass" then %>
 					<i class="fa fa-check text-green"></i>&nbsp;通过
 					<% else %>

@@ -86,7 +86,7 @@ RewriteRule ^sltTestcaseSubmit.html /sltTestcase.asp?action=submit
 RewriteRule ^sltReportCreate-(.*)-(.*)-(.*).html /sltReportCreate.asp?pjtId=$1&platformId=$2&rptId=$3
 RewriteRule ^sltReportCreateSubmit.html /sltReportCreate.asp?action=submit
 RewriteRule ^sltReportShow-(.*)-(.*).html /sltReportShow.asp?pjtId=$1&platformId=$2
-RewriteRule ^sltReportShowDel-(.*)-(.*).html /sltReportShow.asp?action=del&pjtId=$1&platformId=$2
+RewriteRule ^sltReportShowDel-(.*)-(.*)-(.*).html /sltReportShow.asp?action=del&pjtId=$1&platformId=$2&picPath=$3
 RewriteRule ^sltProjectInfo-(.*).html /sltProjectInfo.asp?pjtId=$1
 RewriteRule ^sltProjectInfoSave.html /sltProjectInfo.asp?action=save
 RewriteRule ^sltTestcaseEdit-(.*).html /sltTestcaseEdit.asp?caseId=$1

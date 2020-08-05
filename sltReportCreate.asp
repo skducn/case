@@ -1,6 +1,7 @@
 <!--#include file="frame.asp"-->
 
 <title>新建测试报告 | <%=cstCompany%></title>
+<script src="upload/js/plupload.full.min.js"></script>
 
 <script language="javascript">
 function CheckPost()
@@ -973,6 +974,8 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 					
 			</div>						
 		</div>
+		
+	
 			
 		
 		</div> <!-- .col --> 	 
