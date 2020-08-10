@@ -284,7 +284,7 @@ end if
 			%>				
 					<p><a href="sltReportShowDel-<%=pjtId%>-<%=platformId%>-<%=rptHardPic(i)%>.html" onClick="return confirm('ÊÇ·ñÒªÉ¾³ý´ËÍ¼Æ¬£¿')" >
 					<img src=<%="upload\plupload\"+rptHardPic(i)%>> </a>
-					<h3><% response.write "¸½Í¼"&i %></h3></p><br>
+					</p>
 				<%next%>
 			<% end if %>
 		

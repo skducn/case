@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*!
  * Vali Admin
  * Author: Pratik Borsadiya
@@ -13739,17 +13739,7 @@ be a descendant of the grid when it is being dragged.
   clear: both;
 }
 
-.content-wrapper {
-  height: 100%;
-  z-index: 800;
-  background-color: #E5E5E5;
-  margin-left: 230px;
-  z-index: 820;
-  padding: 30px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
+
 
 @media (min-width: 768px) {
   .sidebar-collapse .content-wrapper {

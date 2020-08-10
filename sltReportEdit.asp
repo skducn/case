@@ -383,7 +383,7 @@ end if
 		<!-- 上传图片，参数 pjtId, platformId -->
 		<div class="col-md-12">
 			<div id="container1">
-				<a id="pickfiles1" >请选择图片</a>														
+				<a id="pickfiles1" >请选择服务器架构拓扑图</a>														
 				<div id="filelist1"></div>				
 				<br>
 				<a id="uploadfiles1" href="javascript:;"><button type="submit" class="btn btn-success pull-left" href="#">上传</button></a> 
@@ -391,6 +391,7 @@ end if
 			<script id="testScript" src="upload/js/uploadRedmine.js" pjtId="<%=pjtId%>" platformId="<%=platformId%>"></script>										
 		</div>
 		
+		<div class="row"></div>	<br>
 		
 		<!--  显示上传的图片 --> 
 		<div class="col-md-12">		
@@ -398,7 +399,7 @@ end if
 			rptHardPic = split(replace(rs("rptHardPic"),"*",""),",")					
 			for i=1 to ubound(rptHardPic)%>							
 					<p><img src=<%="upload\plupload\"+rptHardPic(i)%>>					
-						<h3><% response.write "附图"&i %></h3><br>
+						
 					</p>
 			<%next%>
 			

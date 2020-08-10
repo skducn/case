@@ -19,8 +19,11 @@ end if
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="renderer" content="webkit" />
+
 <link rel="stylesheet" type="text/css" href="731/dist/css/main.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <title>登录 | case</title>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
 <!--if lt IE 9
@@ -118,6 +121,7 @@ function CheckPost()
       <div class="cover"></div>
     </section>
     <section class="login-content">
+	
 
 			
       <div class="login-box">
