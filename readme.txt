@@ -12,4 +12,6 @@ main.asp£¨frame.asp£©
 frame.asp (conn.asp,common/function.asp)
 
 sltTestcase.asp (frame.asp)  ĞÂ½¨ÓÃÀı
+test
+
 
