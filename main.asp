@@ -465,14 +465,7 @@ end if %>
 		
  
 	
-<!-- Javascripts-->
-<script src="731/dist/js/jquery-2.1.4.min.js"></script>
-<script src="731/dist/js/bootstrap.min.js"></script>
-<script src="731/dist/js/plugins/pace.min.js"></script>
-<script src="731/dist/js/main.js"></script>
 
-<script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
 
 <script language="javascript">  
 function CheckPost()
@@ -487,9 +480,9 @@ type: "success"
 });
 }
 </script>
-<!-- table-->
-<script type="text/javascript" src="731/dist/js/plugins/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/dataTables.bootstrap.min.js"></script>
+
+
+
 <script type="text/javascript">$('#sampleTable1').DataTable({
 //跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
 "order": [[ 3, "desc" ]],

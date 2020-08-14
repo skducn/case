@@ -3,6 +3,7 @@
 <!--#include file="common/constant.asp"-->
 <%=mainExit(session("userPower"))%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +11,18 @@
 <link rel="shortcut icon" href=" /favicon.ico" /> 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="shortcut icon" href="/favicon.ico" /> 
-<meta name="renderer" content="webkit" />
-<link rel="stylesheet" type="text/css" href="731/dist/css/main.css">	
+<link rel="stylesheet" type="text/css" href="731/dist/css/main2.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<script src="731/dist/js/jquery-2.1.4.min.js"></script>
+<script src="731/dist/js/bootstrap.min.js"></script>
+<script src="731/dist/js/plugins/pace.min.js"></script>
+<script src="731/dist/js/main.js"></script>
+
 <script src="ueditor/ueditor.config.js"></script>
 <script src="ueditor/ueditor.all.min.js"> </script>	
 <script src="ueditor/lang/zh-cn/zh-cn.js"></script> 
-
 
 </head>
 
@@ -569,12 +575,9 @@
 </section>
 </aside>		  
 
-<script src="731/dist/js/jquery-3.2.1.min.js"></script>
-<script src="731/dist/js/bootstrap.min.js"></script>
-
+	
 <script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
 <script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
-
 
 <script type="text/javascript">
   $('#demoExit').click(function(){
