@@ -1,13 +1,10 @@
+@echo off
 
+git stash
 git pull origin master
-
-d:
+c:
 cd\
 ipconfig /all >ip.txt
-for /f "tokens=2 delims=:(首选)" %%b in ('findstr /c:"IPv4 地址" "ip.txt"') do (
-httpcfg set iplisten -i %%b
-
+for /f "tokens=2 delims=:(首选)" %%b in ('findstr /c:"IPv4 地址" "ip.txt"') do (httpcfg set iplisten -i %%b
 del ip.txt
-"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" %%b
-)
-)
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" %%b))
