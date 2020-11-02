@@ -86,6 +86,16 @@ if (addForm.errStory10.value == "")
 </script>
 
 
+<%
+	pjtId = request("pjtId")
+	platformId = request("platformId")	
+	set rs = server.createobject("adodb.recordset")
+	rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" and rptStatus='done' order by rptId desc",conn,3,3
+	if not rs.eof then
+		response.Redirect("index.html")
+	end if %>
+				
+
 <!--  ±à¼­±¨¸æ	-->	
 <%
 if request("action") = "save" then
@@ -698,12 +708,8 @@ end if
 	</div>	
 </div>
 
-<!-- jQuery 2.1.4 -->
-<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
+
+
 <!-- Select2 -->
 <script src="plugins/select2/select2.full.min.js"></script>
 <!-- InputMask -->
@@ -717,16 +723,12 @@ end if
 <script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 <!-- bootstrap time picker -->
 <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
-<!-- SlimScroll 1.3.0 -->
-<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+
 <!-- iCheck 1.0.1 -->
 <script src="plugins/iCheck/icheck.min.js"></script>
 <!-- FastClick -->
 <script src="plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+
 
 <script>
   $(function () {

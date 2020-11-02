@@ -11,9 +11,10 @@ rs.Open "select * from tbl_project where pjtid="&pjtId&" order by pjtId DESC",co
 set rs1 = server.CreateObject("ADODB.RecordSet")
 rs1.Open "select * from tbl_platform where platformId="&platformId&" order by platformId DESC",conn,3,3
 platformNameTitle = replace(rs1("platformName"),".","")
+platformName = rs1("platformName")
 pjtName = rs("pjtName")
 %>
-<title><%=pjtName%><%=platformName%>测试报告_<%=session("userName")%>_<%=year(now)%><%=month(now)%><%=day(now)%></title>
+<title><%=pjtName%>_<%=platformName%>_测试报告_<%=year(now)%><%=month(now)%><%=day(now)%></title>
 <%
 rs1.close
 rs.close
@@ -91,7 +92,9 @@ end if
 				</h1>		
 			</div>		
 			<div class="col-md-6" align="right">
-				<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="编辑"><i class='fa fa-edit'>&nbsp;编辑</i></a>		
+				<%if rs("rptStatus") <> "done" then%>（已完成）
+					<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="编辑"><i class='fa fa-edit'>&nbsp;编辑</i></a>		
+				<% end if %>
 				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>	
 			</div>		
 		</div>				
@@ -614,8 +617,7 @@ error10 = error10 + split(rs4("rptErrStory"),",")(9)
 %>
 
 
-<!-- jQuery 2.1.4 -->
-<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+
 <!-- Bootstrap 3.3.5 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="plugins/morris.js-0.5.1/raphael-min.js"></script>

@@ -32,7 +32,7 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 
 %>
 
-<title><%=pjtName%><%=platformName%>测试计划_<%=session("userName")%>_<%=year(now)%><%=month(now)%><%=day(now)%></title>
+<title><%=pjtName%>_<%=platformName%>_测试计划_<%=year(now)%><%=month(now)%><%=day(now)%></title>
 			
 <div class="content-wrapper">
 	<div class="page-title">
@@ -302,7 +302,7 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 </div>
 
 
-<script src="731/dist/js/jquery-2.1.4.min.js"></script>
+
 <script src="731/dist/js/bootstrap.min.js"></script>
 <script src="/dist/js/app.min.js"></script>
 

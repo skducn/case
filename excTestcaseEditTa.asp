@@ -472,8 +472,6 @@ rs1.Open "select * from tbl_user where userName='"&request("user")&"'",conn,3,3
 		</div>
 
 
-<!-- jQuery 2.1.4 -->
-<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- Select2 -->

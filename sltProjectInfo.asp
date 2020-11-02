@@ -145,14 +145,13 @@ end if
 
 
 
-<!-- Javascripts-->
-<script src="731/dist/js/jquery-2.1.4.min.js"></script>
-<script src="731/dist/js/bootstrap.min.js"></script>
-<script src="731/dist/js/plugins/pace.min.js"></script>
-<script src="731/dist/js/main.js"></script>
-
 <script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
 <script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
+
+
+<script src="731/dist/js/bootstrap.min.js"></script>
+
+
 
 </body>
 </html>

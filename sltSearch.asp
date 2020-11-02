@@ -251,25 +251,18 @@ end if %>
 
 
 
-<!-- ./wrapper -->
-<script src="bootstrap/js/jquery.js"></script>  
-
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<!-- Bootstrap 3.3.5 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- 表格 展开 必须放在 Bootstrap 3.3.5后面 -->
-<script src="bootstrap/js/custom.js?v=0.9.1"></script>
 <!-- DataTables -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-<!-- Slimscroll -->
-<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+
+
+
+
+<script src="bootstrap/js/custom.js?v=0.9.1"></script>
+
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
 <!-- page script -->
 <script>
   $(function () {
