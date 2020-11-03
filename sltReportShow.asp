@@ -83,9 +83,9 @@ end if
 		</div>
 		
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-12">
 				<h1>
-				<%=pjtName%> <%=platformName%> 测试报告
+				<div align="center"><%=pjtName%> <%=platformName%> 测试报告</div>
 				<%if rs("rptStatus") = "undone" and rs("rptAuthor")=session("userName") then%>（待审核）													
 				<%elseif rs("rptStatus") = "reject" and rs("rptAuthor")=session("userName") then%>（已拒绝）																		
 				<% end if %>
@@ -95,13 +95,13 @@ end if
 				<%if rs("rptStatus") <> "done" then%>（已完成）
 					<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="编辑"><i class='fa fa-edit'>&nbsp;编辑</i></a>		
 				<% end if %>
-				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>	
+				
 			</div>		
 		</div>				
 		
 		<hr>							
 				
-		<h1 >第1章 引言 </h1>
+		<h2>第1章、引言 </h2>
 													
 		<div class="col-md-12">	
 			<h3 class="box-title"> 1.1 目的</h3>						
@@ -123,7 +123,7 @@ end if
 		<br>
 		
 				
-		<h1>第2章 测试概述 </h1>
+		<h2>第2章、测试概述 </h2>
 		
 		<div class="col-md-12">	
 			<h3 class="box-title"> 2.1 测试对象</h3>
@@ -174,7 +174,7 @@ end if
 		<br>
 				
 			
-		<h1>第3章 测试方法 </h1>
+		<h2>第3章、测试方法 </h2>
 		
 		<div class="col-md-12">	
 			<h3 class="box-title"> 3.1 测试用例</h3>		
@@ -308,7 +308,7 @@ end if
 		<br>
 	
 
-		<h1>第4章 测试结果及缺陷分析 </h1>
+		<h2>第4章、测试结果及缺陷分析 </h2>
 									
 		<div class="col-md-12">	
 			<h3 class="box-title"> 4.1 测试用例覆盖率</h3>
@@ -505,7 +505,7 @@ end if
 				
 				
 				
-		<h1>第5章 测试总结与建议</h1>
+		<h2>第5章、测试总结与建议</h2>
 									
 		<div class="col-md-12">	
 			<h3 class="box-title"> 5.1 软件质量</h3>
