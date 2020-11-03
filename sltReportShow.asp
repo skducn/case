@@ -2,6 +2,7 @@
   
 <!--  上传图片控件	-->	
 <script type="text/javascript" src="upload/js/plupload.full.min.js"></script>
+
   
 <%
 pjtId = request("pjtId")
@@ -77,22 +78,25 @@ end if
 		<div class="row">
 			<div class="col-md-12" align="left">
 			<% if rs("rptRejectReason") <> "" then%>		
-				<b>拒绝理由：</b><%=replace(rs("rptRejectReason"),chr(13),"<BR>")%>
+				<b><font color="red">驳回原因：</font></b><%=replace(rs("rptRejectReason"),chr(13),"<BR>")%>
+				<hr>
 			<%end if %>
 			</div>
 		</div>
 		
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-6">
 				<h1>
-				<div align="center"><%=pjtName%> <%=platformName%> 测试报告</div>
-				<%if rs("rptStatus") = "undone" and rs("rptAuthor")=session("userName") then%>（待审核）													
-				<%elseif rs("rptStatus") = "reject" and rs("rptAuthor")=session("userName") then%>（已拒绝）																		
+				
+				<%if rs("rptStatus") = "undone" and rs("rptAuthor")=session("userName") then%>
+					<div><%=pjtName%> <%=platformName%> 测试报告（待审核）</div>													
+				<%elseif rs("rptStatus") = "reject" and rs("rptAuthor")=session("userName") then%>
+					<div><%=pjtName%> <%=platformName%> 测试报告（已拒绝）</div>
 				<% end if %>
 				</h1>		
 			</div>		
 			<div class="col-md-6" align="right">
-				<%if rs("rptStatus") <> "done" then%>（已完成）
+				<%if rs("rptStatus") <> "done" then%>
 					<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="编辑"><i class='fa fa-edit'>&nbsp;编辑</i></a>		
 				<% end if %>
 				
@@ -619,7 +623,6 @@ error10 = error10 + split(rs4("rptErrStory"),",")(9)
 
 
 <!-- Bootstrap 3.3.5 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="plugins/morris.js-0.5.1/raphael-min.js"></script>
 <script src="plugins/morris.js-0.5.1/morris.js"></script>
 <link rel="stylesheet" href="test/morris.js-0.5.1/morris.css">

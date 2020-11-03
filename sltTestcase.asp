@@ -279,7 +279,7 @@ lblId = request("lblId")
 					<div class="row">	
 						<div class="col-md-12">						
 							<h4 class="box-title">”√¿˝≤Ω÷Ë *</h4>
-							<script id="caseStep(<%=varcount%>)" style="width:100%; height:400px" name="caseStep(<%=varcount%>)"></script>	
+							<script id="caseStep(<%=varcount%>)" style="position:relative;z-index:0;width:100%; height:400px" name="caseStep(<%=varcount%>)"></script>	
 							<script>var editor_a = UE.getEditor('caseStep(<%=varcount%>)');</script>	
 						</div>
 					</div>				
@@ -495,9 +495,6 @@ lblId = request("lblId")
 
 
 
-
-<!-- Bootstrap 3.3.5 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- Select2 -->
 <script src="plugins/select2/select2.full.min.js"></script>
 <script>

@@ -651,9 +651,6 @@ set rs = nothing
 
 
 
-
-<!-- Bootstrap 3.3.5 -->
-<script src="/bootstrap/js/bootstrap.min.js"></script>
 <!-- date-range-picker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 <script src="/plugins/daterangepicker/daterangepicker.js"></script>

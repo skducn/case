@@ -268,8 +268,6 @@ rs3.open "select * from tbl_plan where plan_pjtId="&pjtId&" and plan_platformId=
 
 
 
-<script src="731/dist/js/bootstrap.min.js"></script>
-<script src="/dist/js/app.min.js"></script>
 
 
 </body>

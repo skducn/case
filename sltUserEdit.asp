@@ -305,15 +305,7 @@ end if
 
 
 
-<!-- jQuery 2.1.4 -->
-<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- 表格 展开 必须放在 Bootstrap 3.3.5后面 -->
-<script src="bootstrap/js/jquery.js"></script>  
-<script src="bootstrap/js/custom.js?v=0.9.1"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
+
 
 </body>
 </html>

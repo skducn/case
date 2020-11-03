@@ -49,7 +49,7 @@ end if
 					
 <!-- 按人员，显示项目清单（规则：当100%时可点击创建测试报告） -->
 <%set rs7 = server.createobject("adodb.recordset")
-rs7.open "select * from tbl_user where userPower=2 and userStatus='1' ",conn,3,3
+rs7.open "select * from tbl_user where userPower=2 and userStatus='1' order by userName",conn,3,3
 do while not rs7.eof
 	response.write "<h3>"
 	response.write rs7("userNickName")

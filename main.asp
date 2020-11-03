@@ -440,7 +440,7 @@ end if %>
 				<form class="form-horizontal" method="post" name="addForm" onSubmit="return CheckPost()" action="mainSave.html#tasklist"> 
 				<%set rs = server.createobject("adodb.recordset")
 				rs.open "select * from tbl_user where userName='"&session("userName")&"'",conn,3,3%>								
-				<script type="text/plain" id="userMemo" style="width:100%; height:300px" name="userMemo"><%=rs("userMemo")%></script>	
+				<script type="text/plain" id="userMemo" style="position:relative;z-index:0; width:100%; height:300px" name="userMemo" ><%=rs("userMemo")%></script>	
 				<script>var editor_a = UE.getEditor('userMemo');</script>
 				<%rs.close
 				set rs = nothing%>				

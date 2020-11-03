@@ -217,13 +217,13 @@ end if
 		
 		<div class="row">
 			<div class="col-md-6" align="left">
-				<h1><%=pjtName%><%=platformName%> 测试报告
+				<h1>
 				<%if rs("rptStatus") = "done" then%>			
-					（已完成）					
+					<%=pjtName%><%=platformName%> 测试报告（已完成）					
 				<%elseif rs("rptStatus") = "undone" then%>
-					（待审核）</h3>						
+					<%=pjtName%><%=platformName%> 测试报告（待审核）</h3>						
 				<%else%>
-					（已拒绝）																
+					<%=pjtName%><%=platformName%> 测试报告（已拒绝）																
 				<%end if %>											
 				</h1>
 			</div>				

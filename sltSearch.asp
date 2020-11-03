@@ -260,7 +260,7 @@ end if %>
 
 <script src="bootstrap/js/custom.js?v=0.9.1"></script>
 
-<script src="bootstrap/js/bootstrap.min.js"></script>
+
 
 
 <!-- page script -->

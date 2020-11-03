@@ -83,8 +83,8 @@
 	<ul class="sidebar-menu">
 		<li class="active"><a href="main.html"><i class="fa fa-dashboard"></i><span> 我的面板</span></a></li>
 		
-			<!-- 新增用例 -->
-			<li class="treeview"><a href="#"><i class="fa fa-edit text-danger">&nbsp;&nbsp;&nbsp;&nbsp;<%=cstNewCase%></i><i class="fa fa-angle-right text-danger"></i></a>
+			<!-- 新增用例 -->					
+			<li class="treeview"><a href="#"><i class="fa fa-edit text-danger"></i><span><%=cstNewCase%> </span><i class="fa fa-angle-right text-danger"></i></a>
 				<ul class="treeview-menu">
 					<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 					rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
@@ -127,7 +127,7 @@
 					  
 			
 			<!-- 执行用例 -->
-				<li class="treeview"><a href="#"><i class="fa fa-edit text-primary">&nbsp;&nbsp;&nbsp;&nbsp;<%=cstExcCase%></i><i class="fa fa-angle-right text-primary"></i></a>
+				<li class="treeview"><a href="#"><i class="fa fa-edit text-primary"></i><span><%=cstExcCase%></span><i class="fa fa-angle-right text-primary"></i></a>
 				<ul class="treeview-menu">
 					<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 					rs1.Open "select * from tbl_project where pjtStatus='1'  order by pjtName",conn,3,3 
@@ -187,7 +187,7 @@
 			
 			
 			<!-- 变更用例 -->
-			<li class="treeview"><a href="#"><i class="fa fa-edit text-warning">&nbsp;&nbsp;&nbsp;&nbsp;<%=cstChangeCase%></i><i class="fa fa-angle-right text-warning"></i></a>
+			<li class="treeview"><a href="#"><i class="fa fa-edit text-warning"></i><span><%=cstChangeCase%></span><i class="fa fa-angle-right text-warning"></i></a>
 				<ul class="treeview-menu">
 					<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 					rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
@@ -391,7 +391,7 @@
 			<!-- 测试报告 -->
 			
 			<li class="treeview"><a href="#"><i class="fa fa-book"></i><span> <%=cstReport%> </span><i class="fa fa-angle-right"></i></a>
-					<ul class="treeview-menu text-purpl">	
+					<ul class="treeview-menu text-purpl" >	
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 											
 						if rs1.eof then
@@ -586,18 +586,18 @@
 		text: "",
 		type: "warning",
 		showCancelButton: true,
-		confirmButtonText: "我确定",
+		confirmButtonText: "确定",
 		cancelButtonText: "容我三思",
 		closeOnConfirm: false,
 		closeOnCancel: false
 	}, function(isConfirm) {
 		if (isConfirm) {
-			swal("英明的决定", "Bye Bye", "success");
+			swal("再见", "Bye Bye", "success");
 			setTimeout("window.location.href='index.html';",1000); 
 			
 		} else {
-			swal("继续干活...", "", "success");
-			setTimeout("window.location.href='main.html';",1000); 
+			swal("继续...", "", "success");
+			
 		}
 	});
   });
@@ -607,18 +607,19 @@
 		text: "",
 		type: "warning",
 		showCancelButton: true,
-		confirmButtonText: "我确定",
+		confirmButtonText: "确定",
 		cancelButtonText: "容我三思",
 		closeOnConfirm: false,
 		closeOnCancel: false
 	}, function(isConfirm) {
 		if (isConfirm) {
-			swal("英明的决定", "Bye Bye", "success");
+			swal("再见", "Bye Bye", "success");
 			setTimeout("window.location.href='mainExit.html';",1000); 
 			
 		} else {
-			swal("继续干活...", "", "success");
-			setTimeout("window.location.href='main.html';",1000); 
+			swal("继续...", "", "success");
+			
+		
 		}
 	});
   });

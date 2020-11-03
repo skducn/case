@@ -106,7 +106,7 @@ end if
 					<div class="col-md-12">
 						<div class="form-group">
 						<h4 class="box-title">项目信息</h4>
-						<script type="text/plain" id="pjtIntro" style="width:100%; height:400px" name="pjtIntro"><%=rs("pjtIntro")%> </script>	
+						<script type="text/plain" id="pjtIntro" style="position:relative;z-index:0; width:100%; height:400px" name="pjtIntro"><%=rs("pjtIntro")%> </script>	
 						<script>var editor_a = UE.getEditor('pjtIntro');</script>
 						</div>
 					</div>
@@ -149,7 +149,6 @@ end if
 <script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
 
 
-<script src="731/dist/js/bootstrap.min.js"></script>
 
 
 

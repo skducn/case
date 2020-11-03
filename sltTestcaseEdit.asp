@@ -242,7 +242,7 @@ set rs2 = nothing
 										<div class="row">
 											<div class="col-md-12">
 												<h4 class="box-title">”√¿˝≤Ω÷Ë * </h4>
-												<script id="caseStep" style="width:100%; height:400px" name="caseStep"><%=rs("caseStep")%></script>	
+												<script id="caseStep" style="position:relative;z-index:0; width:100%; height:400px" name="caseStep"><%=rs("caseStep")%></script>	
 												<script > var editor_a = UE.getEditor('caseStep');</script>
 											</div>
 										</div>				
@@ -360,8 +360,8 @@ set rs2 = nothing
 </div>
 
 
-<!-- Bootstrap 3.3.5 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
+
+
 <!-- Select2 -->
 <script src="plugins/select2/select2.full.min.js"></script>
 <script>
