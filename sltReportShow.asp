@@ -91,7 +91,7 @@ end if
 				<%if rs("rptStatus") = "undone" and rs("rptAuthor")=session("userName") then%>
 					<div><%=pjtName%> <%=platformName%> 测试报告（待审核）</div>													
 				<%elseif rs("rptStatus") = "reject" and rs("rptAuthor")=session("userName") then%>
-					<div><%=pjtName%> <%=platformName%> 测试报告（已拒绝）</div>
+					<div><%=pjtName%> <%=platformName%> 测试报告（未通过）</div>
 				<% end if %>
 				</h1>		
 			</div>		

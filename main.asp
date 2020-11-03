@@ -114,7 +114,7 @@ end if %>
 					if rs13("rptStatus") = "undone" then														
 					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="blue"><i class="fa fa-edit"></i> 测试报告 - 待审核</font></a><%
 					elseif rs13("rptStatus") = "reject" then	
-					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="red"><i class="fa fa-edit"></i> 测试报告 - 已拒绝</font></a><%
+					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="red"><i class="fa fa-edit"></i> 测试报告 - 未通过</font></a><%
 					else
 					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><i class="fa fa-book"></i> 测试报告 - 已完成</a><%
 					end if 
@@ -407,7 +407,7 @@ end if %>
 					response.write "已完成"
 					elseif rs("rptStatus") = "reject" then
 					response.write "<font color='red'>"
-					response.write "已拒绝"
+					response.write "未通过"
 					response.write "</font>"
 					else
 					response.write "<font color='blue'>"
@@ -440,7 +440,7 @@ end if %>
 				<form class="form-horizontal" method="post" name="addForm" onSubmit="return CheckPost()" action="mainSave.html#tasklist"> 
 				<%set rs = server.createobject("adodb.recordset")
 				rs.open "select * from tbl_user where userName='"&session("userName")&"'",conn,3,3%>								
-				<script type="text/plain" id="userMemo" style="position:relative;z-index:0; width:100%; height:300px" name="userMemo" ><%=rs("userMemo")%></script>	
+				<script type="text/plain" id="userMemo" style="z-index:0; position:relative; width:100%; height:300px" name="userMemo" ><%=rs("userMemo")%></script>	
 				<script>var editor_a = UE.getEditor('userMemo');</script>
 				<%rs.close
 				set rs = nothing%>				
@@ -466,6 +466,9 @@ end if %>
  
 	
 
+<!-- table-->
+<script type="text/javascript" src="731/dist/js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="731/dist/js/plugins/dataTables.bootstrap.min.js"></script>
 
 <script language="javascript">  
 function CheckPost()

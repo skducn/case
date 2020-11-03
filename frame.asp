@@ -464,7 +464,7 @@
 														<i class="fa fa-edit text-primary"> <%=rs2("platformName")%></i><span class="label pull-right bg-yellow">待审核</span></a></li>							
 													<%elseif rs4("rptStatus") = "reject" then%>	
 														<li> <a href="sltReportShow-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">
-														<i class="fa fa-edit text-primary"> <%=rs2("platformName")%></i><span class="label pull-right bg-red">已拒绝</span></a></li>
+														<i class="fa fa-edit text-primary"> <%=rs2("platformName")%></i><span class="label pull-right bg-red">未通过</span></a></li>
 													<%elseif rs4("rptStatus") = "done" then%>	
 														<li><a href="sltReportShow-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">
 														<i class="fa fa-book text-primary"> <%=rs2("platformName")%></i><span class="label pull-right">已完成</span></a></li>	
