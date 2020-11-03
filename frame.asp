@@ -11,6 +11,7 @@
 <link rel="shortcut icon" href=" /favicon.ico" /> 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="shortcut icon" href="/favicon.ico" /> 
+
 <link rel="stylesheet" type="text/css" href="731/dist/css/main2.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -44,6 +45,7 @@
 						<button class="app-search__button"><i class="fa fa-search"></i></button>	
 					</form>	  
 				</li>
+								
            
               <!-- User Menu-->
               <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></a>
@@ -390,8 +392,8 @@
 			
 			<!-- ²âÊÔ±¨¸æ -->
 			
-			<li class="treeview"><a href="#"><i class="fa fa-book"></i><span> <%=cstReport%> </span><i class="fa fa-angle-right"></i></a>
-					<ul class="treeview-menu text-purpl" >	
+			<li class="treeview"><a href="#"><i class="fa fa-book" ></i><span> <%=cstReport%> </span><i class="fa fa-angle-right"></i></a>
+					<ul class="treeview-menu text-purpl">	
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 											
 						if rs1.eof then

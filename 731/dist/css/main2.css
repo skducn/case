@@ -1972,6 +1972,22 @@ output {
   color: #555555;
 }
 
+.form-search {
+  display: block;
+  width: 100%;
+  padding: 6px 2px ;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.44;
+  background-color: #bae3df;
+  background-image: none;
+  border: 0px ;
+  border-radius: 3px;
+  -webkit-transition: border-color ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s;
+}
+
 .form-control {
   display: block;
   width: 100%;
@@ -15509,4 +15525,61 @@ be a descendant of the grid when it is being dragged.
 
 .user .user-settings label {
   color: #666;
+}
+
+
+.app-search {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: center;
+      align-self: center;
+  margin-right: 15px;
+  padding: 10px 0;
+}
+
+@media (max-width: 480px) {
+  .app-search {
+    display: none;
+  }
+}
+
+.app-search__input {
+  border: 0;
+  padding: 5px 10px;
+  padding-right: 30px;
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.8);
+  -webkit-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
+}
+
+.app-search__input::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.app-search__input:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.app-search__input::-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.app-search__input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.app-search__button {
+  position: absolute;
+  right: 0;
+  top: 10px;
+  bottom: 10px;
+  padding: 0 10px;
+  border: 0;
+  color: rgba(0, 0, 0, 0.8);
+  background: none;
+  cursor: pointer;
 }
