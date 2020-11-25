@@ -1,7 +1,9 @@
 <!--#include file="../conn.asp"-->
 <!--#include file="../common/constant.asp"-->
 <!--#include file="../common/function.asp"-->
-<%=admMainExit(session("userPower"))%>
+
+<!-- < %=admMainExit(session("userPower")) %> -->
+
 
 <!DOCTYPE html>
 <html>
@@ -17,7 +19,11 @@
 	
 	<!-- Material Icons -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- jQuery可变透明度返回顶部代码 -->
+	<link href="css/67/css/zzsc.css" rel="stylesheet" type="text/css" />
+	<script src="css/67/js/jquery.min.js"></script>
+	<script src="css/67/js/zzsc.js"></script> 
 	
 	<script src="../ueditor/ueditor.config.js"></script>
 	<script src="../ueditor/ueditor.all.min.js"></script>	
@@ -59,12 +65,14 @@
 		</ul>
 
 
+	<% if session("userPower") = 1 then %>
+	
 		<!-- 消息管理 -->
 		
 		<ul class="sub-nav">		
 			<li >
 				<a href="#" title="Message"><span class="nav-icon material-icons ">message</span><%=admMessagePanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
-				<ul class="sub-nav">	
+				<ul class="sub-nav">				
 					<li><a href="admTaskAdd.html"><span class="nav-icon material-icons">add</span>新增消息</a></li>
 					<li class="Form Stuff">
 						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑消息 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
@@ -582,10 +590,20 @@
 			</ul>
 		</li> <!-- 用户管理 over-->
 		
+		<!-- 退出 -->
+		
 			 <ul>
-                 <li><a href="admMainExit.html" onClick="return confirm('是否立即退出系统？')"><span class="nav-icon material-icons">exit_to_app</span> 退出</a></li>           
+                 <li><a href="admMainExit.html" onClick="return confirm('是否立即退出系统？')"><span class="nav-icon material-icons">exit_to_app</span> 退出</a></li>   
              </ul>
-
+			 
+		<%else %>
+		
+		<!-- 返回 -->
+		
+			 <ul>
+			 	 <li><a href="../main.html"><span class="nav-icon material-icons">keyboard_return</span> 返回</a></li>                    
+             </ul>
+		<%end if %>
 
 	</nav>
 </aside>

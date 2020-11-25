@@ -48,6 +48,8 @@ RewriteRule ^admSearchSearch.html /adm/admSearch.asp?action=search
 RewriteRule ^admReportAudit-(.*)-(.*).html /adm/admReportAudit.asp?pjtId=$1&platformId=$2
 RewriteRule ^admReportAuditAudit-(.*)-(.*).html /adm/admReportAudit.asp?action=audit&pjtId=$1&platformId=$2
 RewriteRule ^admReportAuditNoaudit-(.*)-(.*).html /adm/admReportAudit.asp?action=noAudit&pjtId=$1&platformId=$2
+RewriteRule ^admReportAuditRevise-(.*)-(.*).html /adm/admReportAudit.asp?action=revise&pjtId=$1&platformId=$2
+
 RewriteRule ^admExcTestcaseTa-(.*)-(.*)-(.*)-(.*)-(.*).html /adm/admExcTestcaseTa.asp?pjtId=$1&platformId=$2&lblId=$3&caseStage=$4&user=$5
 RewriteRule ^admDatabase-(.*)-(.*).html /adm/admDatabase.asp?pjtId=$1&pjtDBDatabase=$2
 RewriteRule ^admDatebaseRecord-(.*)-(.*)-(.*)-(.*).html /adm/admDatabase.asp?action=record&pjtId=$1&pjtDBDatabase=$2&tablename=$3&recordSum=$4

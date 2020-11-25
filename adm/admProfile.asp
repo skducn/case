@@ -137,7 +137,7 @@ end if
 	<div class="row page-tilte align-items-center">
 	  <div class="col-md-auto">
 		<a href="#" class="mt-3 d-md-none float-right toggle-controls"><span class="material-icons">keyboard_arrow_down</span></a>
-		<h1 class="weight-300 h3 title"><%=admProfile%></h1>
+		<h1 class="weight-300 h3 title">个人信息</h1>
 		<p class="text-muted m-0 desc">Tell about your self here</p>
 	  </div> 
 	  <div class="col controls-wrapper mt-3 mt-md-0 d-none d-md-block ">
@@ -163,9 +163,10 @@ end if
 						  <div class="mx-5 my-4 px-4" align="center">
 							  <img src="<%=rs("userImg")%>" class="img-thumbnail img-fluid rounded-circle">
 						  </div>
+						
 
 						  <div class="text-center">
-							<h5 class="weight-400"><%=rs("userNickName")%></h5>
+							<h4 class="weight-400"><%=rs("userNickName")%></h4>
 						
 
 							<button class="btn btn-info px-4 rounded mx-1"><%=rs("userTitle")%></button>
@@ -222,10 +223,13 @@ end if
 				
 				
 					
-					<div class="form-group col-md-12" align="center">
-						<!--  上传头像 -->
-						<div id="swfContainer" align="center"></div>	
+					<!--  上传头像 插件 -->
+					<div class="form-group col-md-12" align="center">						
+						<div id="swfContainer" align="center"></div>
+						<br>	
+						提醒：google浏览器需允许Flash才能显示上传头像插件，请设置 <a href="chrome://settings/content/flash">chrome://settings/content/flash</a>
 					</div>
+					
 					
 					
 					<div class="form-row">
@@ -290,9 +294,9 @@ end if
 	//case 1 : alert("页面成功加载了组件！");break;
 	//case 2 : alert("已成功加载默认指定的图片到编辑面板。");break;
 	case 3 :
-	if(msg.type == 0){alert("温馨提示：摄像头已准备就绪且用户已允许使用", function () {}, {type: 'success', confirmButtonText: '确定'});}
-	else if(msg.type == 1){alert("温馨提示：摄像头已准备就绪但用户未允许使用!", function () {}, {type: 'warning', confirmButtonText: '确定'});}
-	else{alert("温馨提示：摄像头被占用!", function () {}, {type: 'warning', confirmButtonText: '确定'});}
+	if(msg.type == 0){alert("温馨提示","摄像头已准备就绪且用户已允许使用", function () {}, {type: 'success', confirmButtonText: '确定'});}
+	else if(msg.type == 1){alert("温馨提示","摄像头已准备就绪但用户未允许使用!", function () {}, {type: 'warning', confirmButtonText: '确定'});}
+	else{alert("温馨提示","摄像头被占用!", function () {}, {type: 'warning', confirmButtonText: '确定'});}
 	break;
 	case 5 : 
 	if(msg.type == 0){if(msg.content.sourceUrl){alert("原图已成功保存至服务器，url为：\n" +　msg.content.sourceUrl);

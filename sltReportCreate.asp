@@ -77,6 +77,9 @@ if request("action") = "submit" then
 		rs("rpt_platformId") = platformId
 		rs("rptStatus") = "undone"
 		
+		if request("rptName") <> "" then
+			rs("rptName") = request("rptName")
+		end if 
 		rs("rptNo") = request("rptNo")
 		rs("rptGoal") = request("rptGoal")
 		rs("rptCaption") = request("rptCaption")
@@ -194,37 +197,35 @@ rs1.close
 	
 		<form  action="sltReportCreateSubmit.html" method="post"  name="addForm" onSubmit="return CheckPost()" >		
 
-	
 		<div class="row">
 			<div class="col-md-12">
 				<div class="nav-tabs-custom">
 														 
-					<div class="row">					
-						<div class="col-md-10" align="left"><h3 class="box-title"><%=pjtName%> - <%=platformName%> 测试报告</h3>
-						</div>									
-						
+					<div class="row">	
 							
-			
-					<div class="col-md-2" align="right">
-					<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button>	
-					<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
-					</div>	
+							
+						<div class="col-md-12" align="right">
+							<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button>	
+							<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
+						</div>	
 					</div>
-					
-					<hr>
+				
+				<hr>
 															
 					
 <% set rs8 = server.createobject("adodb.recordset")
 rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rptId desc ",conn,3,3 %>
 
 <div class="row">  
+
+	<div class="col-md-8">	
+		<h4 class="box-title">报告名称</h4>	
+		<input type="text" name="rptName" class="form-control" size="5" maxlength="40"  placeholder="{项目}{版本}测试报告" value="<%=pjtName%><%=platformName%> 测试报告"></input>		
+	</div>	
+	
 	<div class="col-md-2">
-		<div class="form-group">
-			<h4 class="box-title">默认模板名</h4>
-			
-			<input type="text" name="rptNo" class="form-control" size="5" maxlength="20"  placeholder="请输入 ..." value="<%=pjtName%><%=platformName%>"></input>
-			
-		</div>	
+		<h4 class="box-title">模板名称</h4>	
+		<input type="text" name="rptNo" class="form-control" size="5" maxlength="20"  placeholder="请输入 ..." value="<%=pjtName%><%=platformName%>"></input>	
 	</div>
 	
 	<div class="col-md-2">	 
@@ -998,12 +999,6 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 			
 		</form>
 	
-			<div class="row">
-				<div class="col-md-12" align="right">					
-					<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
-					<a id='DD'></a>		
-				</div>
-			</div>
 </div>
 </div>
 
@@ -1036,5 +1031,7 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
    
   });
 </script>
+
+<a href="#0" class="cd-top">Top</a>
 </body>
 </html>

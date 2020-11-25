@@ -26,6 +26,29 @@ if rs.recordcount = 0 then
 end if 
 %>
 
+<!--  重新审核，恢复到待审核 -->	
+
+<% 
+if request("action") = "revise" then
+set rs = server.createobject("adodb.recordset")
+	rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" order by rptId DESC",conn,3,3
+	rs("rptStatus") = "undone"
+	rs("rptRejectReason") = ""
+	rs("rptDoneDate") = now()
+	rs.update
+	rs.close
+	set rs = nothing
+	
+	set rs = server.createobject("adodb.recordset")
+	rs.open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" order by platformId DESC",conn,3,3
+	rs("verIsReport") = "undone"
+	rs.update
+	rs.close
+	set rs = nothing
+	response.Redirect("admMain.html")
+end if
+%>
+
 
 
 <!--  审核通过 -->	
@@ -93,7 +116,7 @@ rs1.close
 	<div class="row page-tilte align-items-center">
 		<div class="col-md-auto">
 			<a href="#" class="mt-3 d-md-none float-right toggle-controls"><span class="material-icons">keyboard_arrow_down</span></a>
-			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">filter_1</span> 报告管理 </h1>
+			<h1 class="weight-300 h3 title"><span class="nav-icon material-icons ">filter_1</span> 报告管理 </h2>
 			<p class="text-muted m-0 desc">Report Panel</p>
 		</div> 
 		<div class="col controls-wrapper mt-3 mt-md-0 d-none d-md-block ">
@@ -105,19 +128,32 @@ rs1.close
 <div class="card mb-4">				
 <div class="card-body">		 
 
- 
-		<% if rs("rptStatus") = "undone" then%>
-		    <h1 align="center"><%=pjtName%> <%=platformName%> 测试报告(未审核)</h1>	
-		<% elseif rs("rptStatus") = "reject" then%>		
-		    <h1 align="center"><%=pjtName%> <%=platformName%> 测试报告(已拒绝)</h1>	
-		<% else %>
-			<h1 align="center"><%=pjtName%> <%=platformName%> 测试报告(已审核)</h1>
-		<%end if %>
+
+			<div class="row">
+			<div class="col-md-10">	
+			<h2>
+			
+			<% if rs("rptStatus") = "undone" then%>
+				<%=rs("rptName")%>（未审核）
+			<% elseif rs("rptStatus") = "reject" then%>	
+				<%=rs("rptName")%>（已拒绝）
+			<%else%>
+				<%=rs("rptName")%>（已完成）
+			<%end if %>
+			
+			</h2>	</div>
+			<div class="col-md-2" align="right">	
+			<a href="#DD" ><button class="btn btn-info px-2 rounded mx-0"><i class="material-icons">arrow_downward</i></button></a>
+			</div>
+			</div>
+	
 		
-		<br>
+
+		
+		<hr>
 	
 	
-<h1 >第1章 引言 </h1>
+<h2>第1章 引言 </h2>
 	
 	<div class="col-md-12">	
 	<h3 class="box-title"> 1.1 目的</h3>						
@@ -136,7 +172,7 @@ rs1.close
 				
 				     
 
-<br><h1>第2章 测试概述 </h1>
+<br><h2>第2章 测试概述 </h2>
 
 	<div class="col-md-12">	
 	<h3 class="box-title"> 2.1 测试对象</h3>
@@ -181,7 +217,7 @@ rs1.close
 		
 				
 			
-<br><h1 >第3章 测试方法 </h1>
+<br><h2>第3章 测试方法 </h2>
 			
 		
 <div class="col-md-12">
@@ -293,7 +329,17 @@ rs1.close
 	<div class="col-md-12">	
 	<h3 class="box-title"> 3.3 软件/硬件说明</h3><br>
 	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptSoft"),chr(13),"<BR>")%></p>		
-	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptHard"),chr(13),"<BR>")%></p>				
+	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptHard"),chr(13),"<BR>")%></p>	
+		<!--  显示图片 --> 
+			<% if rs("rptHardPic") <> "*" then  
+				rptHardPic = split(replace(rs("rptHardPic"),"*",""),",")					
+				for i=1 to ubound(rptHardPic)														
+			%>				
+					<p><a href="sltReportShowDel-<%=pjtId%>-<%=platformId%>-<%=rptHardPic(i)%>.html" onClick="return confirm('是否要删除此图片？')" >
+					<img src=<%="uploadPic\plupload\"+rptHardPic(i)%>> </a>
+					</p>
+				<%next%>
+			<% end if %>			
 	</div>	
 	
 	<div class="col-md-12">	
@@ -312,7 +358,7 @@ rs1.close
 	
 
 
-<br><h1>第4章 测试结果及缺陷分析 </h1>
+<br><h2>第4章 测试结果及缺陷分析 </h2>
 		
 	<div class="col-md-12">
 	<h3 class="box-title"> 4.1 测试用例覆盖率</h3>
@@ -589,7 +635,7 @@ rs1.close
 				
 				
 
-<br><h1>第5章 测试总结与建议</h1>
+<br><h2>第5章 测试总结与建议</h2>
 
 			
 	<div class="col-md-12">	
@@ -631,37 +677,58 @@ rs1.close
 	<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptAdvice"),chr(13),"<BR>")%></p>
 	</div>					
 	
+	<div class="col-md-12">
+			<div class="box-header"><h3 class="box-title"> 5.6 附图</h3></div>
+			
+		<!--  显示图片 --> 
+		<% if rs("rptRedminePic") <> "*" then  
+			rptRedminePic = split(replace(rs("rptRedminePic"),"*",""),",")					
+			for i=1 to ubound(rptRedminePic)														
+		%>				
+				<p><a href="sltReportShowDel-<%=pjtId%>-<%=platformId%>-<%=rptRedminePic(i)%>.html" onClick="return confirm('是否要删除此图片？')" >
+				<img src=<%="uploadPic\plupload\"+rptRedminePic(i)%>> </a>
+				<h3><% response.write "附图"&i %></h3></p><br>
+				
+			<%next%>
+		<% end if %>
+		</div>
+	
 				
 
 			</div><!-- /.row -->	  
 		</div><!-- /.body -->
 	</div><!-- /.body default-->
   
+ 
 
-	<form role="form" action="admReportAuditNoaudit-<%=pjtId%>-<%=platformId%>.html" method="post" name="addForm" onSubmit="return CheckPost()" >	
-			<% if rs("rptStatus") <> "done" then%>
+		<form role="form" action="admReportAuditNoaudit-<%=pjtId%>-<%=platformId%>.html" method="post" name="addForm" onSubmit="return CheckPost()" >	
+		<% if rs("rptStatus") <> "done" then%>
+		
+		<hr>
 			<div class="row">
+				<div class="col-md-12" align="center">
+					<h3 class="box-title"> 审核意见</h3>	
+					
+					<textarea name="rejectReason" cols="100%" rows="5" placeholder="请输入..."><%=rs("rptRejectReason")%></textarea>
+					<br><br>
+				</div>				
+	
 				<div class="col-md-12" align="center">
 					<a href="admReportAuditAudit-<%=pjtId%>-<%=platformId%>.html" onClick="return confirm('是否审核通过，确定吗？')">
 					<button type="button" class="btn btn-info pull-left" style="margin-right: 5px;"  href="#" >审核通过</button></a>										
-					<button type="submit" class="btn btn-danger"  href="#">审核不通过</button> 
-			
-				</div>
-
-				<div class="col-md-12" align="center">
-				<br>
-				<textarea name="rejectReason" cols="200" rows="5" maxlength="300"  placeholder="请填写反馈信息"><%=rs("rptRejectReason")%></textarea>
-				</div>
-			</div>		
-						
-				
-			<% end if %>
+					<button type="submit" class="btn btn-danger"  href="#">拒绝</button> 
+					<br><br>
+				</div>	
+			</div>
+		
+							
+		<% end if %>
 		</form>
      
-
-   
+    <br>
 	</section><!-- ./col -->
-
+<a id='DD'></a>		
+<a href="#0" class="cd-top">Top</a>
 	
 </div><!-- ./wrapper -->
 

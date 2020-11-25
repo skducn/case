@@ -1,7 +1,7 @@
 <!--#include file="frame.asp"-->
   
 <!--  …œ¥´Õº∆¨øÿº˛	-->	
-<script type="text/javascript" src="upload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="uploadPic/js/plupload.full.min.js"></script>
 
   
 <%
@@ -73,6 +73,14 @@ end if
 %>
 
 <div class="content-wrapper">
+	<div class="page-title">
+		<div>
+			<h1><i class="fa fa-edit"></i> ≤‚ ‘±®∏Ê</h1><p>show testreport</p>
+		</div>
+		<div>
+			<ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">≤‚ ‘±®∏Ê</a></li></ul>
+		</div>
+	</div>
 													
 	<div class="card">		
 		<div class="row">
@@ -84,23 +92,28 @@ end if
 			</div>
 		</div>
 		
-		<div class="row">
-			<div class="col-md-6">
-				<h1>
-				
-				<%if rs("rptStatus") = "undone" and rs("rptAuthor")=session("userName") then%>
-					<div><%=pjtName%> <%=platformName%> ≤‚ ‘±®∏Ê£®¥˝…Û∫À£©</div>													
-				<%elseif rs("rptStatus") = "reject" and rs("rptAuthor")=session("userName") then%>
-					<div><%=pjtName%> <%=platformName%> ≤‚ ‘±®∏Ê£®Œ¥Õ®π˝£©</div>
-				<% end if %>
-				</h1>		
-			</div>		
-			<div class="col-md-6" align="right">
-				<%if rs("rptStatus") <> "done" then%>
-					<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="±‡º≠"><i class='fa fa-edit'>&nbsp;±‡º≠</i></a>		
-				<% end if %>
-				
-			</div>		
+		<div class="row">							
+			<%if rs("rptStatus") = "undone" and rs("rptAuthor")=session("userName") then%>
+				<div class="col-md-10">
+				<h2><div><%=rs("rptName")%>£®¥˝…Û∫À£©</div></h2>																			
+				</div>
+				<div class="col-md-2" align="right">
+				<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="±‡º≠"><i class='fa fa-edit'>&nbsp;±‡º≠</i></a>	
+				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="µΩ“≥µ◊"><i class="fa fa-arrow-circle-down"></i></a>		
+				</div>
+			<%elseif rs("rptStatus") = "reject" and rs("rptAuthor")=session("userName") then%>				
+				<div class="col-md-10">
+				<h2><div><%=rs("rptName")%>£®Œ¥Õ®π˝£©</div></h2>																			
+				</div>
+				<div class="col-md-2" align="right">
+				<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="±‡º≠"><i class='fa fa-edit'>&nbsp;±‡º≠</i></a>	
+				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="µΩ“≥µ◊"><i class="fa fa-arrow-circle-down"></i></a>		
+				</div>
+			<%else%>
+				<div class="col-md-12" align="center">
+					<h2><div><%=rs("rptName")%></div></h2>																			
+				</div>
+			<% end if %>																	
 		</div>				
 		
 		<hr>							
@@ -290,7 +303,7 @@ end if
 				for i=1 to ubound(rptHardPic)														
 			%>				
 					<p><a href="sltReportShowDel-<%=pjtId%>-<%=platformId%>-<%=rptHardPic(i)%>.html" onClick="return confirm(' «∑Ò“™…æ≥˝¥ÀÕº∆¨£ø')" >
-					<img src=<%="upload\plupload\"+rptHardPic(i)%>> </a>
+					<img src=<%="uploadPic\plupload\"+rptHardPic(i)%>> </a>
 					</p>
 				<%next%>
 			<% end if %>
@@ -558,7 +571,7 @@ end if
 			for i=1 to ubound(rptRedminePic)														
 		%>				
 				<p><a href="sltReportShowDel-<%=pjtId%>-<%=platformId%>-<%=rptRedminePic(i)%>.html" onClick="return confirm(' «∑Ò“™…æ≥˝¥ÀÕº∆¨£ø')" >
-				<img src=<%="upload\plupload\"+rptRedminePic(i)%>> </a>
+				<img src=<%="uploadPic\plupload\"+rptRedminePic(i)%>> </a>
 				<h3><% response.write "∏ΩÕº"&i %></h3></p><br>
 				
 			<%next%>
@@ -567,11 +580,7 @@ end if
 			
 			
 		<div class="row">
-			<div class="col-md-12" align="right">	
-				<hr>
-				<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="ªÿ“≥∂•"><i class="fa fa-arrow-circle-up"></i></button></a>	
-				<a id='DD'></a>		
-			</div>
+			
 		</div>
 	</div><!-- <div class="card">	 -->
 
@@ -761,5 +770,8 @@ Morris.Bar({
         + Math.round(series.percent) + "%</div>";
   }
 </script>
+<a id='DD'></a>		
+<a href="#0" class="cd-top">Top</a>
+
 </body>
 </html>

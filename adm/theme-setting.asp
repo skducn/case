@@ -1,5 +1,7 @@
 <!--#include file="admFrame.asp"-->
-            
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>tinymce.init({selector:'#userMemo'});</script>
+              
 <title>后台-主题背景 | <%=cstCompany%></title>
 			
             <div class="content-wrapper">
@@ -17,9 +19,32 @@
                   </div>
                 </div> 
 
+	
+	Material icons 图标大全  https://www.wp2.cn/material_icons/
+	<br>	<br>	<br>
                 
-              
+    <form  name="form1" method="post" action="admMainSave.html">
+	 <textarea id="userMemo" name="userMemo" rows="12">
+	 	
+			<div class="col-md-12" align="center">
+				<%
+				set rs8 = server.createobject("adodb.recordset")
+				rs8.open "select * from tbl_user where userName='"&session("userName")&"'",conn,3,3
+				userMemo = rs8("userMemo")		
+				rs8.close
+				set rs8 = nothing
+				%>
+			
+				<div align="left"><%=userMemo%></div>
+			
+			</div></textarea>
+				<br>
+				<div align="center">
+			<button type="submit" class="btn btn-primary text-white py-1 px-2"><span class="material-icons mr-1 align-top">save</span> 保存</button>
+		</div>
+    </form>
 
+		<br>	<br>	<br>
                       
                 <div class="content">
                   
@@ -594,7 +619,7 @@
 
 
 
-
+<a href="#0" class="cd-top">Top</a>
      
 
   </body>

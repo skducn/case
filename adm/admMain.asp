@@ -2,7 +2,14 @@
 
 <title><%=admDashboard%> | <%=admCompany%></title>
 
-<% if request("action") = "save" then
+
+<% if request("action") = "exit" then
+	Session.Abandon()
+	response.Redirect "../index.html"
+
+end if 
+
+if request("action") = "save" then
 	set rs = server.createobject("adodb.recordset")
 	rs.open "select * from tbl_user where userName='"&session("userName")&"'",conn,3,3
 	rs("userMemo") = request("userMemo")
@@ -156,11 +163,14 @@ do while not rs7.eof
 						%><span class="nav-icon material-icons ">report_off</span>测试报告(未创建)<%																	
 					else
 						if rs9("rptStatus") = "undone" then 			
-							%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-yellow">测试报告(待审核)</a><%																	
+							%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html">测试报告(待审核)</a><%																	
 						elseif rs9("rptStatus") = "reject" then 			
-							%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-red"><font color="red">测试报告(已拒绝)</font></a><%																	
+							%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="red">测试报告(已拒绝)</font></a><%																	
 						else
-							%><a href="../sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" target="_blank"><font color="black">测试报告(已完成)</font></a><%	
+							%><a href="../sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" target="_blank"><font color="black">测试报告(已完成)</font></a>
+							<a href="admReportAuditRevise-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" onClick="return confirm('温馨提示，是否重新审核？')">重新审核</a>							
+							
+							<%	
 						end if 
 				end if 
 			end if 
@@ -317,7 +327,8 @@ do while not rs47.eof
 				elseif rs9("rptStatus") = "reject" then 			
 					%> <a href="admReportAudit-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" class="text-red"><font color="red">测试报告(已拒绝)</font></a><%																	
 				else
-				%><a href="../sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" target="_blank"><font color="black"><b>测试报告(已完成)</b></font></a><%	
+				%><a href="../sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" target="_blank"><font color="black"><b>测试报告(已完成)</b></font></a>
+				<a href="admReportAuditRevise-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html" onClick="return confirm('温馨提示，是否重新审核？')">重新审核</a><%	
 				end if 
 			end if 
 		
@@ -363,8 +374,8 @@ do while not rs47.eof
 		
 	
 	<form id="form1" name="form1" method="post" action="admMainSave.html">
-		<div class="row">
-			<div class="col-md-12">
+		<div class="row">	
+			<div class="col-md-12" align="center">
 				<%
 				set rs8 = server.createobject("adodb.recordset")
 				rs8.open "select * from tbl_user where userName='"&session("userName")&"'",conn,3,3
@@ -373,8 +384,8 @@ do while not rs47.eof
 				set rs8 = nothing
 				%>
 			
-				<h1 class="weight-300 h3 title">&nbsp;工作清单</h1>
-				<script type="text/plain" id="userMemo" style="width:100%; height:400px" name="userMemo"><%=userMemo%></script>	
+				<div align="left"><h1 class="weight-300 h3 title">&nbsp;&nbsp;工作清单</h1></div>
+				<script type="text/plain" id="userMemo" style="width:99%; height:400px" name="userMemo"><%=userMemo%></script>	
 				<script>var editor_a = UE.getEditor('userMemo');</script>
 			</div>
 		</div>
@@ -389,6 +400,6 @@ do while not rs47.eof
 </div>
 </div>		
 </div>
-
+<a href="#0" class="cd-top">Top</a>
 </body>
 </html>

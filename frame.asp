@@ -11,7 +11,6 @@
 <link rel="shortcut icon" href=" /favicon.ico" /> 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="shortcut icon" href="/favicon.ico" /> 
-
 <link rel="stylesheet" type="text/css" href="731/dist/css/main2.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -24,6 +23,11 @@
 <script src="ueditor/ueditor.config.js"></script>
 <script src="ueditor/ueditor.all.min.js"> </script>	
 <script src="ueditor/lang/zh-cn/zh-cn.js"></script> 
+
+<!-- top按钮-->
+<link href="css/67/css/zzsc.css" rel="stylesheet" type="text/css" />
+<script src="css/67/js/jquery.min.js"></script>
+<script src="css/67/js/zzsc.js"></script> 
 
 </head>
 
@@ -47,10 +51,10 @@
 				</li>
 								
            
-              <!-- User Menu-->
+              <!-- User Menu  sltUserEdit.html-->
               <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></a>
                 <ul class="dropdown-menu settings-menu">
-                  <li><a href="/sltUserEdit.html"><i class="fa fa-user fa-lg"></i> 个人信息</a></li>                 				 
+                  <li><a href="admProfile.html"><i class="fa fa-user fa-lg"></i> 个人信息</a></li>                 				 
 				  <li><a href="#" id="demoExit1"><i class="fa fa-sign-out fa-lg"></i>  <span>退出</span></a></li>			
                 </ul>
               </li>
@@ -58,27 +62,23 @@
           </div>
         </nav>
       </header>
+	  
       <!-- Side-Nav-->
       <aside class="main-sidebar hidden-print">
         <section class="sidebar">
-          <div class="user-panel">
-		  
-		 
-		
-				
-		 <%Set rs = Server.CreateObject("Adodb.Recordset")
-				rs.Open "select * from tbl_user where userName='"&session("userName")&"'",conn,3,3 
-				%>								
-            <div class="pull-left image">
-				<img class="img-circle" src="<%=rs("userImg")%>" alt="User Image"></div>
-            <div class="pull-left info">
-              <p><%=rs("userNickname")%></p>
-              <p class="designation"><%=rs("userTitle")%></p>
-            </div>
-          </div>
-		  <%rs.close%>
+          <div class="user-panel">		  								
+			<%Set rs = Server.CreateObject("Adodb.Recordset")
+			rs.Open "select * from tbl_user where userName='"&session("userName")&"'",conn,3,3 %>								
+			<div class="pull-left image"><img class="img-circle" src="<%=rs("userImg")%>" alt="User Image"></div>
+			<div class="pull-left info">
+				<p><%=rs("userNickname")%></p>
+				<p class="designation"><%=rs("userTitle")%></p>
+			</div>
+			<%rs.close%>
+		</div>
+			
 	
-	
+
 
 		  
 <!-- Sidebar Menu-->

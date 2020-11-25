@@ -1,431 +1,132 @@
+<%@ LANGUAGE = "VBSCRIPT" CODEPAGE = "65001"%>
 <!--#include file="../conn.asp"-->
 
 <%
+Response.Charset			= "UTF-8"	'指定输出网页编码
+Server.ScriptTimeOut		= 5000		'脚本执行超时最大时限
+'温馨提示：
+'	在flash的参数名upload_url中可自行定义一些参数（请求方式：POST），定义后在服务器端获取即可，比如可以应用到用户验证，文件的保存名等。
+'	如下代码在上传接口Upload.asp中定义了一个user=xxx的参数：
+'		var swf = new fullAvatarEditor("swf", {
+'			id: "swf",
+'			upload_url: "Upload.asp?user=xxx"
+'		});
+'	在本页即可用Upload.Forms("user")获取xxx。
+'	本示例未作极致的用户体验与严谨的安全设计（如用户直接访问此页时该如何，万一客户端数据不可信时验证文件的大小、类型等），只保证正常情况下无误，请阁下注意。
+'艾恩ASP无组件上传类 V13.01.16
+%>
 
-'�����ߣ�����ĺ���
-'��ӭ����Ⱥ��341053582
-Response.Buffer = True 
-Response.ExpiresAbsolute = Now() - 1 
-Response.Expires = 0 
-Response.CacheControl = "no-cache" 
-Response.AddHeader "Pragma", "No-Cache"
-Session.CodePage=936
-Response.Charset="GB2312"
-session.Timeout=999
-Class UpLoadClass
-	Private m_TotalSize,m_MaxSize,m_FileType,m_SavePath,m_AutoSave,m_Error,m_Charset
-	Private m_dicForm,m_binForm,m_binItem,m_strDate,m_lngTime
-	Public	FormItem,FileItem
+<!--#include file="Upload.asp.cls"-->
+<%
+'生成指定长度的随机码。
+Function CreateRandomCode(ByVal Length)
+	Randomize
+	Dim RandCode		: RandCode = ""
+	Dim RandChar		: RandChar = "0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z"
+	Dim RandCharArray	: RandCharArray = Split(RandChar, ",")
+	Dim i
+	For i = 1 To Length
+		RandCode = RandCode & RandCharArray(Int(36 * Rnd))
+	Next
+	CreateRandomCode = RandCode
+End Function
 
-	Public Property Get Version
-		Version="Fonshen ASP UpLoadClass Version 2.11"
-	End Property
+Function GetVirtualPath(ByVal path)
+	Dim webRoot : webRoot = Server.MapPath("/")
+	Dim physicalPath : physicalPath = Server.MapPath(path)
+	GetVirtualPath = Replace(physicalPath, webRoot, "")
+	GetVirtualPath = Replace(GetVirtualPath, "\", "/")
+End Function
 
-	Public Property Get Error
-		Error=m_Error
-	End Property
+'取服务器时间+8位随机码作为部分文件名，确保文件名无重复。
+Dim FileName : FileName = Year(NowTime) & Right("0" & Month(NowTime), 2) & Right("0" & Day(NowTime), 2) & Right("0" & Hour(NowTime), 2) & Right("0" & Minute(NowTime), 2) & Right("0" & Second(NowTime), 2) & Left(Replace(Right(timer(), 2), ".", "") & "0", 2) & CreateRandomCode(8)
 
-	Public Property Get Charset
-		Charset=m_Charset
-	End Property
-	Public Property Let Charset(strCharset)
-		m_Charset=strCharset
-	End Property
+Dim Msg								'表示自定义的附加返回消息。
+Dim Success : Success = "false"		'表示图片是否已上传成功。
+Dim SavePath : SavePath = "img"	'保存在服务器的虚拟路径
+Dim SourceUrl						'表示原始图片的保存地址。
+DIM AvatarUrls						'表示所有头像图片的保存地址，多个之间使用英文的逗号“,”分隔。
 
-	Public Property Get TotalSize
-		TotalSize=m_TotalSize
-	End Property
-	Public Property Let TotalSize(lngSize)
-		if isNumeric(lngSize) then m_TotalSize=Clng(lngSize)
-	End Property
+Dim SuccessNum : SuccessNum = 0
 
-	Public Property Get MaxSize
-		MaxSize=m_MaxSize
-	End Property
-	Public Property Let MaxSize(lngSize)
-		if isNumeric(lngSize) then m_MaxSize=Clng(lngSize)
-	End Property
+On Error Resume Next
+'建立上传对象
+Dim Upload
+Set Upload = new AnUpLoad
+	Upload.Charset = "UTF-8"				'设置字符集
+	Upload.Exe = "*.bmp;*.jpg;*.gif;*.png;"	'设置允许上传的文件类型
+	Upload.SingleSize = 1024 * 1024 * 2		'设置单个文件的最大上传限制，按字节计算，该处为2MB
+	Upload.GetData()
+	If Upload.ErrorID > 0 Then
+		Msg = Upload.Description
+	Else
+		'定义一个变量用以储存当前头像的序号
+		Dim AvatarNumber : AvatarNumber = 1
+		Dim i : i = 1
+		'遍历所有文件域
+		For Each F In Upload.Files(-1)
+			Dim File
+			Set File = Upload.Files(F)
+				If File.IsFile Then
+					'如果 file 域的名称是以__source（可在插件配置参数中自定义，参数名：src_field_name）打头，说明是原始图片，如果在插件中定义可以上传的话，可在此处理。
+					If InStr(File.FormName, "__source") = 1 Then
+						'保存的文件名，不包括扩展名
+						File.UserSetName = "asp_source_" & FileName 
+						'保存的文件扩展名，不含点“.”
+						File.Extend = "jpg"
+						'当前头像基于原图的初始化参数（即只有上传原图时才会发送该数据），用于修改头像时保证界面的视图跟保存头像时一致，提升用户体验度。
+						'修改头像时设置默认加载的原图url为当前原图url+该参数即可，可直接附加到原图url中储存，不影响图片呈现。
+						Dim InitParams : InitParams = Upload.Forms("__initParams")
+						SourceUrl = GetVirtualPath(SavePath & "/" & File.UserSetName & "." & File.Extend) & InitParams
+						If File.SaveToFile(SavePath, -1, True) Then
+							SuccessNum = SuccessNum + 1
+						Else
+							Msg = "原图片保存失败，错误信息：" & File.Exception	'错误信息请参考同目录中的PDF文件
+						End If
+					'否则就是头像图片(file 域的名称：__avatar1,2,3...，可在插件配置参数中自定义，参数名：avatar_field_names)
+					Else
+						'保存的文件名，不包括扩展名
+						'File.UserSetName = "asp_avatar" & AvatarNumber & "_" & FileName
+						File.UserSetName = FileName
+						'保存的文件扩展名，不含点“.”
+						File.Extend = "jpg"
+						If File.SaveToFile(SavePath, -1, True) Then
+							SuccessNum = SuccessNum + 1
+							AvatarUrls = AvatarUrls & """" & GetVirtualPath(SavePath & "/" & File.FileName) & ""","
+							AvatarNumber = AvatarNumber + 1
+							set rs1 = server.CreateObject("ADODB.RecordSet")
+							rs1.Open "select * from tbl_User where userId="&Upload.Forms("userId")&"",conn,3,3
+							a = replace(AvatarUrls,"""","")		
+							a = replace(a,",","")
+							rs1("userImg") = a
+							rs1.update
+							rs1.close
+							set rs1 = nothing
+						Else
+							Msg = "头像保存失败，错误信息：" & File.Exception	'错误信息请参考同目录中的PDF文件
+						End If
+					End If
+				Set File = Nothing
+			End If
+			exit for
+		Next
+	End If
+'释放上传对象
+Set Upload = Nothing
 
-	Public Property Get FileType
-		FileType=m_FileType
-	End Property
-	Public Property Let FileType(strType)
-		m_FileType=strType
-	End Property
+If Err.Number <> 0 Then Err.Clear
 
-	Public Property Get SavePath
-		SavePath=m_SavePath
-	End Property
-	Public Property Let SavePath(strPath)
-		m_SavePath=Replace(strPath,chr(0),"")
-	End Property
+If SuccessNum > 0 Then
+	Success = "true"
+End If
 
-	Public Property Get AutoSave
-		AutoSave=m_AutoSave
-	End Property
-	Public Property Let AutoSave(byVal Flag)
-		select case Flag
-			case 0,1,2: m_AutoSave=Flag
-		end select
-	End Property
+If AvatarUrls <> "" Then
+	AvatarUrls = Left(AvatarUrls, Len(AvatarUrls) - 1)
 
-	Private Sub Class_Initialize
-		m_Error	   = -1
-		m_Charset  = "gb2312"
-		m_TotalSize= 0
-		m_MaxSize  = 153600
-		m_FileType = "jpg/gif"
-		m_SavePath = ""
-		m_AutoSave = 0
-		Dim dtmNow : dtmNow = Date()
-		m_strDate  = Year(dtmNow)&Right("0"&Month(dtmNow),2)&Right("0"&Day(dtmNow),2)
-		m_lngTime  = Clng(Timer()*1000)
-		Set m_binForm = Server.CreateObject("ADODB.Stream")
-		Set m_binItem = Server.CreateObject("ADODB.Stream")
-		Set m_dicForm = Server.CreateObject("Scripting.Dictionary")
-		m_dicForm.CompareMode = 1
-	End Sub
-
-	Private Sub Class_Terminate
-		m_dicForm.RemoveAll
-		Set m_dicForm = nothing
-		Set m_binItem = nothing
-		m_binForm.Close()
-		Set m_binForm = nothing
-	End Sub
-
-	Public Function Open()
-		set rs8 = server.createobject("adodb.recordset")
-		rs8.open "select * from tbl_report where rpt_pjtId="&request("pjtId")&" and rpt_platformId="&request("platformId")&" order by rptId desc",conn,3,3
-		Open = 0
-		if m_Error=-1 then
-			m_Error=0
-		else
-			Exit Function
-		end if
-		Dim lngRequestSize : lngRequestSize=Request.TotalBytes
-		if m_TotalSize>0 and lngRequestSize>m_TotalSize then
-			m_Error=5
-			Exit Function
-		elseif lngRequestSize<1 then
-			m_Error=4
-			Exit Function
-		end if
-
-		Dim lngChunkByte : lngChunkByte = 102400
-		Dim lngReadSize : lngReadSize = 0
-		m_binForm.Type = 1
-		m_binForm.Open()
-		do
-			m_binForm.Write Request.BinaryRead(lngChunkByte)
-			lngReadSize=lngReadSize+lngChunkByte
-			if  lngReadSize >= lngRequestSize then exit do
-		loop		
-		m_binForm.Position=0
-		Dim binRequestData : binRequestData=m_binForm.Read()
-
-		Dim bCrLf,strSeparator,intSeparator
-		bCrLf=ChrB(13)&ChrB(10)
-		intSeparator=InstrB(1,binRequestData,bCrLf)-1
-		strSeparator=LeftB(binRequestData,intSeparator)
-
-		Dim strItem,strInam,strFtyp,strPuri,strFnam,strFext,lngFsiz
-		Const strSplit="'"">"
-		Dim strFormItem,strFileItem,intTemp,strTemp
-		Dim p_start : p_start=intSeparator+2
-		Dim p_end
-		Do
-			p_end = InStrB(p_start,binRequestData,bCrLf&bCrLf)-1
-			m_binItem.Type=1
-			m_binItem.Open()
-			m_binForm.Position=p_start
-			m_binForm.CopyTo m_binItem,p_end-p_start
-			m_binItem.Position=0
-			m_binItem.Type=2
-			m_binItem.Charset=m_Charset
-			strItem = m_binItem.ReadText()
-			m_binItem.Close()
-			intTemp=Instr(39,strItem,"""")
-			strInam=Mid(strItem,39,intTemp-39)
-
-			p_start = p_end + 4
-			p_end = InStrB(p_start,binRequestData,strSeparator)-1
-			m_binItem.Type=1
-			m_binItem.Open()
-			m_binForm.Position=p_start
-			lngFsiz=p_end-p_start-2
-			m_binForm.CopyTo m_binItem,lngFsiz
-
-			if Instr(intTemp,strItem,"filename=""")<>0 then
-			if not m_dicForm.Exists(strInam&"_From") then
-				strFileItem=strFileItem&strSplit&strInam
-				
-				if m_binItem.Size<>0 then
-					intTemp=intTemp+13
-					strFtyp=Mid(strItem,Instr(intTemp,strItem,"Content-Type: ")+14)
-					strPuri=Mid(strItem,intTemp,Instr(intTemp,strItem,"""")-intTemp)
-					intTemp=InstrRev(strPuri,"\")
-					strFnam=Mid(strPuri,intTemp+1)
-					
-					m_dicForm.Add strInam&"_Type",strFtyp
-					m_dicForm.Add strInam&"_Name",strFnam
-					m_dicForm.Add strInam&"_Path",Left(strPuri,intTemp)
-					m_dicForm.Add strInam&"_Size",lngFsiz
-					if Instr(strFnam,".")<>0 then
-						strFext=Mid(strFnam,InstrRev(strFnam,".")+1)
-					else
-						strFext=""
-					end if
-
-					select case strFtyp
-					case "image/jpeg","image/pjpeg","image/jpg"
-						if Lcase(strFext)<>"jpg" then strFext="jpg"
-						m_binItem.Position=3
-						do while not m_binItem.EOS
-							do
-								intTemp = Ascb(m_binItem.Read(1))
-							loop while intTemp = 255 and not m_binItem.EOS
-							if intTemp < 192 or intTemp > 195 then
-								m_binItem.read(Bin2Val(m_binItem.Read(2))-2)
-							else
-								Exit do
-							end if
-							do
-								intTemp = Ascb(m_binItem.Read(1))
-							loop while intTemp < 255 and not m_binItem.EOS
-						loop
-						m_binItem.Read(3)
-						m_dicForm.Add strInam&"_Height",Bin2Val(m_binItem.Read(2))
-						m_dicForm.Add strInam&"_Width",Bin2Val(m_binItem.Read(2))
-					case "image/gif"
-						if Lcase(strFext)<>"gif" then strFext="gif"
-						m_binItem.Position=6
-						m_dicForm.Add strInam&"_Width",BinVal2(m_binItem.Read(2))
-						m_dicForm.Add strInam&"_Height",BinVal2(m_binItem.Read(2))
-					case "image/png"
-						if Lcase(strFext)<>"png" then strFext="png"
-						m_binItem.Position=18
-						m_dicForm.Add strInam&"_Width",Bin2Val(m_binItem.Read(2))
-						m_binItem.Read(2)
-						m_dicForm.Add strInam&"_Height",Bin2Val(m_binItem.Read(2))
-					case "image/bmp"
-						if Lcase(strFext)<>"bmp" then strFext="bmp"
-						m_binItem.Position=18
-						m_dicForm.Add strInam&"_Width",BinVal2(m_binItem.Read(4))
-						m_dicForm.Add strInam&"_Height",BinVal2(m_binItem.Read(4))
-					case "application/x-shockwave-flash"
-						if Lcase(strFext)<>"swf" then strFext="swf"
-						m_binItem.Position=0
-						if Ascb(m_binItem.Read(1))=70 then
-							m_binItem.Position=8
-							strTemp = Num2Str(Ascb(m_binItem.Read(1)), 2 ,8)
-							intTemp = Str2Num(Left(strTemp, 5), 2)
-							strTemp = Mid(strTemp, 6)
-							while (Len(strTemp) < intTemp * 4)
-								strTemp = strTemp & Num2Str(Ascb(m_binItem.Read(1)), 2 ,8)
-							wend
-							m_dicForm.Add strInam&"_Width", Int(Abs(Str2Num(Mid(strTemp, intTemp + 1, intTemp), 2) - Str2Num(Mid(strTemp, 1, intTemp), 2)) / 20)
-							m_dicForm.Add strInam&"_Height",Int(Abs(Str2Num(Mid(strTemp, 3 * intTemp + 1, intTemp), 2) - Str2Num(Mid(strTemp, 2 * intTemp + 1, intTemp), 2)) / 20)
-						end if
-					end select
-
-					m_dicForm.Add strInam&"_Ext",strFext
-					m_dicForm.Add strInam&"_From",p_start
-					if m_AutoSave<>2 then
-						intTemp=GetFerr(lngFsiz,strFext)
-						m_dicForm.Add strInam&"_Err",intTemp
-						if intTemp=0 then
-							if m_AutoSave=0 then
-							    ' �Զ����ļ���ת��Ϊʱ���
-								strFnam=GetTimeStr()
-								if strFext<>"" then strFnam=strFnam&"."&strFext
-							else
-								strFnam=strFnam&"."&strFext
-							end if
-							
-							
-						
-							rs8("rptHardPic") = rs8("rptHardPic") + "," + strFnam
-						
-							rs8.update
-							rs8.close
-							m_binItem.SaveToFile Server.MapPath(m_SavePath&strFnam),2
-							m_dicForm.Add strInam,strFnam
-							
-
-						end if
-					end if
-				else
-					m_dicForm.Add strInam&"_Err",-1
-				end if
-			end if
-			else
-				m_binItem.Position=0
-				m_binItem.Type=2
-				m_binItem.Charset=m_Charset
-				strTemp=m_binItem.ReadText
-				if m_dicForm.Exists(strInam) then
-					m_dicForm(strInam) = m_dicForm(strInam)&","&strTemp
-				else
-					strFormItem=strFormItem&strSplit&strInam
-					m_dicForm.Add strInam,strTemp
-				end if
-			end if
-
-			m_binItem.Close()
-			p_start = p_end+intSeparator+2
-		loop Until p_start+3>lngRequestSize
-		FormItem=Split(strFormItem,strSplit)
-		FileItem=Split(strFileItem,strSplit)
-		
-		Open = lngRequestSize
-	
-	End Function
-
-	Private Function GetTimeStr()
-		m_lngTime=m_lngTime+1
-		GetTimeStr=m_strDate&Right("00000000"&m_lngTime,8)
-	End Function
-
-	Private Function GetFerr(lngFsiz,strFext)
-		dim intFerr
-		intFerr=0
-		if lngFsiz>m_MaxSize and m_MaxSize>0 then
-			if m_Error=0 or m_Error=2 then m_Error=m_Error+1
-			intFerr=intFerr+1
-		end if
-		if Instr(1,LCase("/"&m_FileType&"/"),LCase("/"&strFext&"/"))=0 and m_FileType<>"" then
-			if m_Error<2 then m_Error=m_Error+2
-			intFerr=intFerr+2
-		end if
-		GetFerr=intFerr
-	End Function
-
-	Public Function Save(Item,strFnam)
-		Save=false
-		if m_dicForm.Exists(Item&"_From") then
-			dim intFerr,strFext
-			strFext=m_dicForm(Item&"_Ext")
-			intFerr=GetFerr(m_dicForm(Item&"_Size"),strFext)
-			if m_dicForm.Exists(Item&"_Err") then
-				if intFerr=0 then
-					m_dicForm(Item&"_Err")=0
-				end if
-			else
-				m_dicForm.Add Item&"_Err",intFerr
-			end if
-			if intFerr<>0 then Exit Function
-			if VarType(strFnam)=2 then
-'				select case strFnam
-'					case 0:strFnam=GetTimeStr()
-'						if strFext<>"" then strFnam=strFnam&"."&strFext
-'					case 1:strFnam=m_dicForm(Item&"_Name")
-'				end select
-			end if
-			m_binItem.Type = 1
-			m_binItem.Open
-			m_binForm.Position = m_dicForm(Item&"_From")
-			m_binForm.CopyTo m_binItem,m_dicForm(Item&"_Size")
-			
-			m_binItem.SaveToFile Server.MapPath(m_SavePath&strFnam),2
-			m_binItem.Close()
-			if m_dicForm.Exists(Item) then
-				m_dicForm(Item)=strFnam
-			else
-				m_dicForm.Add Item,strFnam
-			end if
-			Save=true
-		end if
-	End Function
-
-	Public Function GetData(Item)
-		GetData=""
-		if m_dicForm.Exists(Item&"_From") then
-			if GetFerr(m_dicForm(Item&"_Size"),m_dicForm(Item&"_Ext"))<>0 then Exit Function
-			m_binForm.Position = m_dicForm(Item&"_From")
-			GetData = m_binForm.Read(m_dicForm(Item&"_Size"))
-		end if
-	End Function
-
-	Public Function Form(Item)
-		if m_dicForm.Exists(Item) then
-			Form=m_dicForm(Item)
-		else
-			Form=""
-		end if
-	End Function
-
-	Private Function BinVal2(bin)
-		dim lngValue,i
-		lngValue=0
-		for i = lenb(bin) to 1 step -1
-			lngValue = lngValue *256 + Ascb(midb(bin,i,1))
-		next
-		BinVal2=lngValue
-	End Function
-
-	Private Function Bin2Val(bin)
-		dim lngValue,i
-		lngValue=0
-		for i = 1 to lenb(bin)
-			lngValue = lngValue *256 + Ascb(midb(bin,i,1))
-		next
-		Bin2Val=lngValue
-	End Function
-
-	Private Function Num2Str(num, base, lens)
-		Dim ret,i
-		ret = ""
-		while(num >= base)
-			i   = num Mod base
-			ret = i & ret
-			num = (num - i) / base
-		wend
-		Num2Str = Right(String(lens, "0") & num & ret, lens)
-	End Function
-
-	Private Function Str2Num(str, base)
-		Dim ret, i
-		ret = 0 
-		for i = 1 to Len(str)
-			ret = ret * base + Cint(Mid(str, i, 1))
-		next
-		Str2Num = ret
-	End Function
-
-End Class
-
-function createfolder(byval dirpath)
-	Set fso = Server.CreateObject("Scripting.FileSystemObject")
-	dirpath = replace(dirpath, "\", "/") : dirpath = replace(dirpath, "//", "/")
-		dim subpath, pathdeep, i
-		dirpath = replace(server.mappath(dirpath), server.mappath("/"), "")
-		subpath = split(dirpath, "\")
-		pathdeep = pathdeep & server.mappath("/")
-		for i = 1 to ubound(subpath) - 1
-			pathdeep = pathdeep & "/" & subpath(i)
-			if not fso.FolderExists(pathdeep) then fso.createfolder pathdeep
-		next
-end function
+End If
 
 
 
-uploadpath =  "plupload/" '·��
-uploadsize="1024" '��С
-uploadtype="jpg/gif/png/bmp/txt/exe/mp4" '��׺
-Set Uprequest=new UpLoadClass
-	CreateFolder(uploadpath&"index.html")
-    Uprequest.SavePath=uploadpath
-    Uprequest.MaxSize=uploadsize*10000
-    Uprequest.FileType=uploadtype
-    AutoSave=true
-    Uprequest.open
-  if Uprequest.form("file_Err")<>0  then
-  response.Write "{""jsonrpc"":""2.0"",""result"":""ʧ��"",""id"":""id""}"
-  
-  else
-  response.Write "{""jsonrpc"":""2.0"",""result"":""�ɹ�"",""id"":""id""}"
-  end if
-
-
+'返回上传结果(json)
+Response.Write "{""success"":" & Success & ", ""msg"":""" & Msg & """, ""sourceUrl"":""" & SourceUrl & """, ""avatarUrls"":[" & AvatarUrls & "]}"
 %>

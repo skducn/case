@@ -112,11 +112,11 @@ end if %>
 					<%
 				else
 					if rs13("rptStatus") = "undone" then														
-					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="blue"><i class="fa fa-edit"></i> 测试报告 - 待审核</font></a><%
+					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="blue"><i class="fa fa-edit"></i> 测试报告（待审核）</font></a><%
 					elseif rs13("rptStatus") = "reject" then	
-					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="red"><i class="fa fa-edit"></i> 测试报告 - 未通过</font></a><%
+					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><font color="red"><i class="fa fa-edit"></i> 测试报告（未通过）</font></a><%
 					else
-					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><i class="fa fa-book"></i> 测试报告 - 已完成</a><%
+					%><a href="sltReportShow-<%=rs("pjtId")%>-<%=rs1("platformId")%>.html"><i class="fa fa-book"></i> 测试报告（已完成）</a><%
 					end if 
 				end if
 				rs13.close
@@ -148,9 +148,9 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable1">
 					<thead><tr>
 					<th style="white-space: nowrap; width: 10%;">编号</th>
-					<th style="white-space: nowrap; width: 20%;">项目 / 版本</th>
-					<th style="white-space: nowrap; width: 50%;">用例标题</th>
-					<th style="white-space: nowrap; width: 20%;">创建日期</th>
+					<th style="white-space: nowrap; width: 25%;">项目 / 版本</th>
+					<th style="white-space: nowrap; width: 40%;">用例标题</th>
+					<th style="white-space: nowrap; width: 25%;">创建日期</th>
 					</tr></thead><tbody>
 					<%
 					set rs = Server.CreateObject("ADODB.recordset")
@@ -191,9 +191,9 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable2">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 20%;">项目 / 版本</th>
-					<th style="white-space: nowrap;width: 50%;">用例标题</th>
-					<th style="white-space: nowrap;width: 20%;">执行日期</th>
+					<th style="white-space: nowrap;width: 25%;">项目 / 版本</th>
+					<th style="white-space: nowrap;width: 40%;">用例标题</th>
+					<th style="white-space: nowrap;width: 25%;">执行日期</th>
 					</tr></thead><tbody>
 					<%
 					set rs = Server.CreateObject("ADODB.recordset")
@@ -238,9 +238,9 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable3">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 20%;">项目 / 版本</th>
-					<th style="white-space: nowrap;width: 50%;">用例标题</th>
-					<th style="white-space: nowrap;width: 20%;">变更日期</th>
+					<th style="white-space: nowrap;width: 25%;">项目 / 版本</th>
+					<th style="white-space: nowrap;width: 40%;">用例标题</th>
+					<th style="white-space: nowrap;width: 25%;">变更日期</th>
 					</tr></thead><tbody>
 					<%
 					set rs = Server.CreateObject("ADODB.recordset")
@@ -281,9 +281,9 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable4">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 20%;">项目 / 版本</th>
-					<th style="white-space: nowrap;width: 50%;">用例标题</th>
-					<th style="white-space: nowrap;width: 20%;">执行日期</th>
+					<th style="white-space: nowrap;width: 25%;">项目 / 版本</th>
+					<th style="white-space: nowrap;width: 40%;">用例标题</th>
+					<th style="white-space: nowrap;width: 25%;">执行日期</th>
 
 					</tr></thead><tbody>
 					<% 
@@ -329,9 +329,9 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable5">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 50%;">项目 / 版本</th>
-					<th style="white-space: nowrap;width: 20%;">创建日期</th>
-					<th style="white-space: nowrap;width: 20%;">变更日期</th>
+					<th style="white-space: nowrap;width: 40%;">项目 / 版本</th>
+					<th style="white-space: nowrap;width: 25%;">创建日期</th>
+					<th style="white-space: nowrap;width: 25%;">变更日期</th>
 					</tr></thead><tbody>
 					<% 									
 						set rs11 = Server.CreateObject("ADODB.recordset")
@@ -373,10 +373,10 @@ end if %>
 					<table class="table table-hover table-bordered" id="sampleTable6">
 					<thead><tr>
 					<th style="white-space: nowrap;width: 10%;">编号</th>
-					<th style="white-space: nowrap;width: 30%;">项目 / 版本</th>
-					<th style="white-space: nowrap;width: 20%;">测试 / 生产结果</th>
-					<th style="white-space: nowrap;width: 20%;">报告状态</th>
-					<th style="white-space: nowrap;width: 20%;">创建日期</th>
+					<th style="white-space: nowrap;width: 25%;">项目 / 版本</th>
+					<th style="white-space: nowrap;width: 25%;">测试 / 生产结果</th>
+					<th style="white-space: nowrap;width: 15%;">报告状态</th>
+					<th style="white-space: nowrap;width: 25%;">创建日期</th>
 					
 					</tr></thead><tbody>
 					<% 					
@@ -593,7 +593,7 @@ type: "success"
 } );</script>	
 <script type="text/javascript">$('#sampleTable6').DataTable({
 //跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
-"order": [[ 5, "desc" ]],
+"order": [[ 3, "desc" ]],
 "aLengthMenu": [[10, 20, 50], [10, 20, 50]],
 "oLanguage": {
 "sSearch": "搜索：",

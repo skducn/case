@@ -1,7 +1,7 @@
 <!--#include file="frame.asp"-->
 
 <!--  上传图片控件	-->	
-<script type="text/javascript" src="upload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="uploadPic/js/plupload.full.min.js"></script>
 
 <title>编辑测试报告 <%=cstCompany%></title>
 
@@ -107,6 +107,9 @@ if request("action") = "save" then
 	set rs = server.createobject("adodb.recordset")
 	rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" order by rptId desc",conn,3,3
 	if not rs.eof then
+        if request("rptName") <> "" then
+			rs("rptName") = request("rptName")
+		end if 		
 		rs("rptStatus") = "undone"
 		rs("rptNo") = request("rptNo")
 		rs("rptGoal") = request("rptGoal")
@@ -217,15 +220,21 @@ end if
 		
 		<div class="row">
 			<div class="col-md-6" align="left">
-				<h1>
+				
 				<%if rs("rptStatus") = "done" then%>			
 					<%=pjtName%><%=platformName%> 测试报告（已完成）					
 				<%elseif rs("rptStatus") = "undone" then%>
-					<%=pjtName%><%=platformName%> 测试报告（待审核）</h3>						
+					<div class="form-group">
+					<h4 class="box-title">报告名称（待审核）</h4>	
+					<input type="text" name="rptName" size="5" maxlength="40"class="form-control pull-right" id="rptName" value="<%=rs("rptName")%>">
+					</div>					
 				<%else%>
-					<%=pjtName%><%=platformName%> 测试报告（已拒绝）																
+					<div class="form-group">
+					<h4 class="box-title">报告名称（已拒绝）</h4>	
+					<input type="text" name="rptName" size="5" maxlength="40"class="form-control pull-right" id="rptName" value="<%=rs("rptName")%>">
+					</div>																			
 				<%end if %>											
-				</h1>
+				
 			</div>				
 			<div class="col-md-6" align="right">
 				<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button>	
@@ -236,7 +245,7 @@ end if
 		<hr>
 										
 				
-		<h1 >第1章 引言 </h1>	
+		<h2>第1章 引言 </h2>	
 							     					
 		<div class="col-md-12">
 			<div class="box-header"><h3 class="box-title"> 1.1 目标</h3></div>
@@ -256,7 +265,7 @@ end if
 		<br>				
 					
 		 
-		<h1>第2章 测试概述</h1>
+		<h2>第2章 测试概述</h2>
 
 		<div class="col-md-12">
 			<div class="box-header"><h3 class="box-title"> 2.1 测试对象</h3></div>
@@ -310,7 +319,7 @@ end if
 		<br>			 
 
 		
-		<h1>第3章 测试方法</h1>					   
+		<h2>第3章 测试方法</h2>					   
 	
 		<div class="col-md-12">
 			<h3 class="box-title"> 3.1 测试用例</h3>	
@@ -398,7 +407,7 @@ end if
 				<br>
 				<a id="uploadfiles1" href="javascript:;"><button type="submit" class="btn btn-success pull-left" href="#">上传</button></a> 
 			</div>	
-			<script id="testScript" src="upload/js/uploadRedmine.js" pjtId="<%=pjtId%>" platformId="<%=platformId%>"></script>										
+			<script id="testScript" src="uploadPic/js/uploadRedmine.js" pjtId="<%=pjtId%>" platformId="<%=platformId%>"></script>										
 		</div>
 		
 		<div class="row"></div>	<br>
@@ -408,7 +417,7 @@ end if
 			<% 
 			rptHardPic = split(replace(rs("rptHardPic"),"*",""),",")					
 			for i=1 to ubound(rptHardPic)%>							
-					<p><img src=<%="upload\plupload\"+rptHardPic(i)%>>					
+					<p><img src=<%="uploadPic\plupload\"+rptHardPic(i)%>>					
 						
 					</p>
 			<%next%>
@@ -430,7 +439,7 @@ end if
 		<div class="row"></div>
 		<br>	
 		
-		<h1>第4章 测试结果分析</h1>
+		<h2>第4章 测试结果分析</h2>
 					 
 
 		<div class="col-md-12">
@@ -602,7 +611,7 @@ end if
 		<br>	
 		
 
-		<h1>第5章 测试总结与建议</h1>
+		<h2>第5章 测试总结与建议</h2>
 
 		<div class="col-md-12">
 			<h3 class="box-title"> 5.1 软件质量</h3>					  
@@ -663,7 +672,7 @@ end if
 					<br>
 					<a id="uploadfiles2" href="javascript:;"><button type="submit" class="btn btn-success pull-left" href="#">上传</button></a> 
 				</div>	
-				<script id="testScript2" src="upload/js/uploadRedmine2.js" pjtId="<%=pjtId%>" platformId="<%=platformId%>"></script>										
+				<script id="testScript2" src="uploadPic/js/uploadRedmine2.js" pjtId="<%=pjtId%>" platformId="<%=platformId%>"></script>										
 			</div>
 			
 			<div class="row"></div>	<br>
@@ -672,7 +681,7 @@ end if
 			<div class="col-md-12">		
 				<%rptRedminePic = split(replace(rs("rptRedminePic"),"*",""),",")					
 				for i=1 to ubound(rptRedminePic)%>				
-					<p><img src=<%="upload\plupload\"+rptRedminePic(i)%>>					
+					<p><img src=<%="uploadPic\plupload\"+rptRedminePic(i)%>>					
 						<h3><% response.write "附图"&i %></h3><br>
 					</p>				
 				<%next%>
@@ -698,12 +707,7 @@ end if
 		<input name="rptLatestdDate" type="hidden" value="<%=now%>" />		
 		</form>													
 
-		<div class="row">
-			<div class="col-md-12" align="right">				
-			<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>	
-			<a id='DD'></a>		
-			</div>
-		</div>
+		
 	
 	</div>	
 </div>
@@ -742,5 +746,8 @@ end if
    
   });
 </script>
+<a id='DD'></a>		
+<a href="#0" class="cd-top">Top</a>
+
 </body>
 </html>

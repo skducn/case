@@ -130,21 +130,23 @@ function CheckPost()
 			<h2 class="login-head"><i class="fa fa-area-chart"></i> 测试用例平台</h2>		  		  		              				  
 			<div class="form-group">
 				<h4>用户名</h4>
-				<input class="form-control" type="text" name="userName"  placeholder="username" autofocus>
+				<input class="form-control" type="text" name="userName"  placeholder="USERNAME" autofocus>
 			</div>
 			<div class="form-group">
 				<h4>密码</h4>
-				<input class="form-control" type="password" name="userPass" placeholder="password">
+				<input class="form-control" type="password" name="userPass" placeholder="PASSWORD">
 			</div>
 			<div class="form-group">
 				<div class="utility">
-					<div class="animated-checkbox"></div>
+					<div class="animated-checkbox"></div>									
 					<p class="semibold-text mb-0"><a data-toggle="flip">忘记密码？</a></p>
 				</div>
 			</div>
 			<div class="form-group btn-container">
 				<button class="btn btn-primary btn-block" id="button"><h4><i class="fa fa-sign-in fa-lg fa-fw"></i> 登录</h4></button>
 			</div>
+				<p class="semibold-text mb-0"><a href="http://172.21.200.153"><i class="fa fa-book"></i> 知识库</a></p>
+
 		</form>
 		
 

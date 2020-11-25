@@ -1,52 +1,37 @@
-功能：批量上传图片
-流程：表单里先上传图片，然后将图片转换成时间戳文件名，将文件名写入数据库。
-原理：如测试报告中上传附图功能，先新建一份测试报告记录，编辑时，上传图片文件名到对应的记录中的某个字段里，如tbl_report表中第一条记录的rptRedminePic。
-文件：
-plupload.full.min.js
-uploadRedmine2.js
-upload2.asp
+asp上传头像
 
+1，将upload目录放在网站的根目录
 
+2，在文件中加载js, 如demo.asp中。
+<!--  上传头像	-->	
+<script type="text/javascript" src="../upload/js/swfobject.js"></script>
+<script type="text/javascript" src="../upload/js/fullAvatarEditor.js"></script>
 
-sltReportEdit.asp   编辑
-<!--  上传图片控件	-->	
-<script type="text/javascript" src="upload/js/plupload.full.min.js"></script>
+3，文件中 需要传入当前userId号，如： ../upload/Upload.asp?userId=<%=session("userId")%>
+<!--  上传头像 -->
+<script type="text/javascript">
+	swfobject.addDomLoadEvent(function () {var swf = new fullAvatarEditor("swfContainer", {
+	id: 'swf',upload_url: '../upload/Upload.asp?userId=<%=session("userId")%>',src_upload:2}, function (msg) {switch(msg.code){
+	//case 1 : alert("页面成功加载了组件！");break;
+	//case 2 : alert("已成功加载默认指定的图片到编辑面板。");break;
+	case 3 :
+	if(msg.type == 0){alert("温馨提示","摄像头已准备就绪且用户已允许使用", function () {}, {type: 'success', confirmButtonText: '确定'});}
+	else if(msg.type == 1){alert("温馨提示","摄像头已准备就绪但用户未允许使用!", function () {}, {type: 'warning', confirmButtonText: '确定'});}
+	else{alert("温馨提示","摄像头被占用!", function () {}, {type: 'warning', confirmButtonText: '确定'});}
+	break;
+	case 5 : 
+	if(msg.type == 0){if(msg.content.sourceUrl){alert("原图已成功保存至服务器，url为：\n" +　msg.content.sourceUrl);
+	alert("温馨提示","原图已成功保存至服务器，url为：\n" +　msg.content.sourceUrl, function () {}, {type: 'success', confirmButtonText: '确定'});}
+	//alert("头像已成功保存至服务器，url为：\n" + msg.content.avatarUrls);
+	}break;}});
+	document.getElementById("upload").onclick=function(){swf.call("upload");};});
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F5f036dd99455cb8adc9de73e2f052f72' type='text/javascript'%3E%3C/script%3E"));
+</script>
 
+4，调用upload/Upload.asp
+需要conn.asp 链接数据库，将生成的图片名称写入数据库。
 
-<!-- 上传图片，参数 pjtId, platformId -->
-<div class="col-md-12">
-<div id="container2">
-<a id="pickfiles2" >请选择图片</a>														
-<div id="filelist2"></div>				
-<br>
-<a id="uploadfiles2" href="javascript:;"><button type="submit" class="btn btn-success pull-left" href="#">上传</button></a> 
-</div>	
-<script id="testScript2" src="upload/js/uploadRedmine2.js" pjtId="<%=pjtId%>" platformId="<%=platformId%>"></script>						</div>
-			
-			
-<!--  显示上传的图片 --> 
-<div class="col-md-12">		
-<%rptRedminePic = split(replace(rs("rptRedminePic"),"*",""),",")					
-for i=1 to ubound(rptRedminePic)%>				
-<p><img src=<%="upload\plupload\"+rptRedminePic(i)%>>					
-<h3><% response.write "附图"&i %></h3><br>
-</p>				
-<%next%>
-</div>
-
-
-sltReportShow.asp  显示
-<!--  上传图片控件	-->	
-<script type="text/javascript" src="upload/js/plupload.full.min.js"></script>
-
-<!--  显示图片 --> 
-<% if rs("rptHardPic") <> "*" then  
-rptHardPic = split(replace(rs("rptHardPic"),"*",""),",")					
-for i=1 to ubound(rptHardPic)	%>				
-<p><a href="sltReportShowDel-<%=pjtId%>-<%=platformId%>-<%=rptHardPic(i)%>.html" onClick="return confirm('是否要删除此图片？')" >
-<img src=<%="upload\plupload\"+rptHardPic(i)%>> </a>
-</p>
-<%next%>
-<% end if %>
-
-
+5，fullAvatarEditor.js 中可设置2个文件的加载路径。
+var file= '../upload/fullAvatarEditor.swf';		//flash文件的路径
+var expressInstall= '../upload/expressInstall.swf';	//expressInstall.swf的路径
