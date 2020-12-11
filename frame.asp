@@ -15,10 +15,6 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-<script src="731/dist/js/jquery-2.1.4.min.js"></script>
-<script src="731/dist/js/bootstrap.min.js"></script>
-<script src="731/dist/js/plugins/pace.min.js"></script>
-<script src="731/dist/js/main.js"></script>
 
 <script src="ueditor/ueditor.config.js"></script>
 <script src="ueditor/ueditor.all.min.js"> </script>	
@@ -576,6 +572,8 @@
 	</ul>
 </section>
 </aside>		  
+
+
 
 	
 <script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>

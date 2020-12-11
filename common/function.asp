@@ -1,6 +1,20 @@
-
-
 <%		
+
+' 1，获取服务器ip
+Function getServerIp()
+	getServerIp = Request.ServerVariables("Local_Addr")
+End Function
+
+
+' 2，获取客户端ip 
+Function getClientIp()
+	getClientIp = Request.ServerVariables("HTTP_X_FORWARDED_FOR")
+	if getClientIp =  "" Then 
+		getClientIp = Request.ServerVariables("REMOTE_ADDR")
+	end if 		
+End Function
+
+
 '----------------------- 退出 from main.asp
 Function mainExit(userPower)
 	if request("action")="exit" or session("userName") = "" then

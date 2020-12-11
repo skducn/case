@@ -487,3 +487,10 @@ rs1.Open "select * from tbl_user where userName='"&request("user")&"'",conn,3,3
 
 </body>
 </html>
+
+ <!-- Javascripts-->
+<script src="731/dist/js/jquery-2.1.4.min.js"></script>
+<script src="731/dist/js/bootstrap.min.js"></script>
+<script src="731/dist/js/plugins/pace.min.js"></script>
+<script src="731/dist/js/main.js"></script>
+	

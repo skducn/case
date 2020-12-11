@@ -145,7 +145,7 @@ function CheckPost()
 			<div class="form-group btn-container">
 				<button class="btn btn-primary btn-block" id="button"><h4><i class="fa fa-sign-in fa-lg fa-fw"></i> 登录</h4></button>
 			</div>
-				<p class="semibold-text mb-0"><a href="http://172.21.200.153"><i class="fa fa-book"></i> 知识库</a></p>
+				<p class="semibold-text mb-0"><a href="http://<%=getServerIp()%>"><i class="fa fa-book"></i> cms 知识库</a></p>
 
 		</form>
 		

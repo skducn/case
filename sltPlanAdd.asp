@@ -684,3 +684,10 @@ $('#reservation10').daterangepicker();
 </script>
 </body>
 </html>
+
+ <!-- Javascripts-->
+<script src="731/dist/js/jquery-2.1.4.min.js"></script>
+<script src="731/dist/js/bootstrap.min.js"></script>
+<script src="731/dist/js/plugins/pace.min.js"></script>
+<script src="731/dist/js/main.js"></script>
+	
