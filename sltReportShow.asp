@@ -488,15 +488,9 @@ end if
 					<div class="box-header with-border">
 						<h3 class="box-title">缺陷状态统计</h3>
 					</div>		
-					<div class="col-md-4">
-						<ul class="chart-legend clearfix">
-						<li><i class="fa fa-circle-o text-red"></i> 未处理</li>
-						<li><i class="fa fa-circle-o text-aqua"></i> 处理中</li>
-						<li><i class="fa fa-circle-o text-green"></i> 已解决</li>
-						<li><i class="fa fa-circle-o text-yellow"></i> 已反馈</li>              
-						</ul>
-					</div>							
+												
 					<div class="box-body">
+						<br><br>
 						<div id="donut-chart3" style="height: 300px;"></div>
 						<br><br>
 					</div>
@@ -631,26 +625,6 @@ error10 = error10 + split(rs4("rptErrStory"),",")(9)
 
 
 
-<!-- Bootstrap 3.3.5 -->
-<script src="plugins/morris.js-0.5.1/raphael-min.js"></script>
-<script src="plugins/morris.js-0.5.1/morris.js"></script>
-<link rel="stylesheet" href="test/morris.js-0.5.1/morris.css">
-<!-- ChartJS 1.0.1 -->
-<script src="plugins/chartjs/Chart.min.js"></script>
-<!-- FastClick -->
-<script src="plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-<!-- FLOT CHARTS -->
-<script src="plugins/flot/jquery.flot.min.js"></script>
-<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
-<script src="plugins/flot/jquery.flot.resize.min.js"></script>
-<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
-<script src="plugins/flot/jquery.flot.pie.min.js"></script>
-<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
-<script src="plugins/flot/jquery.flot.categories.min.js"></script>
 
 
 
@@ -735,7 +709,7 @@ Morris.Bar({
 	
  /*
  * 缺陷状态统计charJS
- *  http://www.sioe.cn/yingyong/yanse-rgb-16/
+ * RGB颜色值转换成十六进制颜色码 http://www.sioe.cn/yingyong/yanse-rgb-16/
  */
     var donutData3 = [
       {label: "未处理", data: <%=varNew%>, color: "#3c8dbc"},
@@ -751,7 +725,7 @@ Morris.Bar({
           innerRadius: 0.5,
           label: {
             show: true,
-            radius: 5 / 7,
+            radius: 5 / 6,
             formatter: labelFormatter,
             threshold: 0.1
           }
@@ -759,14 +733,14 @@ Morris.Bar({
         }
       },
       legend: {
-        show: false
+        show: true
       }
     });	 
   });
   function labelFormatter(label, series) {
-    return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
+    return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 400;">'
         + label
-        + "<br>"
+        + "<br>"+ "<br>"+ "<br>"
         + Math.round(series.percent) + "%</div>";
   }
 </script>
@@ -776,9 +750,30 @@ Morris.Bar({
 </body>
 </html>
 
+
  <!-- Javascripts-->
 <script src="731/dist/js/jquery-2.1.4.min.js"></script>
 <script src="731/dist/js/bootstrap.min.js"></script>
 <script src="731/dist/js/plugins/pace.min.js"></script>
 <script src="731/dist/js/main.js"></script>
-	
+
+<!-- Bootstrap 3.3.5 -->
+<script src="plugins/morris.js-0.5.1/raphael-min.js"></script>
+<script src="plugins/morris.js-0.5.1/morris.js"></script>
+<link rel="stylesheet" href="test/morris.js-0.5.1/morris.css">
+<!-- ChartJS 1.0.1 -->
+<script src="plugins/chartjs/Chart.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- FLOT CHARTS -->
+<script src="plugins/flot/jquery.flot.min.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="plugins/flot/jquery.flot.resize.min.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="plugins/flot/jquery.flot.pie.min.js"></script>
+<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+<script src="plugins/flot/jquery.flot.categories.min.js"></script>
