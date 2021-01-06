@@ -14,7 +14,9 @@
 <link rel="stylesheet" type="text/css" href="731/dist/css/main2.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+<style> 
+.divcss5{ border:1px solid #00F; height:120px; width:200px;word-wrap:break-word} 
+</style> 
 
 <script src="ueditor/ueditor.config.js"></script>
 <script src="ueditor/ueditor.all.min.js"> </script>	
@@ -342,21 +344,18 @@
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' order by pjtName",conn,3,3 
 						if not rs1.eof then
-							do while not rs1.eof %>	<!-- 遍历项目 -->																																	
-								<li class="treeview"><a href="#"><span><%=rs1("pjtName")%></span><i class="fa fa-angle-right"></i></a>
+							do while not rs1.eof %>	<!-- 遍历项目 -->																																			
+								<li class="treeview" ><a href="#"><span><%=rs1("pjtName")%></span><i class="fa fa-angle-right"></i></a>
 								<ul class="treeview-menu">	
 									<%Set rs3 = Server.CreateObject("Adodb.Recordset")
 									rs3.Open "select * from tbl_platform where plat_pjtId="&rs1("pjtId")&" and verIsPlan='on' and  platformStatus='1' order by platformId DESC",conn,3,3 
 									if rs3.eof then
 										response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-aqua'>无版本</i>"
 									else
-										do while not rs3.eof%>	<!-- 遍历版本 -->	
-										
-										
+										do while not rs3.eof%>	<!-- 遍历版本 -->																					
 											<%Set rs2 = Server.CreateObject("Adodb.Recordset")
 											rs2.Open "select * from tbl_plan where plan_pjtId="&rs1("pjtId")&" and plan_platformId="&rs3("platformId")&" order by planId DESC",conn,3,3 
-												if not rs2.eof then%>	
-																																	
+												if not rs2.eof then%>																																		
 													<li><span><a href="sltTestPlanList-<%=rs2("planId")%>.html"><%=rs3("platformName")%></a></span></li>																										
 												<%
 												end if 

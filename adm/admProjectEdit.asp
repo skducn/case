@@ -148,8 +148,8 @@ rs.Open "select * from tbl_project where pjtId="&pjtId&"",conn,3,3
 						<div class="row">	
 							<div class="col-md-6">
 								<div class="form-group">
-								<label>项目名称 * (<12)</label>
-								<input type="text" name="pjtName"   maxlength="12" class="form-control" value="<%=rs("pjtName")%>">
+								<label>项目名称 * (<20)</label>
+								<input type="text" name="pjtName"   maxlength="20" class="form-control" value="<%=rs("pjtName")%>">
 								</div>
 							</div>
 									

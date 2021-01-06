@@ -106,8 +106,10 @@
 				<a href="#" title="Project"><span class="nav-icon material-icons ">table_chart</span><%=admProjectPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">	
 					<li><a href="admProjectAdd.html"><span class="nav-icon material-icons">add</span>新建项目</a></li>
+					
+					<!-- 编辑项目 -->
 					<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑项目 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title=><span class="nav-icon material-icons ">edit</span>编辑项目 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">			
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 							rs1.Open "select * from tbl_project order by pjtName",conn,3,3 
@@ -117,7 +119,7 @@
 								do while not rs1.eof %>
 									<!-- 遍历项目名 -->
 									<li>
-										<a href="admProjectEdit-<%=rs1("pjtId")%>.html"><i class="fa fa-circle-o text-red"></i> <%=rs1("pjtName")%> 
+										<a href="admProjectEdit-<%=rs1("pjtId")%>.html" title=<%=rs1("pjtName")%> ><i class="fa fa-circle-o text-red"></i> <%=rs1("pjtName")%> 
 										<% if rs1("pjtStatus") = 2 then
 											response.write "<span class='label pull-right bg-red'>（关闭）</span>"			
 										end if %></a>
@@ -131,6 +133,7 @@
 					</li>
 					
 					<!-- 项目列表 -->
+					
 					<li class="Form Stuff">
 						<a href="#" title=""><span class="nav-icon material-icons ">list</span>项目列表 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">	
@@ -142,7 +145,7 @@
 								do while not rs1.eof %>
 									<!-- 遍历项目名 -->
 									<li>
-									<a href="admProjectInfo-<%=rs1("pjtId")%>.html"><%=rs1("pjtName")%> </a>
+									<a href="admProjectInfo-<%=rs1("pjtId")%>.html" title=<%=rs1("pjtName")%>><%=rs1("pjtName")%> </a>
 									</li>
 								<%rs1.movenext
 								loop
@@ -251,7 +254,7 @@
 							do while not rs1.eof %>
 								<!-- 项目名 -->							
 								<li class="Form Stuff">
-									<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+									<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 									<ul class="sub-nav">
 										<!-- 平台名 -->
 										<%Set rs2 = Server.CreateObject("Adodb.Recordset")
@@ -288,7 +291,7 @@
 							do while not rs1.eof %>
 								<!-- 项目名 -->
 								<li class="Form Stuff">
-									<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+									<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 									<ul class="sub-nav">
 										<!-- 平台名 -->
 										<%Set rs2 = Server.CreateObject("Adodb.Recordset")
@@ -353,7 +356,7 @@
 				else
 					do while not rs1.eof %> <!-- 遍历项目名 -->								
 							<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 							<%Set rs2 = Server.CreateObject("Adodb.Recordset")
 							rs2.Open "select * from tbl_platform where plat_pjtId="&rs1("pjtId")&" and platformStatus='1' order by platformId DESC",conn,3,3 
@@ -398,7 +401,7 @@
 								
 								
 								<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 									<%Set rs3 = Server.CreateObject("Adodb.Recordset")
 									rs3.Open "select * from tbl_platform where plat_pjtId="&rs1("pjtId")&" and verIsPlan='on' and platformStatus='1' order by platformId DESC",conn,3,3 
@@ -432,7 +435,7 @@
 				<!-- 计划列表 -->
 			
 				<li class="Form Stuff">
-					<a href="#" title=""><span class="nav-icon material-icons ">list</span>计划列表 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+					<a href="#"><span class="nav-icon material-icons ">list</span>计划列表 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 					<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on'  order by pjtName",conn,3,3 
@@ -446,7 +449,7 @@
 								
 								
 									<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 									<%Set rs3 = Server.CreateObject("Adodb.Recordset")
 									rs3.Open "select * from tbl_platform where plat_pjtId="&rs1("pjtId")&" and verIsPlan='on' and platformStatus='1' order by platformId DESC",conn,3,3 
@@ -512,7 +515,7 @@
 								noAudit = rs5.recordcount 
 								rs5.close 
 								%>
-									<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+									<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 							
 							
 								<!-- 平台名 -->
