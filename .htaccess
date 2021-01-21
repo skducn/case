@@ -70,6 +70,7 @@ RewriteRule ^excTestcaseReport-(.*)-(.*)-(.*)-(.*).html /excTestcaseReport.asp?p
 
 RewriteRule ^index.html /index.asp
 RewriteRule ^indexLogin.html /index.asp?action=login
+RewriteRule ^indexExit.html /index.asp?action=exit
 RewriteRule ^lock.html /lock.asp
 RewriteRule ^lockLogin.html /lock.asp?action=login
 RewriteRule ^indexClear-(.*).html /index.asp?action=clear&userName=$1

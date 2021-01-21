@@ -35,7 +35,7 @@ end if %>
 
 <div class="content-wrapper">
 	<div class="page-title">
-		<div><h1><i class="fa fa-dashboard"></i> 我的面板</h1><p>Dashboard</p></div>
+		<div><h1>我的面板</h1><p>Dashboard<font color="white"><%response.write session.timeout%></font></p></p></div>
 		<div><ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">我的面板</a></li></ul></div>
 	</div>
 	
@@ -451,177 +451,30 @@ end if %>
 				</table>						
 				</form>
 			</div>	
-			<!-- top按钮 -->
-			<div class="col-md-12" align="right">	
-				<hr>
-				<a href="#top"><button type="text" class="btn btn-primary"  href="#" data-toggle="tooltip" data-original-title="回页顶"><i class="fa fa-arrow-circle-up"></i></button></a>			
-			</div>
+		
 		</div>
 	</div>
-		
-			
 	
 </div>	
-		
- <!-- Javascripts-->
-<script src="731/dist/js/jquery-2.1.4.min.js"></script>
-<script src="731/dist/js/bootstrap.min.js"></script>
-<script src="731/dist/js/plugins/pace.min.js"></script>
-<script src="731/dist/js/main.js"></script>
-	
 
-<!-- table-->
-<script type="text/javascript" src="731/dist/js/plugins/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/dataTables.bootstrap.min.js"></script>
-
-<script language="javascript">  
-function CheckPost()
-{
-  
-$.notify({
-title: "&nbsp;&nbsp;",
-message: "保存成功",
-icon: 'fa fa-check' 
-},{
-type: "success"
-});
-}
-</script>
-
-
-
-<script type="text/javascript">$('#sampleTable1').DataTable({
-//跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
-"order": [[ 3, "desc" ]],
-"aLengthMenu": [[10, 20, 50], [10, 20, 50]],
-"oLanguage": {
-"sSearch": "搜索：",
-"sLengthMenu": "每页显示 _MENU_ 条记录",
-"sZeroRecords": "抱歉， 没有找到",
-"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-"sInfoEmpty": "没有数据",
-"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-"oPaginate": {
-"sFirst": "首页",
-"sPrevious": "前一页",
-"sNext": "后一页",
-"sLast": "尾页"
-},
-"sZeroRecords": "没有检索到数据",
-"sProcessing": "<img src='./loading.gif' />"
-}
-} );</script>	
-<script type="text/javascript">$('#sampleTable2').DataTable({
-//跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
-"order": [[ 3, "desc" ]],
-"aLengthMenu": [[10, 20, 50], [10, 20, 50]],
-"oLanguage": {
-"sSearch": "搜索：",
-"sLengthMenu": "每页显示 _MENU_ 条记录",
-"sZeroRecords": "抱歉， 没有找到",
-"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-"sInfoEmpty": "没有数据",
-"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-"oPaginate": {
-"sFirst": "首页",
-"sPrevious": "前一页",
-"sNext": "后一页",
-"sLast": "尾页"
-},
-"sZeroRecords": "没有检索到数据",
-"sProcessing": "<img src='./loading.gif' />"
-}
-} );</script>	
-<script type="text/javascript">$('#sampleTable3').DataTable({
-//跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
-"order": [[ 3, "desc" ]],
-"aLengthMenu": [[10, 20, 50], [10, 20, 50]],
-"oLanguage": {
-"sSearch": "搜索：",
-"sLengthMenu": "每页显示 _MENU_ 条记录",
-"sZeroRecords": "抱歉， 没有找到",
-"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-"sInfoEmpty": "没有数据",
-"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-"oPaginate": {
-"sFirst": "首页",
-"sPrevious": "前一页",
-"sNext": "后一页",
-"sLast": "尾页"
-},
-"sZeroRecords": "没有检索到数据",
-"sProcessing": "<img src='./loading.gif' />"
-}
-} );</script>	
-<script type="text/javascript">$('#sampleTable4').DataTable({
-//跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
-"order": [[ 3, "desc" ]],
-"aLengthMenu": [[10, 20, 50], [10, 20, 50]],
-"oLanguage": {
-"sSearch": "搜索：",
-"sLengthMenu": "每页显示 _MENU_ 条记录",
-"sZeroRecords": "抱歉， 没有找到",
-"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-"sInfoEmpty": "没有数据",
-"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-"oPaginate": {
-"sFirst": "首页",
-"sPrevious": "前一页",
-"sNext": "后一页",
-"sLast": "尾页"
-},
-"sZeroRecords": "没有检索到数据",
-"sProcessing": "<img src='./loading.gif' />"
-}
-} );</script>	
-<script type="text/javascript">$('#sampleTable5').DataTable({
-//跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
-"order": [[ 3, "desc" ]],
-"aLengthMenu": [[10, 20, 50], [10, 20, 50]],
-"oLanguage": {
-"sSearch": "搜索：",
-"sLengthMenu": "每页显示 _MENU_ 条记录",
-"sZeroRecords": "抱歉， 没有找到",
-"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-"sInfoEmpty": "没有数据",
-"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-"oPaginate": {
-"sFirst": "首页",
-"sPrevious": "前一页",
-"sNext": "后一页",
-"sLast": "尾页"
-},
-"sZeroRecords": "没有检索到数据",
-"sProcessing": "<img src='./loading.gif' />"
-}
-} );</script>	
-<script type="text/javascript">$('#sampleTable6').DataTable({
-//跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
-"order": [[ 3, "desc" ]],
-"aLengthMenu": [[10, 20, 50], [10, 20, 50]],
-"oLanguage": {
-"sSearch": "搜索：",
-"sLengthMenu": "每页显示 _MENU_ 条记录",
-"sZeroRecords": "抱歉， 没有找到",
-"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-"sInfoEmpty": "没有数据",
-"sInfoFiltered": "(从 _MAX_ 条数据中检索)",
-"oPaginate": {
-"sFirst": "首页",
-"sPrevious": "前一页",
-"sNext": "后一页",
-"sLast": "尾页"
-},
-"sZeroRecords": "没有检索到数据",
-"sProcessing": "<img src='./loading.gif' />"
-}
-} );</script>		
-
-  </body>
+</body>
 </html>
 
 
+<!-- top -->
+<a href="#0" class="cd-top">Top</a>
 
+
+<!-- 表格 -->
+<script  src="js/table/custom.js"></script>
+
+
+<!-- 左侧菜单，放在每个页面底部-->
+<script src="js/menu/jquery-2.1.4.min.js"></script>
+<script src="js/menu/bootstrap.min.js"></script>
+<script src="js/menu/plugins/pace.min.js"></script>
+<script src="js/menu/main.js"></script>
+<script  src="js/shortcutKey/bootstrap-notify.min.js"></script>
 
 
 	  

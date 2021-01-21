@@ -1,8 +1,7 @@
 <!--#include file="conn.asp"-->
-<!--#include file="common/function.asp"-->
-<!--#include file="common/constant.asp"-->
-<%=mainExit(session("userPower"))%>
-
+<!--#include file="function.asp"-->
+<!--#include file="constant.asp"-->
+<%exitIndex()%>
 
 <!DOCTYPE html>
 <html>
@@ -14,18 +13,7 @@
 <link rel="stylesheet" type="text/css" href="731/dist/css/main2.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<style> 
-.divcss5{ border:1px solid #00F; height:120px; width:200px;word-wrap:break-word} 
-</style> 
 
-<script src="ueditor/ueditor.config.js"></script>
-<script src="ueditor/ueditor.all.min.js"> </script>	
-<script src="ueditor/lang/zh-cn/zh-cn.js"></script> 
-
-<!-- top按钮-->
-<link href="css/67/css/zzsc.css" rel="stylesheet" type="text/css" />
-<script src="css/67/js/jquery.min.js"></script>
-<script src="css/67/js/zzsc.js"></script> 
 
 </head>
 
@@ -50,7 +38,7 @@
 								
            
               <!-- User Menu  sltUserEdit.html-->
-              <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></a>
+              <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog fa-lg"></i> 设置</a>
                 <ul class="dropdown-menu settings-menu">
                   <li><a href="admProfile.html"><i class="fa fa-user fa-lg"></i> 个人信息</a></li>                 				 
 				  <li><a href="#" id="demoExit1"><i class="fa fa-sign-out fa-lg"></i>  <span>退出</span></a></li>			
@@ -411,7 +399,7 @@
 								<li class="treeview">				
 									<%if rs52.recordcount > 0 then%>
 										<!-- 报告未审核 -->
-										<a href="#"><%=rs1("pjtName")%> <i class="fa fa-angle-left pull-right"></i></a>						  						
+										<a href="#"><%=rs1("pjtName")%> <i class="fa fa-angle-right"></i></a>						  						
 									<%elseif rs53.eof then
 										count1 = 0
 										Set rs55 = Server.CreateObject("Adodb.Recordset")
@@ -424,14 +412,14 @@
 										loop
 										if count1 > 0 then%>
 										<!-- 未执行完用例的项目名 -->
-											<a href="#"><%=rs1("pjtName")%> <i class="fa fa-angle-left pull-right"></i></a>								
+											<a href="#"><%=rs1("pjtName")%> <i class="fa fa-angle-right"></i></a>								
 										<%else%>
 										<!-- 新建报告的项目名 -->
-											<a href="#"><%=rs1("pjtName")%><i class="fa fa-angle-left pull-right"></i></a>																							
+											<a href="#"><%=rs1("pjtName")%><i class="fa fa-angle-right"></i></a>																							
 										<%end if %>									
 									<%else%>
 										<!-- 已完成报告的项目名 -->
-										<a href="#"><%=rs1("pjtName")%><i class="fa fa-angle-left pull-right"></i></a>
+										<a href="#"><%=rs1("pjtName")%><i class="fa fa-angle-right"></i></a>
 									<%end if%>	
 								
 									<ul class="treeview-menu">
@@ -462,9 +450,8 @@
 													<%elseif rs4("rptStatus") = "reject" then%>	
 														<li> <a href="sltReportShow-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">
 														<i class="fa fa-edit text-primary"> <%=rs2("platformName")%></i><span class="label pull-right bg-red">未通过</span></a></li>
-													<%elseif rs4("rptStatus") = "done" then%>	
-														<li><a href="sltReportShow-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">
-														<i class="fa fa-book text-primary"> <%=rs2("platformName")%></i><span class="label pull-right">已完成</span></a></li>	
+													<%elseif rs4("rptStatus") = "done" then%>
+														<li><a href="sltReportShow-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html"><%=rs2("platformName")%><span class="label pull-right">已完成</span></a></li>	
 													<%end if
 												end if 
 												rs33.close
@@ -550,7 +537,7 @@
 							response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-aqua'>无项目</i>"
 						else
 							do while not rs1.eof %>
-								<li><a href="sltProjectInfo-<%=rs1("pjtId")%>.html"><%=rs1("pjtName")%> </a></li>
+								<li><span><a href="sltProjectInfo-<%=rs1("pjtId")%>.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=rs1("pjtName")%></a></span></li>
 							<%rs1.movenext
 							loop
 						end if 
@@ -575,54 +562,28 @@
 
 
 	
-<script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
 
-<script type="text/javascript">
-  $('#demoExit').click(function(){
-	swal({
-		title: "是否退出系统?",
-		text: "",
-		type: "warning",
-		showCancelButton: true,
-		confirmButtonText: "确定",
-		cancelButtonText: "容我三思",
-		closeOnConfirm: false,
-		closeOnCancel: false
-	}, function(isConfirm) {
-		if (isConfirm) {
-			swal("再见", "Bye Bye", "success");
-			setTimeout("window.location.href='index.html';",1000); 
-			
-		} else {
-			swal("继续...", "", "success");
-			
-		}
-	});
-  });
-  $('#demoExit1').click(function(){
-	swal({
-		title: "是否退出系统?",
-		text: "",
-		type: "warning",
-		showCancelButton: true,
-		confirmButtonText: "确定",
-		cancelButtonText: "容我三思",
-		closeOnConfirm: false,
-		closeOnCancel: false
-	}, function(isConfirm) {
-		if (isConfirm) {
-			swal("再见", "Bye Bye", "success");
-			setTimeout("window.location.href='mainExit.html';",1000); 
-			
-		} else {
-			swal("继续...", "", "success");
-			
-		
-		}
-	});
-  });
-</script>		
+<!-- 百度编辑器--> 
+<script src="ueditor/ueditor.config.js"></script>
+<script src="ueditor/ueditor.all.min.js"> </script>	
+<script src="ueditor/lang/zh-cn/zh-cn.js"></script> 
 
 
-			
+<!-- 退出弹框效果 -->
+<script src="js/exit/jquery-2.1.4.min.js"></script>	
+<script type="text/javascript" src="js/exit/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="js/exit/sweetalert.min.js"></script>
+<script type="text/javascript" src="js/exit/custom.js"></script>
+
+<!-- top按钮 cd-top-arrow.svg箭头-->
+<link href="js/topButton/zzsc.css" rel="stylesheet" type="text/css" />
+<script src="js/topButton/jquery.min.js"></script>
+<script src="js/topButton/zzsc.js"></script> 
+
+<!-- 表单提交校验 -->
+<script src="js/check.js"></script>
+
+<!-- 表格 -->
+<script  src="js/table/jquery.dataTables.min.js"></script>
+<script  src="js/table/dataTables.bootstrap.min.js"></script>
+
