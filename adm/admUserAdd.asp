@@ -1,7 +1,7 @@
 <!--#include file="admFrame.asp"-->
 <!--#include file="../md5.asp"-->
 
-<title><%=admUserNew%> | <%=admCompany%></title>
+<title><%=admUserNew%> | <%=admProject%></title>
 
 <!--  获取所有账号及昵称 -->
 <%

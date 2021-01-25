@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title><%=admDashboard%> | <%=admCompany%></title>
+<title><%=admDashboard%> | <%=admProject%></title>
 
 
 <% if request("action") = "exit" then

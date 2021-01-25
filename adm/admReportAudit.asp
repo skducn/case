@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title><%=cstCompany%> | …Û∫À±®∏Ê</title>
+<title><%=admReportAudit%> | <%=admProject%></title>
 
 <script language="javascript">     
 function CheckPost()

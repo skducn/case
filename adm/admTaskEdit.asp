@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title><%=admMessageEdit%> | <%=admCompany%></title>
+<title><%=admMessageEdit%> | <%=admProject%></title>
 
 <!--  非法输入taskId，则退出系统 -->
 

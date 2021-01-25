@@ -1,8 +1,8 @@
 <!--#include file="admFrame.asp"-->
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-  <script>tinymce.init({selector:'#userMemo'});</script>
+<script>tinymce.init({selector:'#userMemo'});</script>
               
-<title>后台-主题背景 | <%=cstCompany%></title>
+<title>主题背景 | <%=admProject%></title>
 			
             <div class="content-wrapper">
 

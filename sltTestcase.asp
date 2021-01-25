@@ -1,6 +1,6 @@
 <!--#include file="frame.asp"-->
 
-<title> 新增用例 | <%=cstCompany%></title>
+<title> 新增用例 | <%=cstProject%></title>
 
 <script language="javascript">     
 function CheckPost()

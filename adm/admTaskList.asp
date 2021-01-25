@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title><%=admMessageList%> | <%=admCompany%></title>
+<title><%=admMessageList%> | <%=admProject%></title>
 
 
 <!-- 表格 展开 -->

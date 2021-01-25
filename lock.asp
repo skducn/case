@@ -1,6 +1,6 @@
 ﻿<!--#include file="conn.asp"-->
-<!--#include file="common/function.asp"-->
-<!--#include file="common/constant.asp"-->
+<!--#include file="function.asp"-->
+<!--#include file="constant.asp"-->
 <!--#include file="md5.asp"-->
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
 <meta name="renderer" content="webkit" />
 <meta charset="utf-8">
 <link rel="shortcut icon" href=" /favicon.ico" /> 
-<title>快速登录 | <%=cstCompany%></title>
+<title>快速登录 | <%=cstProject%></title>
 <link rel="stylesheet" type="text/css" href="731/dist/css/main.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>

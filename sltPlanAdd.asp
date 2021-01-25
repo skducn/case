@@ -1,6 +1,6 @@
 <!--#include file="frame.asp"-->
 
-<title><%=cstNewPlan%> | <%=cstCompany%></title>
+<title><%=cstNewPlan%> | <%=cstProject%></title>
 
 <script language="javascript">     
 function CheckPost()

@@ -9,7 +9,7 @@ set rs = server.createobject("adodb.recordset")
 	lblId = rs("case_lblId")
 %>	
 
-<title><%=cstExcCase%><%=caseId%> | <%=cstCompany%></title>
+<title><%=cstExcCase%><%=caseId%> | <%=cstProject%></title>
 
  
 <script language="javascript">     

@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title><%=cstCompany%> | 查看项目</title>
+<title>查看项目 | <%=admProject%></title>
 
 <div class="content-wrapper">
 	<section class="content-header">

@@ -14,7 +14,7 @@ end if
 rs.close
 %>
 
-<title><%=cstChangeCase%><%=caseId%> | <%=cstCompany%></title>
+<title><%=cstChangeCase%><%=caseId%> | <%=cstProject%></title>
 
 <!--  获取当前项目版本的所有用例标题 -->
 

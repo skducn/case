@@ -1,6 +1,6 @@
 <!--#include file="frame.asp"-->
 
-<title>我的面板 | <%=cstCompany%></title></title>
+<title>我的面板 | <%=cstProject%></title></title>
 
 <script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
 <script language="javascript">  

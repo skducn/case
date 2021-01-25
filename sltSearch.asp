@@ -1,6 +1,6 @@
 <!--#include file="frame.asp"-->
 
-<title>кякВсцюЩ | <%=cstCompany%> </title>
+<title>кякВсцюЩ | <%=cstProject%> </title>
 
 <link href="bootstrap/css/custom.css" rel="stylesheet">
 

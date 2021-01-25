@@ -1,6 +1,6 @@
 <!--#include file="admframe.asp"-->
 
-<title>后台-新建计划 | <%=cstCompany%></title>
+<title><%=admPlanNew%> | <%=admProject%></title>
 
 
 <script type="text/javascript" src="upload/js/plupload.full.min.js"></script>

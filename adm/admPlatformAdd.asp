@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title><%=admVerNew%> | <%=admCompany%></title>
+<title><%=admVerNew%> | <%=admProject%></title>
 
 
 <!--  非法输入pjtId，则退出系统 -->

@@ -1,6 +1,6 @@
 <!--#include file="frame.asp"-->
 
-<title>项目信息 | <%=cstCompany%> </title>
+<title>项目信息 | <%=cstProject%> </title>
 
 <script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
 <script language="javascript">  

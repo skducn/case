@@ -1,6 +1,6 @@
 <!--#include file="admframe.asp"-->
 
-<title>case | 测试计划列表</title>
+<title><%=admPlanList%> | <%=admProject%></title>
 <script type="text/javascript" src="upload/js/plupload.full.min.js"></script>
 
 <% 

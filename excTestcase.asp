@@ -1,6 +1,6 @@
 <!--#include file="frame.asp"-->
 
-<title>执行用例 | <%=cstCompany%></title>
+<title>执行用例 | <%=cstProject%></title>
 <link href="bootstrap/css/custom.css" rel="stylesheet">
 
 <%

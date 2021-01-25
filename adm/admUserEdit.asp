@@ -1,7 +1,7 @@
 <!--#include file="admFrame.asp"-->
 <!--#include file="../md5.asp"-->
 
-<title><%=admUserEdit%> | <%=admCompany%></title>
+<title><%=admUserEdit%> | <%=admProject%></title>
 
 
 <%userId = request("userId")%>

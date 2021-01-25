@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title><%=admMessageNew%> | <%=admCompany%></title>
+<title><%=admMessageNew%> | <%=admProject%></title>
 
 <!--  获取所有消息名称 -->
 

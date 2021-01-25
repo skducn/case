@@ -1,7 +1,7 @@
 <!--#include file="admFrame.asp"-->
 
 
-<title><%=admProjectNew%> | <%=admCompany%></title>
+<title><%=admProjectNew%> | <%=admProject%></title>
 
 
 <!--  遍历项目名称	-->

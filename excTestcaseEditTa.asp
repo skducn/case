@@ -1,6 +1,6 @@
 <!--#include file="frame.asp"-->
 
-<title>执行Ta的用例 | <%=cstCompany%></title>
+<title>执行Ta的用例 | <%=cstProject%></title>
 
 <script language="javascript">     
 function CheckPost()

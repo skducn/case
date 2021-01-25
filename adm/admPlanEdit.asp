@@ -1,6 +1,6 @@
 <!--#include file="admframe.asp"-->
 
-<title>case | ≤‚ ‘º∆ªÆ</title>
+<title><%=admPlanEdit%> | <%=admProject%></title>
 <script type="text/javascript" src="upload/js/plupload.full.min.js"></script>
 
 <script language="javascript">     

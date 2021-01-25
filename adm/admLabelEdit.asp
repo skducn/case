@@ -1,6 +1,6 @@
 <!--#include file="admFrame.asp"-->
 
-<title><%=admLabelEdit%> | <%=admCompany%></title>
+<title><%=admLabelEdit%> | <%=admProject%></title>
 
 <!--  非法输入，则退出系统 -->
 

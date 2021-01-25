@@ -1,8 +1,8 @@
 <%
 
 '前台
-cstCompany = "case"
-cstLogo = "CETC Testcase"
+cstProject = "case"
+cstLogo = "CASE Testcase"
 cstNewCase = "新增用例"
 cstExcCase = "执行用例"
 cstChangeCase = "变更用例"
@@ -28,7 +28,7 @@ TestResultAbNormal = "错误"
 
 
 '后台
-admCompany = "case后台"
+admProject = "case后台"
 admDashboard = "项目仪表盘"
 admTheme = "主题背景"
 admMessagePanel = "消息管理"
@@ -48,11 +48,18 @@ admVerPanel = "版本管理"
 admLabelPanel = "标签管理"
 	admLabelNew = "新建标签"
 	admLabelEdit = "编辑标签"
+	
 admPlanPanel = "计划管理"
+	admPlanNew = "新建计划"
+	admPlanEdit = "编辑计划"
+	admPlanList = "计划列表"
+	
 admReportPanel = "报告管理"
+	admReportAudit = "审核报告"
+	
 admUserPanel = "用户管理"
 	admUserNew = "新建用户"
 	admUserEdit = "编辑用户"
-admProfile = "个人账户"
+admProfile = "个人账号"
 
 %>

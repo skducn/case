@@ -1,6 +1,6 @@
 <!--#include file="conn.asp"-->
-<!--#include file="common/function.asp"-->
-<!--#include file="common/constant.asp"-->
+<!--#include file="function.asp"-->
+<!--#include file="constant.asp"-->
 <!--#include file="md5.asp"-->
 <!--http://pratikborsadiya.in/vali-admin/#-->
 <!--https://fontawesome.com/v4.7.0/icons/-->
@@ -24,7 +24,7 @@ end if
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-<title>登录 | case</title>
+<title>登录 | <%=cstProject%></title>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
 <!--if lt IE 9
 script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')

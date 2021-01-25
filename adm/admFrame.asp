@@ -1,6 +1,6 @@
 <!--#include file="../conn.asp"-->
-<!--#include file="../common/constant.asp"-->
-<!--#include file="../common/function.asp"-->
+<!--#include file="../constant.asp"-->
+<!--#include file="../function.asp"-->
 
 <!-- < %=admMainExit(session("userPower")) %> -->
 
@@ -16,7 +16,12 @@
 	<link href="../cosmo/assets/css/basestyle/style.css" rel="stylesheet">
 	<link href="../cosmo/assets/css/daterangepicker/daterangepicker.css" rel="stylesheet">
 	<link href="../cosmo/assets/css/fullcalendar/fullcalendar.css" rel="stylesheet">
-	
+	<style>
+	li {
+word-wrap: break-word;
+white-space:normal;
+}
+</style>
 	<!-- Material Icons -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -55,7 +60,7 @@
 <section>
 <aside class="sidebar">
 	<nav class="navbar navbar-dark bg-primary">
-	<a class="navbar-brand m-0 py-2 brand-title" href="admMain.html"><%=admCompany%></a>
+	<a class="navbar-brand m-0 py-2 brand-title" href="admMain.html"><%=admProject%></a>
 	<a class="navbar-brand py-2 material-icons toggle-sidebar" href="#">menu</a>
 	</nav>
 	<nav class="navigation" >
@@ -73,9 +78,9 @@
 			<li >
 				<a href="#" title="Message"><span class="nav-icon material-icons ">message</span><%=admMessagePanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">				
-					<li><a href="admTaskAdd.html"><span class="nav-icon material-icons">add</span>新增消息</a></li>
+					<li><a href="admTaskAdd.html">新增消息</a></li>
 					<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑消息 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title="">编辑消息 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">			
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 							rs1.Open "select * from tbl_task order by taskId DESC",conn,3,3 
@@ -84,7 +89,7 @@
 							else
 							do while not rs1.eof %>
 								<li>
-								<a href="admTaskEdit-<%=rs1("taskId")%>.html"><i class="fa fa-circle-o"></i> <%=rs1("taskName")%></a>
+								<a href="admTaskEdit-<%=rs1("taskId")%>.html"><%=rs1("taskName")%></a>
 								</li>
 							<%rs1.movenext
 							loop
@@ -93,7 +98,7 @@
 							set rs1 = nothing %>
 						</ul>
 					</li>
-					<li><a href="admTaskList.html"><span class="nav-icon material-icons ">list</span>消息列表</a></li>
+					<li><a href="admTaskList.html">消息列表</a></li>
 				</ul>			
 			</li>
 		</ul>
@@ -105,11 +110,11 @@
 			<li >
 				<a href="#" title="Project"><span class="nav-icon material-icons ">table_chart</span><%=admProjectPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">	
-					<li><a href="admProjectAdd.html"><span class="nav-icon material-icons">add</span>新建项目</a></li>
+					<li><a href="admProjectAdd.html">新建项目</a></li>
 					
 					<!-- 编辑项目 -->
 					<li class="Form Stuff">
-						<a href="#" title=><span class="nav-icon material-icons ">edit</span>编辑项目 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title=>编辑项目 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">			
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 							rs1.Open "select * from tbl_project order by pjtName",conn,3,3 
@@ -119,7 +124,7 @@
 								do while not rs1.eof %>
 									<!-- 遍历项目名 -->
 									<li>
-										<a href="admProjectEdit-<%=rs1("pjtId")%>.html" title=<%=rs1("pjtName")%> ><i class="fa fa-circle-o text-red"></i> <%=rs1("pjtName")%> 
+										<a href="admProjectEdit-<%=rs1("pjtId")%>.html" title=<%=rs1("pjtName")%>><%=rs1("pjtName")%> 
 										<% if rs1("pjtStatus") = 2 then
 											response.write "<span class='label pull-right bg-red'>（关闭）</span>"			
 										end if %></a>
@@ -135,7 +140,7 @@
 					<!-- 项目列表 -->
 					
 					<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">list</span>项目列表 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title="">项目列表 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">	
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 							rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
@@ -167,7 +172,7 @@
 				<ul class="sub-nav">	
 					<!-- 新建版本 -->
 					<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">add</span>新建版本 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title="">新建版本 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">	
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 							rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
@@ -177,7 +182,7 @@
 								do while not rs1.eof %>
 									<!-- 遍历项目名 -->
 									<li>
-									<a href="admPlatformAdd-<%=rs1("pjtId")%>.html"><i class="fa fa-circle-o text-green"></i> <%=rs1("pjtName")%></a>
+									<a href="admPlatformAdd-<%=rs1("pjtId")%>.html"><%=rs1("pjtName")%></a>
 									</li>
 								<%rs1.movenext
 								loop
@@ -189,7 +194,7 @@
 					
 					<!-- 编辑版本 -->
 					<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑版本 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title="">编辑版本 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">	
 							<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 							rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
@@ -199,7 +204,7 @@
 								do while not rs1.eof %>
 									<!-- 项目名 -->								
 									<li class="Form Stuff">
-										<a href="#" title=""><span class="nav-icon material-icons ">table_chart</span> <%=rs1("pjtName")%>  <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+										<a href="#" title="">&nbsp;&nbsp;<%=rs1("pjtName")%>  <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 										<ul class="sub-nav">											
 											<!-- 平台名 -->
 											<%Set rs2 = Server.CreateObject("Adodb.Recordset")
@@ -210,7 +215,7 @@
 												do while not rs2.eof 	%>		
 													<!-- 遍历项目名 -->
 													<li>
-														<a href="admPlatformEdit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html"><i class="fa fa-circle-o text-green"></i> <%=rs2("platformName")%> 
+														<a href="admPlatformEdit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">&nbsp;&nbsp;<%=rs2("platformName")%> 
 														<% if rs2("platformStatus") = 2 then
 															response.write "<span class='label pull-right bg-red'>"			
 															response.write "（关闭）"
@@ -244,7 +249,7 @@
 				<ul class="sub-nav">	
 					<!-- 新建标签 -->
 					<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">add</span>新建标签 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title="">新建标签 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
@@ -254,7 +259,7 @@
 							do while not rs1.eof %>
 								<!-- 项目名 -->							
 								<li class="Form Stuff">
-									<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+									<a href="#" title=<%=rs1("pjtName")%>>&nbsp;&nbsp;<%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 									<ul class="sub-nav">
 										<!-- 平台名 -->
 										<%Set rs2 = Server.CreateObject("Adodb.Recordset")
@@ -263,7 +268,7 @@
 											<a href="admPlatformAdd-<%=rs1("pjtId")%>.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-green'>请新建版本</i></a>
 										<%else
 											do while not rs2.eof %>								
-											<li><a href="admLabelAdd-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html"><i class="fa fa-circle-o text-yellow"></i> <%=rs2("platformName")%> </a></li>
+											<li><a href="admLabelAdd-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">&nbsp;&nbsp;<%=rs2("platformName")%> </a></li>
 											<% rs2.movenext
 											loop	
 										end if 
@@ -281,7 +286,7 @@
 				
 				<!-- 编辑标签 -->
 				<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑标签 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title="">编辑标签 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 
@@ -291,7 +296,7 @@
 							do while not rs1.eof %>
 								<!-- 项目名 -->
 								<li class="Form Stuff">
-									<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+									<a href="#" title=<%=rs1("pjtName")%>>&nbsp;&nbsp;<%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 									<ul class="sub-nav">
 										<!-- 平台名 -->
 										<%Set rs2 = Server.CreateObject("Adodb.Recordset")
@@ -301,7 +306,7 @@
 										<%else
 											do while not rs2.eof  %>												
 												<li class="Form Stuff">
-									<a href="#" title=""><span class="nav-icon material-icons ">filter_1</span><%=rs2("platformName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+									<a href="#" title="">&nbsp;&nbsp;<%=rs2("platformName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 									<ul class="sub-nav">
 									
 													<%								
@@ -312,7 +317,7 @@
 													<%else
 														do while not rs3.eof 
 														' 遍历标签%>
-														<li><a href="admLabelEdit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>-<%=rs3("lblId")%>.html"><i class="fa fa-circle-o text-yellow"></i> <%=rs3("lblName")%> </a></li>
+														<li><a href="admLabelEdit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>-<%=rs3("lblId")%>.html">&nbsp;&nbsp;<%=rs3("lblName")%> </a></li>
 														<%rs3.movenext
 														loop		
 													end if 
@@ -347,7 +352,7 @@
 				<ul class="sub-nav">	
 					<!-- 新建标签 -->
 					<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">add</span>新建计划 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title="">新建计划 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 				<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 				rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' and pjtIsPlan='off'  order by pjtName",conn,3,3 
@@ -356,7 +361,7 @@
 				else
 					do while not rs1.eof %> <!-- 遍历项目名 -->								
 							<li class="Form Stuff">
-						<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title=<%=rs1("pjtName")%>>&nbsp;&nbsp;<%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 							<%Set rs2 = Server.CreateObject("Adodb.Recordset")
 							rs2.Open "select * from tbl_platform where plat_pjtId="&rs1("pjtId")&" and platformStatus='1' order by platformId DESC",conn,3,3 
@@ -367,7 +372,7 @@
 									<%Set rs6 = Server.CreateObject("Adodb.Recordset")
 									rs6.Open "select * from tbl_plan where plan_pjtId="&rs1("pjtId")&" and plan_platformId="&rs2("platformId")&" order by planId DESC",conn,3,3 
 									if rs6.eof then%>						
-										<li><a href="admPlanAdd-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html"><i class="fa fa-circle-o text-maroon"></i> <%=rs2("platformName")%></a></li>																																			
+										<li><a href="admPlanAdd-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">&nbsp;&nbsp;<%=rs2("platformName")%></a></li>																																			
 								<%  end if 
 								rs2.movenext
 								loop						
@@ -387,7 +392,7 @@
 				
 				<!-- 编辑计划 -->
 				<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑计划 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title="">编辑计划 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 				<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 				rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on' order by pjtName",conn,3,3 
@@ -401,7 +406,7 @@
 								
 								
 								<li class="Form Stuff">
-						<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title=<%=rs1("pjtName")%>>&nbsp;&nbsp;<%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 									<%Set rs3 = Server.CreateObject("Adodb.Recordset")
 									rs3.Open "select * from tbl_platform where plat_pjtId="&rs1("pjtId")&" and verIsPlan='on' and platformStatus='1' order by platformId DESC",conn,3,3 
@@ -409,7 +414,7 @@
 										response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-aqua'>无版本</i>"
 									else
 										do while not rs3.eof%>	<!-- 遍历版本 -->																						
-											<li><a href="admPlanEdit-<%=rs1("pjtId")%>-<%=rs3("platformId")%>.html"><i class="fa fa-circle-o text-maroon"></i> <%=rs3("platformName")%></a></li>																										
+											<li><a href="admPlanEdit-<%=rs1("pjtId")%>-<%=rs3("platformId")%>.html">&nbsp;&nbsp;<%=rs3("platformName")%></a></li>																										
 										<%rs3.movenext
 										loop						
 									end if 
@@ -435,7 +440,7 @@
 				<!-- 计划列表 -->
 			
 				<li class="Form Stuff">
-					<a href="#"><span class="nav-icon material-icons ">list</span>计划列表 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+					<a href="#">计划列表 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 					<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 						rs1.Open "select * from tbl_project where pjtStatus='1' and pjtIsVer='on'  order by pjtName",conn,3,3 
@@ -449,7 +454,7 @@
 								
 								
 									<li class="Form Stuff">
-						<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+						<a href="#" title=<%=rs1("pjtName")%>>&nbsp;&nbsp;<%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 						<ul class="sub-nav">
 									<%Set rs3 = Server.CreateObject("Adodb.Recordset")
 									rs3.Open "select * from tbl_platform where plat_pjtId="&rs1("pjtId")&" and verIsPlan='on' and platformStatus='1' order by platformId DESC",conn,3,3 
@@ -457,7 +462,7 @@
 										response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa text-aqua'>无版本</i>"
 									else
 										do while not rs3.eof%>	<!-- 遍历版本 -->																						
-											<li><a href="admTestPlanList-<%=rs1("pjtId")%>-<%=rs3("platformId")%>.html"><i class="fa fa-circle-o text-maroon"></i> <%=rs3("platformName")%></a></li>																										
+											<li><a href="admTestPlanList-<%=rs1("pjtId")%>-<%=rs3("platformId")%>.html">&nbsp;&nbsp;<%=rs3("platformName")%></a></li>																										
 										<%rs3.movenext
 										loop						
 									end if 
@@ -489,7 +494,7 @@
 				<a href="#" title="Report"><span class="nav-icon material-icons ">book</span><%=admReportPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 				<ul class="sub-nav">	
 					<li class="Form Stuff">
-						<a href="#" title=""><span class="nav-icon material-icons ">bookmarks</span>审核报告 
+						<a href="#" title="">审核报告 
 					<!-- 显示待审核的报告数量 -->
 					<% Set rs5 = Server.CreateObject("Adodb.Recordset")
 					rs5.Open "select * from tbl_report where rptStatus='undone' and rpt_pjtStatus='1' order by rptId DESC",conn,3,3 
@@ -515,7 +520,7 @@
 								noAudit = rs5.recordcount 
 								rs5.close 
 								%>
-									<a href="#" title=<%=rs1("pjtName")%>><span class="nav-icon material-icons ">table_chart</span><%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+									<a href="#" title=<%=rs1("pjtName")%>>&nbsp;&nbsp;<%=rs1("pjtName")%> <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 							
 							
 								<!-- 平台名 -->
@@ -530,11 +535,11 @@
 											rs5.Open "select * from tbl_report where rpt_pjtId="&rs1("pjtId")&" and rpt_platformId="&rs2("platformId")&" order by rptId DESC",conn,3,3 
 											if not rs5.eof then
 												if rs5("rptStatus") = "done" then %>
-													<li><a href="admReportAudit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html"><%=rs2("platformName")%> &nbsp;&nbsp;(已完成）</a></li>      				
+													<li><a href="admReportAudit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">&nbsp;&nbsp;<%=rs2("platformName")%>（已完成）</a></li>      				
 												<%elseif rs5("rptStatus") = "reject" then %>
-													<li><a href="admReportAudit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html"><%=rs2("platformName")%> &nbsp;&nbsp;<font color="white">(已拒绝）</font></a></li>    
+													<li><a href="admReportAudit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">&nbsp;&nbsp;<%=rs2("platformName")%> <font color="white">（已拒绝）</font></a></li>    
 												<%else %>
-													<li><a href="admReportAudit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html"><%=rs2("platformName")%>&nbsp;&nbsp;<font color="white">（待审核）</font> </a></li    
+													<li><a href="admReportAudit-<%=rs1("pjtId")%>-<%=rs2("platformId")%>.html">&nbsp;&nbsp;<%=rs2("platformName")%><font color="white">（待审核）</font> </a></li    
 												><%end if 
 											end if
 											rs5.close			
@@ -564,9 +569,9 @@
 		<li>
 			<a href="#" title="User"><span class="nav-icon material-icons ">perm_identity</span><%=admUserPanel%><span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 			<ul class="sub-nav">	
-				<li><a href="admUserAdd.html"><span class="nav-icon material-icons">add</span>新增用户</a></li>
+				<li><a href="admUserAdd.html">新增用户</a></li>
 				<li class="Form Stuff">
-					<a href="#" title=""><span class="nav-icon material-icons ">edit</span>编辑用户 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+					<a href="#" title="">编辑用户 <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
 					<ul class="sub-nav">
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
 						rs1.Open "select * from tbl_user order by userName",conn,3,3 
@@ -576,7 +581,7 @@
 							do while not rs1.eof %>
 								<!-- 遍历用户名 -->
 								<li>
-								<a href="admUserEdit-<%=rs1("userId")%>.html"><i class="fa fa-circle-o text-aqua"></i> <%=rs1("userNickname")%>
+								<a href="admUserEdit-<%=rs1("userId")%>.html">&nbsp;&nbsp;<%=rs1("userNickname")%>
 								<% if rs1("userStatus") = 2 then
 										response.write "<span class='label pull-right bg-red'>"			
 										response.write "（关闭）"
