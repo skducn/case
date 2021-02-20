@@ -14,6 +14,7 @@ Function getClientIp()
 	end if 		
 End Function
 
+
 '3，退出系统
 Function exitIndex()
 	if session("userName") = "" then
@@ -213,14 +214,7 @@ Function strTo_(strSource)
 End Function
 
 
-'----------------------- 获取用户当前ip 
-Function getUserIp()
-	userIp=Request.ServerVariables("HTTP_X_FORWARDED_FOR")
-	if userIp= "" Then 
-	userIp=Request.ServerVariables("REMOTE_ADDR")
-	end if 	
-	getUserIp = userIp
-End Function
+
 
 
 '*****************************************

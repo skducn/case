@@ -1,7 +1,19 @@
+<!--
+http://pratikborsadiya.in/vali-admin/#
+https://fontawesome.com/v4.7.0/icons/
+https://fontawesome.com/icons?d=gallery&q=project  icon
+http://demo.kangjingept.com:8020/cssthemes6/dgfp_82_busines/index.html  模版
+-->
+
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+
 <%
 
 '前台
-cstProject = "case"
+cstProject = "TPS"
+cstTitle = "TPS 测试项目套件集"
+cstIntro = "TPS（Test Project Suite） 是由测试计划、测试用例、测试报告等管理的一体化套件集，可有效管理用例的设计颗粒度及执行情况，搁置或暂停的测试用例会用图形的方式展示，以便之后执行与跟踪管理。测试报告支持报告模块引用及测试用例列表展示。"
+
 cstLogo = "CASE Testcase"
 cstNewCase = "新增用例"
 cstExcCase = "执行用例"
@@ -25,6 +37,7 @@ varNoRecord = "无此记录！"
 varNoContent = "无内容！"
 TestResultNormal = "正确"
 TestResultAbNormal = "错误"
+
 
 
 '后台

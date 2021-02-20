@@ -2,8 +2,6 @@
 <!--#include file="function.asp"-->
 <!--#include file="constant.asp"-->
 <!--#include file="md5.asp"-->
-<!--http://pratikborsadiya.in/vali-admin/#-->
-<!--https://fontawesome.com/v4.7.0/icons/-->
 
 
 <% 
@@ -12,160 +10,138 @@ Session.Abandon()
 response.Redirect("index.html")
 end if 
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="renderer" content="webkit" />
-
-<link rel="stylesheet" type="text/css" href="731/dist/css/main.css">
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-<title>ç™»å½• | <%=cstProject%></title>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
-<!--if lt IE 9
-script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
-script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
--->
-</head>
-  
-<!-- Javascripts-->
-<script src="731/dist/js/jquery-2.1.4.min.js"></script>
-<script src="731/dist/js/bootstrap.min.js"></script>
-<script src="731/dist/js/plugins/pace.min.js"></script>
-<script src="731/dist/js/main.js"></script>
-
-<script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
-  
-<script language="javascript">  
-function CheckPost()
-{	  
-     if (addForm.userName.value == "" || addForm.userPass.value == "") 
-	 {
-		$.notify({
-			title: "&nbsp;&nbsp;",
-			message: "ç”¨æˆ·åæˆ–å¯†ç ä¸èƒ½ä¸ºç©ºï¼",
-			icon: 'fa fa-info-circle' 
-		},{
-			type: "danger"
-		});
-	  addForm.userName.focus();
-	  return false;
-  }
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link rel="shortcut icon" href=" /favicon.ico" /> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>µÇÂ¼ | <%=cstProject%></title>
+<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+<link href="css/fontawesome.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/solid.css" rel="stylesheet">
+<style>
+input::-webkit-input-placeholder {
+/* placeholderÑÕÉ«  */
+color: #aab2bd;
+/* placeholder×ÖÌå´óĞ¡  */
+font-size: 12px;
+/* placeholderÎ»ÖÃ  */
+text-align: left;
 }
-</script>
+</style>
+</head>
 
-  	<%if request("action") = "login" then
-		userName = request("userName")
-		userPass = md5(request("userPass")) 
-		Set rs = Server.CreateObject("Adodb.Recordset")						
-		rs.Open "select * from tbl_user where userName='"&userName&"' and userPass='"&userPass&"' and userStatus='1'",conn,3,3
-		if not rs.eof then	   
-			rs("latestLoginIp") = getUserIp()   'from function.asp
-			rs("latestLoginDate") = now()
-			rs.update
-			session("userId") = rs("userId")
-			session("userName") = rs("userName")
-			session("userPower") = rs("userPower")
-			session("latestLoginIp") = getUserIp()
-			if session("userPower") = 1 then   'ç®¡ç†å‘˜
-				response.Redirect "admMain.html"
-			elseif session("userPower") = 3 then  
-				response.Redirect "tourist.html" ' ç”¨ä¾‹æ¸¸å®¢
-			elseif session("userPower") = 4 then  
-				response.Redirect "review.html"  ' ç”¨ä¾‹è¯„å®¡å‘˜
-			else 
-				response.Redirect "main.html"  'æµ‹è¯•äººå‘˜
-			end if 
-		else
-			response.Redirect("index.html")
 
-		end if    
-		rs.close
-		set rs = nothing
-		conn.close
-		set conn = nothing
-	end if%>
-	
-	  <%if request("action") = "clear" then
-		userName = request("userName")
-		Set rs = Server.CreateObject("Adodb.Recordset")						
-		rs.Open "select * from tbl_user where userName='"&userName&"'",conn,3,3
-		if not rs.eof then	   
-			rs("latestLoginIp") = ""
-			rs.update
-		end if    
-		rs.close
-		set rs = nothing
-		conn.close
-		set conn = nothing
+
+<!-- µÇÂ¼ -->
+<%if request("action") = "login" then
+	userName = request("userName")
+	userPass = md5(request("userPass")) 
+	Set rs = Server.CreateObject("Adodb.Recordset")						
+	rs.Open "select * from tbl_user where userName='"&userName&"' and userPass='"&userPass&"' and userStatus='1'",conn,3,3
+	if not rs.eof then	   
+		rs("latestLoginIp") = getClientIp()   'from function.asp
+		rs("latestLoginDate") = now()
+		rs.update
+		session("userId") = rs("userId")
+		session("userName") = rs("userName")
+		session("userPower") = rs("userPower")
+		session("latestLoginIp") = getClientIp()
+		if session("userPower") = 1 then   '¹ÜÀíÔ±
+			response.Redirect "admMain.html"
+		elseif session("userPower") = 3 then  
+			response.Redirect "tourist.html" ' ÓÃÀıÓÎ¿Í
+		elseif session("userPower") = 4 then  
+			response.Redirect "review.html"  ' ÓÃÀıÆÀÉóÔ±
+		else 
+			response.Redirect "main.html"  '²âÊÔÈËÔ±
+		end if 
+	else
 		response.Redirect("index.html")
-	end if%>
 
-<body >
+	end if    
+	rs.close
+	set rs = nothing
+	conn.close
+	set conn = nothing
+end if%>
 
-	<%
-		Set rs = Server.CreateObject("Adodb.Recordset")						
-		rs.Open "select * from tbl_user where latestLoginIp='"&getUserIp()&"' and userStatus='1'",conn,3,3
-		if not rs.eof then	   
-			response.Redirect("lock.html")		
-		end if
-		rs.close
-	%>
 
-    <section class="material-half-bg">
-      <div class="cover"></div>
-    </section>
-    <section class="login-content">
+<!-- Çå³ıµÇÂ¼IP -->	
+<%if request("action") = "clear" then
+userName = request("userName")
+Set rs = Server.CreateObject("Adodb.Recordset")						
+rs.Open "select * from tbl_user where userName='"&userName&"'",conn,3,3
+if not rs.eof then	   
+	rs("latestLoginIp") = ""
+	rs.update
+end if    
+rs.close
+set rs = nothing
+conn.close
+set conn = nothing
+response.Redirect("index.html")
+end if%>
+	
+<!-- ²éÑ¯µ±Ç°µÇÂ¼IPÊÇ·ñµÇÂ¼¹ı£¬Èç¹ûÖ®Ç°µÇÂ¼µÄ£¬ÔòÌø×ªlock.htmlÒ³Ãæ¡£ -->	
+<%
+Set rs = Server.CreateObject("Adodb.Recordset")						
+rs.Open "select * from tbl_user where latestLoginIp='"&getClientIp()&"' and userStatus='1'",conn,3,3
+if not rs.eof then	   
+response.Redirect("lock.html")		
+end if
+rs.close
+%>
 	
 
-			
-      <div class="login-box">
-	  <!-- ç”¨æˆ·ç™»å½• -->	
-		<form action="indexLogin.html" method="post" name="addForm"  class="login-form" onSubmit="return CheckPost()" >
-			<h2 class="login-head"><i class="fa fa-area-chart"></i> æµ‹è¯•ç”¨ä¾‹å¹³å°</h2>		  		  		              				  
-			<div class="form-group">
-				<h4>ç”¨æˆ·å</h4>
-				<input class="form-control" type="text" name="userName"  placeholder="USERNAME" autofocus>
-			</div>
-			<div class="form-group">
-				<h4>å¯†ç </h4>
-				<input class="form-control" type="password" name="userPass" placeholder="PASSWORD">
-			</div>
-			<div class="form-group">
-				<div class="utility">
-					<div class="animated-checkbox"></div>									
-					<p class="semibold-text mb-0"><a data-toggle="flip">å¿˜è®°å¯†ç ï¼Ÿ</a></p>
+<body onLoad="document.getElementById('inputTxt').focus()"> 	
+<img src="images/book.png" width="3" height="3">
+<div class="signupform">
+	<div class="container">
+		<!-- main content -->
+		<div class="agile_info">
+			<div class="w3l_form">
+				<div class="left_grid_info">
+					<h1><%=cstTitle%></h1>
+					<p><%=cstIntro%></p><br>
+					<img src="./images/index.png" alt="" >
+					
 				</div>
 			</div>
-			<div class="form-group btn-container">
-				<button class="btn btn-primary btn-block" id="button"><h4><i class="fa fa-sign-in fa-lg fa-fw"></i> ç™»å½•</h4></button>
+			<div class="w3_info ">
+				<h2>»¶Ó­Ê¹ÓÃ<%=cstProject%></h2>
+				<p>ÇëµÇÂ¼ÄúµÄÕËºÅ</p>
+				<form action="indexLogin.html" method="post">
+					<label>ÕËºÅ</label>
+					<div class="input-group">
+						<span class="fa fa-user-alt" aria-hidden="true"></span>
+						<input type="text" name="userName" placeholder="ÇëÊäÈë..." required="" maxlength="20" id="inputTxt"> 
+					</div>
+					<label>ÃÜÂë</label>
+					<div class="input-group">
+						<span class="fa fa-lock" aria-hidden="true"></span>
+						<input type="Password" name="userPass" placeholder="ÇëÊäÈë..." required="" maxlength="30"> 
+					</div> 
+					<div class="login-check">
+						 <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i> ¼Ç×¡ÎÒ</label>
+					</div>						
+						<button class="btn btn-danger btn-block" type="submit" >µÇÂ¼</button>                
+				</form>
+				<p class="account">µã»÷µÇÂ¼£¬Í¬ÒâÓëÈÏ¿É<a href="#"><%=cstProject%>Ê¹ÓÃ¹æ·¶</a></p>
+				<p class="account1">ÎÒÃ»ÓĞÕËºÅ£¿<a href="mailto:h.jin@zy-healthtech.com">ÉêÇëÕËºÅ</a></p>
+				<p class="account1 fa fa-tasks" align="right"> <a href="http://<%=getServerIp()%>" target="_blank">CMSÖªÊ¶¿â</a></p>
 			</div>
-				<p class="semibold-text mb-0"><a href="http://<%=getServerIp()%>"><i class="fa fa-book"></i> cms çŸ¥è¯†åº“</a></p>
+		</div>
+		<!-- //main content -->
+	</div>
+</div>
 
-		</form>
-		
-
-		
-        <form class="forget-form" action="index.html">
-          <h3 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>å¿˜è®°å¯†ç äº†å—ï¼Ÿ</h3>
-          <div class="form-group">
-            <h4>é‚®ç®±è®¤è¯</h4>
-            <input class="form-control" type="text" placeholder="Email">
-          </div>
-          <div class="form-group btn-container">
-            <button class="btn btn-primary btn-block"><h4><i class="fa fa-unlock fa-lg fa-fw"></i> é‡ç½®</h4></button>
-          </div>
-          <div class="form-group mt-20">
-            <p class="semibold-text mb-0"><a data-toggle="flip"><i class="fa fa-angle-left fa-fw"></i>è¿”å›ç™»å½•</a></p>
-          </div>
-        </form>
-      </div>
-    </section>
-  </body>
-
+<div class="footer-w3l" align="center"></div>
+</body>
 </html>
+
+
+

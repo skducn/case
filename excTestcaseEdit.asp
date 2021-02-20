@@ -452,14 +452,15 @@ function CheckPost()
   });
 </script>
 
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
+
 
 </body>
 </html>
  <!-- Javascripts-->
-<script src="731/dist/js/jquery-2.1.4.min.js"></script>
-<script src="731/dist/js/bootstrap.min.js"></script>
-<script src="731/dist/js/plugins/pace.min.js"></script>
-<script src="731/dist/js/main.js"></script>
+
+<!-- 左侧菜单，放在每个页面底部-->
+<script src="js/menu/jquery-2.1.4.min.js"></script>
+<script src="js/menu/bootstrap.min.js"></script>
+<script src="js/menu/main.js"></script>
+
 	

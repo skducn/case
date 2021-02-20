@@ -2,7 +2,6 @@
 
 <title>нр╣дцФ╟Е | <%=cstProject%></title></title>
 
-<script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
 <script language="javascript">  
 function CheckPost()
 {   	

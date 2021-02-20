@@ -1,4 +1,4 @@
-ï»¿<!--#include file="conn.asp"-->
+<!--#include file="conn.asp"-->
 <!--#include file="function.asp"-->
 <!--#include file="constant.asp"-->
 <!--#include file="md5.asp"-->
@@ -9,107 +9,107 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="renderer" content="webkit" />
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <link rel="shortcut icon" href=" /favicon.ico" /> 
-<title>å¿«é€Ÿç™»å½• | <%=cstProject%></title>
-<link rel="stylesheet" type="text/css" href="731/dist/css/main.css">
+<title>¿ìËÙµÇÂ¼ | <%=cstProject%></title>
+<link href="css/fontawesome.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="css/solid.css" rel="stylesheet">
 </head>
-<script src="731/dist/js/jquery-2.1.4.min.js"></script>
-<script src="731/dist/js/bootstrap.min.js"></script>
-<script src="731/dist/js/plugins/pace.min.js"></script>
-<script src="731/dist/js/main.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script> 
-<script language="javascript">  
-function CheckPost()
-{	  
-     if (addForm.userPass.value == "") 
-	 {
-		$.notify({
-			title: "&nbsp;&nbsp;",
-			message: "å¯†ç ä¸èƒ½ä¸ºç©ºï¼",
-			icon: 'fa fa-remove' 
-		},{
-			type: "danger"
-		});
-	  addForm.userName.focus();
-	  return false;
-  }
+<style>
+input::-webkit-input-placeholder {
+/* placeholderÑÕÉ«  */
+color: #aab2bd;
+/* placeholder×ÖÌå´óĞ¡  */
+font-size: 12px;
+/* placeholderÎ»ÖÃ  */
+text-align: left;
 }
-</script>
+</style>
+</head>
 
-  	<%if request("action") = "login" then
-		userPass = md5(request("userPass")) 
-		userName = request("userName")
-		latestLoginIp = request("latestLoginIp")
+<%if request("action") = "login" then
+	userPass = md5(request("userPass")) 
+	userName = request("userName")
+	latestLoginIp = request("latestLoginIp")
+	Set rs = Server.CreateObject("Adodb.Recordset")						
+	rs.Open "select * from tbl_user where userPass='"&userPass&"' and latestLoginIp='"&latestLoginIp&"' and userStatus='1'",conn,3,3
+	if not rs.eof then	   
+	rs("latestLoginDate") = now()
+	rs.update
+	session("userId") = rs("userId")
+	session("userName") = rs("userName")
+	session("userPower") = rs("userPower")
+	if session("userPower") = 1 then   '¹ÜÀíÔ±
+	response.Redirect "admMain.html"
+	elseif session("userPower") = 3 then  
+	response.Redirect "tourist.html" ' ÓÃÀıÓÎ¿Í
+	elseif session("userPower") = 4 then  
+	response.Redirect "review.html"  ' ÓÃÀıÆÀÉóÔ±
+	else 
+	response.Redirect "main.html"  '²âÊÔÈËÔ±
+	end if 
+	else
+	response.Write("<script>;alert('ºÜ±§Ç¸£¬ÃÜÂë´íÎó£¡');window.location.href='index.html';</script>")  
+	end if    
+	rs.close
+	set rs = nothing
+	conn.close
+	set conn = nothing
+end if%>
 
-		Set rs = Server.CreateObject("Adodb.Recordset")						
-		rs.Open "select * from tbl_user where userPass='"&userPass&"' and latestLoginIp='"&latestLoginIp&"' and userStatus='1'",conn,3,3
-		if not rs.eof then	   
-			rs("latestLoginDate") = now()
-			rs.update
-			session("userId") = rs("userId")
-			session("userName") = rs("userName")
-			session("userPower") = rs("userPower")
-			if session("userPower") = 1 then   'ç®¡ç†å‘˜
-				response.Redirect "admMain.html"
-			elseif session("userPower") = 3 then  
-				response.Redirect "tourist.html" ' ç”¨ä¾‹æ¸¸å®¢
-			elseif session("userPower") = 4 then  
-				response.Redirect "review.html"  ' ç”¨ä¾‹è¯„å®¡å‘˜
-			else 
-				response.Redirect "main.html"  'æµ‹è¯•äººå‘˜
-			end if 
-		else
-			response.Write("<script>;alert('å¾ˆæŠ±æ­‰ï¼Œå¯†ç é”™è¯¯ï¼');window.location.href='index.html';</script>")  
-			
-		end if    
-		rs.close
-		set rs = nothing
-		conn.close
-		set conn = nothing
-	end if%>
 
 <body onLoad="document.getElementById('inputTxt').focus()">
-   <section class="material-half-bg">
-      <div class="cover"></div>
-    </section>
-    <section class="lockscreen-content">
-			
-      <div class="logo">
-          <h1 align="center">æµ‹è¯•ç”¨ä¾‹å¹³å°</h1>
-      </div>
-	  
-	    <%
-		
-		Set rs4 = Server.CreateObject("Adodb.Recordset")						
-		rs4.Open "select * from tbl_user where latestLoginIp='"&getUserIp()&"'",conn,3,3
+<div class="signupform">
+	<div class="container">
+		<!-- main content -->
+		<div class="agile_info">
+			<div class="w3l_form">
+				<div class="left_grid_info">
+					<h1><%=cstTitle%></h1>
+					<p><%=cstIntro%></p><br>
+					<img src="./images/index.png" alt="" >	
+				</div>
+			</div>
+			<div class="w3_info">
+				<h2>»¶Ó­Ê¹ÓÃ<%=cstProject%></h2>
+				<p>ÇëµÇÂ¼ÄúµÄÕËºÅ</p>
+				
+				<form action="lockLogin.html" method="post" >
+					<%
+					Set rs4 = Server.CreateObject("Adodb.Recordset")						
+					rs4.Open "select * from tbl_user where latestLoginIp='"&getClientIp()&"'",conn,3,3
+					if not rs4.eof then		
+					%>
+					<div class="lock-box">
+						<img src="<%=rs4("userImg")%>" class="img-circle user-image">	 
+						<h3 class="text-center user-name"><%=rs4("userNickname")%></h3>
+						<p class="text-center text-muted"><%=rs4("userTitle")%></p>
+						<label>ÃÜÂë</label>
+					<div class="input-group">
+						<span class="fa fa-lock" aria-hidden="true"></span>
+						<input type="Password" name="userPass" placeholder="ÇëÊäÈë..." required="" id="inputTxt" maxlength="30"> 
+					</div> 
+						<input name="latestLoginIp" type="hidden" value="<%=getClientIp()%>" >
+						<input name="userName2" type="hidden" value="<%=rs4("userName")%>" >		
+						<button class="btn btn-danger btn-block" type="submit">¿ìËÙµÇÂ¼</button>   
+						<p class="account" align="right"><a href="indexClear-<%=rs4("userName")%>.html" class="lock11">ÎÒ²»ÊÇ¡°<%=rs4("userNickname")%>¡±£¬ÇĞ»»ÕËºÅ</a></p>
+						<%
+						else
+						response.Redirect("index.html")		
+						end if 
+						rs4.close
+						set rs4 = nothing%>
+					</div>
+				</form>
 	
-		%>
-	  <form action="lockLogin.html" method="post" name="addForm"  class="login-form" onSubmit="return CheckPost()" >
-      <div class="lock-box"><img class="img-circle user-image" src="<%=rs4("userImg")%>">
-        <h3 class="text-center user-name"><%=rs4("userNickname")%></h3>
-        <p class="text-center text-muted"><%=rs4("userTitle")%></p>
-        <form class="unlock-form" action="index.html">
-          <div class="form-group">
-          <br>
-            <input class="form-control" name="userPass" type="password" placeholder="password" id="inputTxt">
-			<input name="latestLoginIp" type="hidden" value="<%=getUserIp()%>" >
-			<input name="userName" type="hidden" value="<%=rs4("userName")%>" >
-          </div>
-          <div class="form-group btn-container">
-            <button class="btn btn-primary btn-block" type="submit"><h4><i class="fa fa-unlock fa-lg"></i> å¿«é€Ÿç™»å½•</h4></button>
-          </div>
-        </form>
-        <p><a href="indexClear-<%=rs4("userName")%>.html">æˆ‘ä¸æ˜¯ <%=rs4("userNickname")%> ? é‡æ–°ç™»å½•</a></p>
-      </div>
-    </section>
-	<%rs4.close
-	set rs4 = nothing%>
-
-			
-      </div>
-    </section>
-  </body>
-
+				<p class="account">µã»÷µÇÂ¼£¬Í¬ÒâÓëÈÏ¿É<a href="#"><%=cstProject%>Ê¹ÓÃ¹æ·¶</a></p>
+				<p class="account1">ÎÒÃ»ÓĞÕËºÅ£¿<a href="mailto:h.jin@zy-healthtech.com">ÉêÇëÕËºÅ</a></p>
+			</div>
+		</div>
+		<!-- //main content -->
+	</div>
+</div>
+</body>
 </html>
+
