@@ -5,6 +5,19 @@
 <title><%=admProfile%> | <%=admProject%></title>   
 
 
+<style>
+.img-circle {
+  border-radius: 50%;
+}
+
+.user-image {
+  border: 3px solid #fff;
+  max-width: 100px;
+  display: block;
+  margin: 0 auto;
+}
+</style>
+
 <!--  获取所有用户的昵称，用于新用户中遍历 -->
 <%
 dim ArrNickName,rs8
@@ -257,8 +270,8 @@ end if
 					set rs = server.CreateObject("ADODB.RecordSet")
 					rs.Open "select * from tbl_user where userId="&session("userId")&"",conn,3,3
 					%>
-					<div class="mx-5 my-4 px-4" align="center">
-					<img src="<%=rs("userImg")%>" class="img-thumbnail img-fluid rounded-circle">
+					<div class="mx-5 my-4 px-4" align="center">					
+						<img src="<%=rs("userImg")%>" class="img-thumbnail img-circle user-image">	
 					</div>
 				
 					<div class="text-center">

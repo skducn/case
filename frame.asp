@@ -54,7 +54,7 @@
           <div class="user-panel">		  								
 			<%Set rs = Server.CreateObject("Adodb.Recordset")
 			rs.Open "select * from tbl_user where userName='"&session("userName")&"'",conn,3,3 %>								
-			<div class="pull-left image"><img class="img-circle" src="<%=rs("userImg")%>" alt="User Image"></div>
+			<div class="pull-left image"><img class="img-circle " src="<%=rs("userImg")%>" alt="User Image"></div>
 			<div class="pull-left info">
 				<p><%=rs("userNickname")%></p>
 				<p class="designation"><%=rs("userTitle")%></p>
