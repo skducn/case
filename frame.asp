@@ -13,6 +13,8 @@
 <link rel="stylesheet" type="text/css" href="731/dist/css/main2.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 <!-- https://fontawesome.dashgame.com/ ，确保 fonts不能删除 -->	
+<link rel="stylesheet" type="text/css" href="css/1.css">
+
 </head>
 
 
@@ -561,12 +563,10 @@
 
 
 	
-
 <!-- 百度编辑器--> 
 <script src="ueditor/ueditor.config.js"></script>
 <script src="ueditor/ueditor.all.min.js"> </script>	
 <script src="ueditor/lang/zh-cn/zh-cn.js"></script> 
-
 
 <!-- 退出弹框效果 -->
 <script src="js/exit/jquery-2.1.4.min.js"></script>	
@@ -578,6 +578,10 @@
 <link href="js/topButton/zzsc.css" rel="stylesheet" type="text/css" />
 <script src="js/topButton/jquery.min.js"></script>
 <script src="js/topButton/zzsc.js"></script> 
+
+<!-- 快捷鍵列表 -->
+<link href="js/shortcutKey/custom.css" rel="stylesheet" type="text/css" />
+
 
 <!-- 表单提交校验 -->
 <script src="js/check.js"></script>

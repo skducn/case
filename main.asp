@@ -473,8 +473,5 @@ end if %>
 <script src="js/menu/bootstrap.min.js"></script>
 <script src="js/menu/plugins/pace.min.js"></script>
 <script src="js/menu/main.js"></script>
-<script  src="js/shortcutKey/bootstrap-notify.min.js"></script>
-
-
-	  
+<script src="js/shortcutKey/bootstrap-notify.min.js"></script>	  
 
