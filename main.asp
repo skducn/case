@@ -38,8 +38,9 @@ end if %>
 		<div><ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">我的面板</a></li></ul></div>
 	</div>
 	
-	<div class="row">
-							
+	
+			<div class="col-md-12">
+					
 		<!-- 显示 执行用例情况（规则：当100%时可点击创建测试报告） -->
 		<%
 		varNoResult = 0 
@@ -133,8 +134,7 @@ end if %>
 		rs.movenext
 		loop%>	
 		
-	</div>	  
-				 
+			</div>	 
 	
 	<div class="row">
 	
@@ -180,6 +180,10 @@ end if %>
 				</div>
 			</div>
 		</div>
+	
+
+	
+	
 	
 		<!-- 执行用例-->
 

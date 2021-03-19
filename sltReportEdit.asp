@@ -463,7 +463,7 @@ end if
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 已通过数</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未通过数</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未测试数</h4></th>
-			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 执行覆盖率</h4></th>
+			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 执行覆盖率%</h4></th>
 			</tr></thead><tbody>
 			<% set rs4 = server.createobject("adodb.recordset")
 			rs4.open "select * from tbl_platform where platformId="&platformId&" order by platformId asc",conn,3,3 
@@ -471,8 +471,7 @@ end if
 			set rs5 = server.createobject("adodb.recordset")
 			rs5.open "select * from tbl_label where lbl_pjtId="&pjtId&" and lbl_platformId="&platformId&" order by lblId asc",conn,3,3 
 			do while not rs5.eof
-			set rs6 = server.createobject("adodb.recordset")
-			rs6.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" and case_lblId="&rs5("lblId")&" order by caseId asc",conn,3,3 %>
+			 %>
 			<tr>
 		
 		

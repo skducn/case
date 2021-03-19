@@ -666,8 +666,8 @@ end if
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例总数</h4></th>
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 已通过数</h4></th>
 				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未通过数</h4></th>
-				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未测试数(搁置/暂停）</h4></th>
-				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 通过覆盖率</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未测试数</h4></th>
+				<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 通过覆盖率%</h4></th>
 				</tr>
 				</thead>
 				<tbody>

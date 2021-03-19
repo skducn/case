@@ -365,13 +365,13 @@ rs1.close
 	<table id="example2" class="table table-bordered table-hover">
 	<thead>
 	<tr> 
-	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>版本</h5></th>
+
 	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>标签</h5></th>
 	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>用例总数</h5></th>
 	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>已通过数</h5></th>
 	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>未通过数</h5></th>
-	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>未测试数(搁置/暂停）</h5></th>
-	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>用例执行覆盖率</h5></th>
+	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>未测试数</h5></th>
+	<th style="width: 14.28%" bgcolor="#f1f1f1"><h5>执行覆盖率%</h5></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -380,60 +380,38 @@ rs1.close
 	do while not rs4.eof 
 		set rs5 = server.createobject("adodb.recordset")
 		rs5.open "select * from tbl_label where lbl_pjtId="&pjtId&" and lbl_platformId="&platformId&" order by lblId asc",conn,3,3 
-		do while not rs5.eof
-			set rs6 = server.createobject("adodb.recordset")
-			rs6.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" and case_lblId="&rs5("lblId")&" order by caseId asc",conn,3,3 %>
+			do while not rs5.eof
+			 %>
 			<tr>
-			<td><%=rs4("platformName")%></td>
-			<td><%=rs5("lblName")%></td>
-		
-			<td><% if rs("rptCaseTotal") <>"" then
-					response.write rs6.recordcount
-				end if %>
-		
+			
+			<td><%=rs5("lblName")%></td>						
+			<td><% 
+			response.write rs("rptCaseTotal") 
+			 %>
 			</td>
-			<td><%
-			varOkSum3 = 0
-			varErrorSum3 = 0
-			varEmptySum3 = 0
-				do while not rs6.eof
-					if rs6("caseResult") = "ok" then
-					   varOkSum3 = varOkSum3 + 1
-					end if 
-					if rs6("caseResult") = "error" then
-					   varErrorSum3 = varErrorSum3 + 1
-					end if 
-					if rs6("caseResult")="empty" and rs6("caseStatus") = "1" then
-					   varEmptySum3 = varEmptySum3 + 1
-					end if 
-						if rs6("caseStatus") = "3" or rs6("caseStatus") = "2" then
-					   varEmptySum3 = varEmptySum3 + 1
-					end if 
-				rs6.movenext
-				loop
-				
-			if rs("rptCasePass") <>"" then
-				response.write varOkSum3
-			end if %>							
+			<td><%				
+			
+				response.write rs("rptCasePass")
+			%>							
 			</td>
 			<td>
-			<% if rs("rptNoPass") <>"" then
-				response.write varErrorSum3
-			end if %>
+			<% 
+				response.write rs("rptNoPass")
+			 %>
 			</td>
 			<td>
-			<%  if rs("rptNoTest") <>"" then
-				response.write varEmptySum3
-			end if %>
+			<% 
+				response.write rs("rptNoTest")
+			 %>
 			</td>
 			<td>
-			<%  if rs("rptCaseCoverage") <>"" then
-					varFGL = int((varOkSum3+varErrorSum3)/rs6.recordcount*100)
-					response.write cstr(varFGL) + "%"
-			end if  
-			rs6.close%>
+			<%  
+				response.write rs("rptCaseCoverage")
+			 
+			%>
 			</td>
 			</tr>
+		
 		<% rs5.movenext
 		loop
 		rs5.close
