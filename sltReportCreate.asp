@@ -1,8 +1,34 @@
 <!--#include file="frame.asp"-->
 
-<title>新建测试报告 | <%=cstCompany%></title>
-<script src="upload/js/plupload.full.min.js"></script>
 
+<%
+pjtId = request("pjtId")
+platformId = request("platformId")
+
+set rs = server.createobject("adodb.recordset")
+set rs2 = server.createobject("adodb.recordset")
+rs.open "select * from tbl_project where pjtId="&pjtId&" order by pjtId desc",conn,3,3
+pjtName = rs("pjtName")
+
+rs2.open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" order by platformId desc",conn,3,3
+pjtRedmine = rs2("platformRedmine")
+platformName = rs2("platformName")
+rs2.close
+rs.close
+set rs2 = nothing
+set rs = nothing
+
+set rs1 = server.createobject("adodb.recordset")
+rs1.open "select * from tbl_platform where platformId="&platformId&" order by platformId desc",conn,3,3
+platformName = rs1("platformName")
+platformRedmine = rs1("platformRedmine")
+rs1.close
+%>
+
+<title>新建报告 | <%=pjtName%><%=platformName%></title>
+
+
+<script src="upload/js/plupload.full.min.js"></script>
 <script language="javascript">
 function CheckPost()
 {
@@ -55,7 +81,6 @@ return true;
 }else{
 return false;
 }
- 
 }
 </script>
 
@@ -121,6 +146,11 @@ if request("action") = "submit" then
 		'rs("rptRedminePic") = request("rptRedminePic")
 		rs("rptAuthor") = session("userName")
 		rs("rptCreatedDate") = now()
+		rs("rptCaseTotal") = request("caseTotal")
+		rs("rptCasePass") = request("casePass")
+		rs("rptNoPass") = request("caseNoPass")
+		rs("rptNoTest") = request("caseNoTest")			
+		rs("rptCaseCoverage") = request("caseCoverage")		
 		x = ""
 		for i=1 to 10
 			if request("errStory"&i) = "" then
@@ -158,39 +188,18 @@ if request("action") = "submit" then
 	set rs = nothing
 	
 	response.Redirect("sltReportShow.asp?pjtId="&pjtId&"&platformId="&platformId&"")
-end if 
-		
-
-
-
-pjtId = request("pjtId")
-platformId = request("platformId")
-
-set rs = server.createobject("adodb.recordset")
-set rs2 = server.createobject("adodb.recordset")
-rs.open "select * from tbl_project where pjtId="&pjtId&" order by pjtId desc",conn,3,3
-pjtName = rs("pjtName")
-
-rs2.open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" order by platformId desc",conn,3,3
-pjtRedmine = rs2("platformRedmine")
-platformName = rs2("platformName")
-rs2.close
-rs.close
-set rs2 = nothing
-set rs = nothing
-
-set rs1 = server.createobject("adodb.recordset")
-rs1.open "select * from tbl_platform where platformId="&platformId&" order by platformId desc",conn,3,3
-platformName = rs1("platformName")
-platformRedmine = rs1("platformRedmine")
-rs1.close
+end if 	
 %>
+
 
    
 <div class="content-wrapper">
 	<div class="page-title">
-		<div><h1><i class="fa fa-edit"></i> 测试报告 - 新建测试报告</h1><p>create testReport</p></div>
-		<div><ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">测试报告</a></li></ul></div>
+		<div>
+			<h1><i class="fa fa-edit"></i> 新建测试报告									
+			</h1><p>create report</p>
+		</div>	
+		<ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i> 测试报告 / <%=pjtName%></li></ul>
 	</div>
 	
 	<div class="card">	
@@ -199,57 +208,59 @@ rs1.close
 
 		<div class="row">
 			<div class="col-md-12">
-				<div class="nav-tabs-custom">
-														 
-					<div class="row">	
-							
-							
+				<div class="nav-tabs-custom">														 
+					<div class="row">															
 						<div class="col-md-12" align="right">
 							<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button>	
 							<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
 						</div>	
 					</div>
 				
-				<hr>
-															
+				<hr>															
 					
-<% set rs8 = server.createobject("adodb.recordset")
-rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rptId desc ",conn,3,3 %>
-
-<div class="row">  
-
-	<div class="col-md-8">	
-		<h4 class="box-title">报告名称</h4>	
-		<input type="text" name="rptName" class="form-control" size="5" maxlength="40"  placeholder="{项目}{版本}测试报告" value="<%=pjtName%><%=platformName%> 测试报告"></input>		
-	</div>	
+				<% set rs8 = server.createobject("adodb.recordset")
+				rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rptId desc ",conn,3,3 %>
+				
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="col-md-6">
+							<h4 class="box-title">报告名称</h4>	
+							<input type="text" name="rptName" class="form-control" size="5" maxlength="40"  placeholder="{项目}{版本}测试报告" value="<%=pjtName%><%=platformName%> 测试报告"></input>		
+						</div>	
+					
+						<div class="col-md-3">
+							<h4 class="box-title">模板名称</h4>	
+							<input type="text" name="rptNo" class="form-control" size="5" maxlength="20"  placeholder="请输入 ..." value="<%=pjtName%><%=platformName%>"></input>	
+						</div>
+					
+						<div class="col-md-3">	 
+							<h4 class="box-title">导入模板</h4>
+							<% set rs66 = server.createobject("adodb.recordset")
+							rs66.open "select * from tbl_report where rptAuthor='"&session("userName")&"' and rpt_pjtId="&request("pjtId")&" order by rptId desc ",conn,3,3 %>		
+							<select name="caseErrorType(<%=varcount%>)" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
+							<% if request("rptId") = "0" then%>
+							<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >请选择 ...</option>
+							<%else%>
+							<% set rs266 = server.createobject("adodb.recordset")
+							rs266.open "select * from tbl_report where rptId="&request("rptId")&" order by rptId desc ",conn,3,3 %>		
+							<option value="" ><%=rs266("rptNo")%></option>
+							<%rs266.close%>
+							<%end if %>
+							<% do while not rs66.eof%>
+							<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-<%=rs66("rptId")%>.html" ><%=rs66("rptNo")%></option>
+							<%rs66.movenext
+							loop
+							rs66.close
+							set rs66 = nothing %>
+							</select>									
+						</div>
+					</div>
+				</div>
 	
-	<div class="col-md-2">
-		<h4 class="box-title">模板名称</h4>	
-		<input type="text" name="rptNo" class="form-control" size="5" maxlength="20"  placeholder="请输入 ..." value="<%=pjtName%><%=platformName%>"></input>	
-	</div>
 	
-	<div class="col-md-2">	 
-		<h4 class="box-title">导入模板</h4>
-		<% set rs66 = server.createobject("adodb.recordset")
-		rs66.open "select * from tbl_report where rptAuthor='"&session("userName")&"' and rpt_pjtId="&request("pjtId")&" order by rptId desc ",conn,3,3 %>		
-		<select name="caseErrorType(<%=varcount%>)" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
-		<% if request("rptId") = "0" then%>
-			<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >请选择 ...</option>
-		<%else%>
-			<% set rs266 = server.createobject("adodb.recordset")
-			rs266.open "select * from tbl_report where rptId="&request("rptId")&" order by rptId desc ",conn,3,3 %>		
-			<option value="" ><%=rs266("rptNo")%></option>
-			<%rs266.close%>
-		<%end if %>
-		<% do while not rs66.eof%>
-		<option value="sltReportCreate-<%=request("pjtId")%>-<%=request("platformId")%>-<%=rs66("rptId")%>.html" ><%=rs66("rptNo")%></option>
-		<%rs66.movenext
-		loop
-		rs66.close
-		set rs66 = nothing %>
-		</select>									
-	</div>
-</div>
+
+
 
 <h3 class="box-title">第1章 引言</h3>
 					
@@ -672,7 +683,8 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 						<td><%=rs4("platformName")%></td>
 						<td><%=rs5("lblName")%></td>
 						<td><% if rs6.recordcount <> 0 then
-						response.write rs6.recordcount
+							caseTotle =  rs6.recordcount
+						response.write caseTotle
 						end if %>
 						</td>
 						<td><%
@@ -694,18 +706,19 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 								end if 
 							rs6.movenext
 							loop
-						if varOkSum3 <> 0 then
+						
 						response.write varOkSum3
-						end if %></td>
-						<td><% if varErrorSum3 <> 0 then
+						%></td>
+						<td><% 
 						response.write varErrorSum3
-						end if %></td>
-						<td><% if varEmptySum3 <> 0 then
+						%></td>
+						<td><% 
 						response.write varEmptySum3
-						end if %></td>
+						%></td>
 						<td><% 
 						if rs6.recordcount <> 0 then
-						response.write cstr(int((varOkSum3+varErrorSum3)/rs6.recordcount*100)) + "%"
+							caseCoverage = cstr(int((varOkSum3+varErrorSum3)/rs6.recordcount*100)) + "%"
+						response.write caseCoverage
 						end if 
 						rs6.close%>
 						</td>
@@ -716,6 +729,11 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 				rs4.movenext
 				loop
 				rs4.close %>	       
+				<input name="caseTotal" type="hidden" value="<%=caseTotle%>" />	
+				<input name="casePass" type="hidden" value="<%=varOkSum3%>" />	
+				<input name="caseNoPass" type="hidden" value="<%=varErrorSum3%>" />	
+				<input name="caseNoTest" type="hidden" value="<%=varEmptySum3%>" />	
+				<input name="caseCoverage" type="hidden" value="<%=caseCoverage%>" />	
                 </tbody>
                 <tfoot>            
                 </tfoot>
@@ -745,25 +763,25 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 					<tr>
 					<td>iOS</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptIbug" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptIbug" class="form-control"  value="0"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>android</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptAbug" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptAbug" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>数据库/接口类</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptSbug" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptSbug" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>web php C/S</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptPbug" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptPbug" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					</tbody>
@@ -792,25 +810,25 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 					<tr>
 					<td>紧急</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptJdegree" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptJdegree" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>高</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptGdegree" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptGdegree" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>普通</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptPdegree" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptPdegree" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>低</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptDdegree" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptDdegree" class="form-control"  value="0"  oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					</tbody>
@@ -839,25 +857,25 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 					<tr>
 					<td>未处理(新建)</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptWstatus" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptWstatus" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>处理中</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptCstatus" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptCstatus" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>已解决</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptJstatus" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptJstatus" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					<tr>
 					<td>已反馈</td>
 					<td><div class="form-group">
-					<input type="text" maxlength="3" name="rptFstatus" class="form-control"  oninput="value=value.replace(/[^\d]/g,'')">
+					<input type="text" maxlength="3" name="rptFstatus" class="form-control"  value="0" oninput="value=value.replace(/[^\d]/g,'')">
 					</div></td>
 					</tr>
 					</tbody>
@@ -891,7 +909,7 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 			<% x = 0
 			do while not rs4.eof
 				x = x + 1%>
-				<td><input maxlength="3" type="text" name="errStory<%=x%>" class="form-control" oninput="value=value.replace(/[^\d]/g,'')"></td>			
+				<td><input maxlength="3" type="text" name="errStory<%=x%>" class="form-control" value="0" oninput="value=value.replace(/[^\d]/g,'')"></td>			
 			<%rs4.movenext
 			loop
 			rs4.close%>
@@ -1003,26 +1021,15 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
 </div>
 
 
-
-<!-- jQuery 2.1.4 -->
-<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<!-- Bootstrap 3.3.5 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- Select2 -->
-<script src="plugins/select2/select2.full.min.js"></script>
-<!-- date-range-picker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
-
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
+<a href="#0" class="cd-top">Top</a>
+</body>
+</html>
 
 
 <script>
   $(function () {
     //Initialize Select2 Elements
     $(".select2").select2();
-
     //Date range picker
     $('#reservation').daterangepicker();
 	$('#reservation1').daterangepicker();
@@ -1032,6 +1039,35 @@ rs8.open "select * from tbl_report where rptId="&request("rptId")&" order by rpt
   });
 </script>
 
-<a href="#0" class="cd-top">Top</a>
-</body>
-</html>
+ <!-- Javascripts-->
+<script src="731/dist/js/jquery-2.1.4.min.js"></script>
+<script src="731/dist/js/bootstrap.min.js"></script>
+<script src="731/dist/js/plugins/pace.min.js"></script>
+<script src="731/dist/js/main.js"></script>
+
+<!-- Bootstrap 3.3.5 -->
+<script src="plugins/morris.js-0.5.1/raphael-min.js"></script>
+<script src="plugins/morris.js-0.5.1/morris.js"></script>
+<link rel="stylesheet" href="test/morris.js-0.5.1/morris.css">
+<!-- ChartJS 1.0.1 -->
+<script src="plugins/chartjs/Chart.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- FLOT CHARTS -->
+<script src="plugins/flot/jquery.flot.min.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="plugins/flot/jquery.flot.resize.min.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="plugins/flot/jquery.flot.pie.min.js"></script>
+<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+<script src="plugins/flot/jquery.flot.categories.min.js"></script>
+
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+<!-- date-range-picker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="plugins/daterangepicker/daterangepicker.js"></script>

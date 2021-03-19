@@ -1,9 +1,33 @@
 <!--#include file="frame.asp"-->
 
+
+<% 
+pjtId = request("pjtId")
+platformId = request("platformId")	
+set rs1 = server.createobject("adodb.recordset")
+rs1.open "select * from tbl_project where pjtId="&pjtId&" order by pjtId desc",conn,3,3
+pjtName = rs1("pjtName")
+set rs2 = server.createobject("adodb.recordset")
+rs2.open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" order by platformId desc",conn,3,3
+pjtRedmine = rs2("platformRedmine")
+platformName = rs2("platformName")
+rs1.close
+rs2.close
+set rs = server.createobject("adodb.recordset")
+rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" and rptAuthor='"&session("userName")&"'  order by rptId desc",conn,3,3
+if rs.eof then
+response.Redirect("index.html")
+end if 
+%>
+
+
+	
+
+<title>编辑报告 | <%=pjtName%><%=platformName%></title>
+
+
 <!--  上传图片控件	-->	
 <script type="text/javascript" src="uploadPic/js/plupload.full.min.js"></script>
-
-<title>编辑测试报告 <%=cstCompany%></title>
 
 <script language="javascript">
 function CheckPost()
@@ -86,14 +110,7 @@ if (addForm.errStory10.value == "")
 </script>
 
 
-<%
-	pjtId = request("pjtId")
-	platformId = request("platformId")	
-	set rs = server.createobject("adodb.recordset")
-	rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" and rptStatus='done' order by rptId desc",conn,3,3
-	if not rs.eof then
-		response.Redirect("index.html")
-	end if %>
+
 				
 
 <!--  编辑报告	-->	
@@ -147,11 +164,11 @@ if request("action") = "save" then
 		'rs("rptRedminePic") = request("rptRedminePic")  upload.asp已经上传了此文件。			
 		rs("rptEditor") = session("userName")
 		rs("rptLatestDate") = now()	
-		rs("rptCaseTotal") = request("caseTotal")
-		rs("rptCasePass") = request("casePass")
-		rs("rptNoPass") = request("caseNoPass")
-		rs("rptNoTest") = request("caseNoTest")
-		rs("rptCaseCoverage") = request("caseCoverage")				
+		rs("rptCaseTotal") = request("rptCaseTotal")
+		rs("rptCasePass") = request("rptCasePass")
+		rs("rptNoPass") = request("rptNoPass")
+		rs("rptNoTest") = request("rptNoTest")			
+		rs("rptCaseCoverage") = request("rptCaseCoverage")				
 		x = ""
 		for i=1 to 10
 			if request("errStory"&i) = "" then
@@ -184,35 +201,22 @@ if request("action") = "save" then
 end if 
 %>
 
-
-<% 
-pjtId = request("pjtId")
-platformId = request("platformId")	
-set rs1 = server.createobject("adodb.recordset")
-rs1.open "select * from tbl_project where pjtId="&pjtId&" order by pjtId desc",conn,3,3
-pjtName = rs1("pjtName")
-set rs2 = server.createobject("adodb.recordset")
-rs2.open "select * from tbl_platform where plat_pjtId="&pjtId&" and platformId="&platformId&" order by platformId desc",conn,3,3
-pjtRedmine = rs2("platformRedmine")
-platformName = rs2("platformName")
-rs1.close
-rs2.close
-set rs = server.createobject("adodb.recordset")
-rs.open "select * from tbl_report where rpt_pjtId="&pjtId&" and rpt_platformId="&platformId&" and rptAuthor='"&session("userName")&"' order by rptId desc",conn,3,3
-if rs.eof then
-response.Redirect("index.html")
-end if 
-%>
   
   
 <div class="content-wrapper">
 	<div class="page-title">
 		<div>
-			<h1><i class="fa fa-edit"></i> 编辑测试报告</h1><p>edit testreport</p>
+			<h1><i class="fa fa-edit"></i> 编辑测试报告			
+				<%if rs("rptStatus") = "done" then%>			
+				（已完成）				
+				<%elseif rs("rptStatus") = "undone" then%>
+				（待审核）
+				<%else%>
+				（已拒绝）								
+				<%end if %>					
+			</h1><p>edit report</p>
 		</div>
-		<div>
-			<ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">编辑测试报告</a></li></ul>
-		</div>
+		<ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i> 测试报告 / <%=pjtName%></li></ul>	
 	</div>
 																				
 	<div class="card">
@@ -221,11 +225,26 @@ end if
 		<div class="row">
 			<div class="col-md-6" align="left">
 				
+														
+				
+			</div>				
+			<div class="col-md-6" align="right">
+				<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button>	
+				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
+			</div>	
+		</div>
+
+		<hr>
+		
+		
+
+			<div class="col-md-4">
+				
 				<%if rs("rptStatus") = "done" then%>			
 					<%=pjtName%><%=platformName%> 测试报告（已完成）					
 				<%elseif rs("rptStatus") = "undone" then%>
 					<div class="form-group">
-					<h4 class="box-title">报告名称（待审核）</h4>	
+					<h4 class="box-title">报告名称</h4>	
 					<input type="text" name="rptName" size="5" maxlength="40"class="form-control pull-right" id="rptName" value="<%=rs("rptName")%>">
 					</div>					
 				<%else%>
@@ -236,14 +255,8 @@ end if
 				<%end if %>											
 				
 			</div>				
-			<div class="col-md-6" align="right">
-				<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button>	
-				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>		
-			</div>	
-		</div>
-
-		<hr>
-										
+		
+		<br><br><br><br><br>
 				
 		<h2>第1章 引言 </h2>	
 							     					
@@ -444,14 +457,13 @@ end if
 
 		<div class="col-md-12">
 			<div class="box-header"><h3 class="box-title">4.1 测试覆盖率</h3></div>
-			<table id="example2" class="table table-bordered table-hover"><thead><tr>
-			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 版本</h4></th>
+			<table id="example2" class="table table-bordered table-hover"><thead><tr>	
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 标签</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例总数</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 已通过数</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未通过数</h4></th>
-			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未测试数(搁置/暂停）</h4></th>
-			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 用例执行覆盖率</h4></th>
+			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 未测试数</h4></th>
+			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title"> 执行覆盖率</h4></th>
 			</tr></thead><tbody>
 			<% set rs4 = server.createobject("adodb.recordset")
 			rs4.open "select * from tbl_platform where platformId="&platformId&" order by platformId asc",conn,3,3 
@@ -462,64 +474,25 @@ end if
 			set rs6 = server.createobject("adodb.recordset")
 			rs6.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" and case_lblId="&rs5("lblId")&" order by caseId asc",conn,3,3 %>
 			<tr>
-			<td><%=rs4("platformName")%></td>
-			<td><%=rs5("lblName")%></td>
-			<td>
-			<%if rs("rptCaseTotal") <> "" then %>
-			
-				<input maxlength="6" type="text" name="caseTotal" class="form-control" value="<%=rs6.recordcount%>" readonly="">				 
-			<%end if %>				
-			</td>
-			<%
-			varOkSum3 = 0
-			varErrorSum3 = 0
-			varEmptySum3 = 0
-			do while not rs6.eof
-			if rs6("caseResult") = "ok" then
-				varOkSum3 = varOkSum3 + 1
-			end if 
-			if rs6("caseResult") = "error" then
-				varErrorSum3 = varErrorSum3 + 1
-			end if 
-			if rs6("caseResult")= "empty" and rs6("caseStatus") = "1" then
-				varEmptySum3 = varEmptySum3 + 1
-			end if 
-			if rs6("caseStatus") = "2" then
-				varEmptySum3 = varEmptySum3 + 1
-			end if 
-			if rs6("caseStatus") = "3" then
-				varEmptySum3 = varEmptySum3 + 1
-			end if 
-			rs6.movenext
-			loop
-			 caseCoverage = cstr(int((varOkSum3+varErrorSum3)/rs6.recordcount*100)) + "%" 
-			%>
-			
-			<td>				
-			<%if rs("rptCasePass") <> "" then %>			
-				<input maxlength="6" type="text" name="casePass" class="form-control" value="<%=varOkSum3%>" readonly="">				 
-			<%end if %>
-			</td>
-			
-			<td>
-			<%if rs("rptNoPass") <> "" then %>				
-				<input maxlength="6" type="text" name="caseNoPass" class="form-control" value="<%=varErrorSum3%>" readonly="">				 
-			<%end if %>
-			</td>
-			
-			<td>
-			<%if rs("rptNoTest") <> "" then %>				
-				<input maxlength="6" type="text" name="caseNoTest" class="form-control" value="<%=varEmptySum3%>" readonly="">				 
-			<%end if %>
-			</td>
-			
-			<td>
-			<%if rs("rptCaseCoverage") <> "" then %>													
-				<input maxlength="6" type="text" name="caseCoverage" class="form-control" value="<%=caseCoverage%>" readonly="">				 
-			<%end if 
 		
-			rs6.close%>
+		
+			
+				<td><%=rs5("lblName")%></td>						
+			<td>			<input maxlength="6" type="text" name="rptCaseTotal" class="form-control" value="<%=rs("rptCaseTotal")%>" >	  
 			</td>
+			<td>			<input maxlength="6" type="text" name="rptCasePass" class="form-control" value="<%=rs("rptCasePass")%>" >	  						
+			</td>
+			<td>
+						<input maxlength="6" type="text" name="rptNoPass" class="form-control" value="<%=rs("rptNoPass")%>" >	  
+			</td>
+			<td>
+						<input maxlength="6" type="text" name="rptNoTest" class="form-control" value="<%=rs("rptNoTest")%>" >	  
+			</td>
+			<td>
+			<input maxlength="6" type="text" name="rptCaseCoverage" class="form-control" value="<%=rs("rptCaseCoverage")%>" >	  
+			
+			</td>
+			
 			</tr>
 			<% rs5.movenext
 			loop
@@ -714,24 +687,13 @@ end if
 
 
 
-<!-- Select2 -->
-<script src="plugins/select2/select2.full.min.js"></script>
-<!-- InputMask -->
-<script src="plugins/input-mask/jquery.inputmask.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
-<!-- date-range-picker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap color picker -->
-<script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
-<!-- bootstrap time picker -->
-<script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
 
-<!-- iCheck 1.0.1 -->
-<script src="plugins/iCheck/icheck.min.js"></script>
-<!-- FastClick -->
-<script src="plugins/fastclick/fastclick.js"></script>
+<a id='DD'></a>		
+<a href="#0" class="cd-top">Top</a>
+
+</body>
+</html>
+
 
 
 <script>
@@ -746,15 +708,36 @@ end if
    
   });
 </script>
-<a id='DD'></a>		
-<a href="#0" class="cd-top">Top</a>
-
-</body>
-</html>
 
  <!-- Javascripts-->
 <script src="731/dist/js/jquery-2.1.4.min.js"></script>
 <script src="731/dist/js/bootstrap.min.js"></script>
 <script src="731/dist/js/plugins/pace.min.js"></script>
 <script src="731/dist/js/main.js"></script>
-	
+
+<!-- Bootstrap 3.3.5 -->
+<script src="plugins/morris.js-0.5.1/raphael-min.js"></script>
+<script src="plugins/morris.js-0.5.1/morris.js"></script>
+<link rel="stylesheet" href="test/morris.js-0.5.1/morris.css">
+<!-- ChartJS 1.0.1 -->
+<script src="plugins/chartjs/Chart.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- FLOT CHARTS -->
+<script src="plugins/flot/jquery.flot.min.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="plugins/flot/jquery.flot.resize.min.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="plugins/flot/jquery.flot.pie.min.js"></script>
+<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+<script src="plugins/flot/jquery.flot.categories.min.js"></script>
+
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+<!-- date-range-picker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="plugins/daterangepicker/daterangepicker.js"></script>

@@ -73,14 +73,7 @@ end if
 %>
 
 <div class="content-wrapper">
-	<div class="page-title">
-		<div>
-			<h1><i class="fa fa-edit"></i> 测试报告</h1><p>show testreport</p>
-		</div>
-		<div>
-			<ul class="breadcrumb"><li><i class="fa fa-home fa-lg"></i></li><li><a href="#">测试报告</a></li></ul>
-		</div>
-	</div>
+	
 													
 	<div class="card">		
 		<div class="row">
@@ -182,7 +175,7 @@ end if
 		</div>	
 
 		<div class="col-md-12">	
-			<h3 class="box-title"> 2.5 测试人员</h3>
+			<h3 class="box-title"> 2.5 参与人员</h3>
 			<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptMember"),chr(13),"<BR>")%></p>					
 		</div>	
 				
@@ -205,7 +198,7 @@ end if
 			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">测试对象</h4></th>
 			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">测试阶段</h4></th>
 			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">测试结果</h4></th>
-			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">创建/执行者</h4></th>
+			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">创建者/执行者</h4></th>
 			</tr></thead><tbody>	  
 			<% set rs2 = server.createobject("adodb.recordset")
 			rs2.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" order by caseId asc",conn,3,3 
@@ -280,7 +273,8 @@ end if
 			</table>
 			<% rs1.movenext
 			loop
-			rs1.close %> 				
+			rs1.close %> 	
+			注意：实际测试用例请参阅附件表格。			
 		</div>	
 
 		<div class="col-md-12">	
@@ -329,14 +323,13 @@ end if
 									
 		<div class="col-md-12">	
 			<h3 class="box-title"> 4.1 测试用例覆盖率</h3>
-			<table id="example2" class="table table-bordered table-hover"><thead><tr>
-			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">版本</h4></th>
+			<table id="example2" class="table table-bordered table-hover"><thead><tr>			
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">标签</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">用例总数</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">已通过数</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">未通过数</h4></th>
-			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">未测试数(搁置/暂停）</h4></th>
-			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">通过覆盖率</h4></th></tr></thead><tbody>
+			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">未测试数</h4></th>
+			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">执行覆盖率</h4></th></tr></thead><tbody>	
 			<% set rs4 = server.createobject("adodb.recordset")
 			rs4.open "select * from tbl_platform where platformId="&platformId&" order by platformId asc",conn,3,3 
 			do while not rs4.eof 
@@ -346,49 +339,30 @@ end if
 			set rs6 = server.createobject("adodb.recordset")
 			rs6.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" and case_lblId="&rs5("lblId")&" order by caseId asc",conn,3,3 %>
 			<tr>
-			<td><%=rs4("platformName")%></td>
+			
 			<td><%=rs5("lblName")%></td>						
 			<td><% if rs("rptCaseTotal") <>"" then
-			response.write rs6.recordcount
+			response.write rs("rptCaseTotal") 
 			end if %>
 			</td>
-			<td><%
-			varOkSum3 = 0
-			varErrorSum3 = 0
-			varEmptySum3 = 0
-			do while not rs6.eof
-			if rs6("caseResult") = "ok" then
-			varOkSum3 = varOkSum3 + 1
-			end if 
-			if rs6("caseResult") = "error" then
-			varErrorSum3 = varErrorSum3 + 1
-			end if 
-			if rs6("caseResult")="empty" and rs6("caseStatus") = "1"  then
-			varEmptySum3 = varEmptySum3 + 1
-			end if 
-			if rs6("caseStatus") = "3" or rs6("caseStatus") = "2" then
-			varEmptySum3 = varEmptySum3 + 1
-			end if 
-			rs6.movenext
-			loop
+			<td><%				
 			if rs("rptCasePass") <>"" then
-				response.write varOkSum3
+				response.write rs("rptCasePass")
 			end if %>							
 			</td>
 			<td>
 			<% if rs("rptNoPass") <>"" then
-				response.write varErrorSum3
+				response.write rs("rptNoPass")
 			end if %>
 			</td>
 			<td>
 			<%  if rs("rptNoTest") <>"" then
-				response.write varEmptySum3
+				response.write rs("rptNoTest")
 			end if %>
 			</td>
 			<td>
 			<%  if rs("rptCaseCoverage") <>"" then
-			varFGL = int((varOkSum3+varErrorSum3)/rs6.recordcount*100)
-			response.write cstr(varFGL) + "%"
+				response.write rs("rptCaseCoverage")
 			end if  
 			rs6.close%>
 			</td>
@@ -399,10 +373,11 @@ end if
 			rs4.movenext
 			loop
 			rs4.close %>	       
-			</tbody>
+			</tbody>		
 			<tfoot>            
 			</tfoot>
-			</table>		
+			</table>
+			注意：此部分内容请参考测试用例文档。	
 		</div>		
 					
 		<div class="col-md-12">	
