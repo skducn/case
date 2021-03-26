@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="731/dist/css/main2.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 <!-- https://fontawesome.dashgame.com/ ，确保 fonts不能删除 -->	
-<link rel="stylesheet" type="text/css" href="css/1.css">
+<link rel="stylesheet" type="text/css" href="css/1.css"> 
 
 </head>
 
