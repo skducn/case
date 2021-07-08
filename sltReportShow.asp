@@ -111,10 +111,10 @@ end if
 		
 		<hr>							
 				
-		<h2>第1章、引言 </h2>
+		<h2>第1章 引言 </h2>
 													
 		<div class="col-md-12">	
-			<h3 class="box-title"> 1.1 目的</h3>						
+			<h3 class="box-title"> 1.1 编写目的</h3>						
 			<p style="font-size:18px;line-height:160%;letter-spacing:1px;"><%=replace(rs("rptGoal"),chr(13),"<BR>")%></p>				
 		</div>	
 		
@@ -133,7 +133,7 @@ end if
 		<br>
 		
 				
-		<h2>第2章、测试概述 </h2>
+		<h2>第2章 测试概述 </h2>
 		
 		<div class="col-md-12">	
 			<h3 class="box-title"> 2.1 测试对象</h3>
@@ -151,11 +151,11 @@ end if
 		</div>	
 		
 		<div class="col-md-12">	
-			<h3 class="box-title"> 2.4 测试进度表</h3>
+			<h3 class="box-title"> 2.4 时间进度表</h3>
 			<div class="form-group">
 				<table class="table table-bordered"><tr>               
-				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title">分类</h4></th>
-				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title">开始 - 结束日期</h4></th>
+				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title">名称</h4></th>
+				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title">日期起始</h4></th>
 				<th style="width: 60%" bgcolor="#f1f1f1"><h4 class="box-title">备注</h4></th></tr>
 				<tr><td>需求文档分析</td><td>							
 				<div class="form-group"><div class="input-group"><%=rs("rptStoryDate")%></div></div></td><td>
@@ -184,21 +184,21 @@ end if
 		<br>
 				
 			
-		<h2>第3章、测试方法 </h2>
+		<h2>第3章 测试方法 </h2>
 		
 		<div class="col-md-12">	
-			<h3 class="box-title"> 3.1 测试用例</h3>		
+			<h3 class="box-title"> 3.1 测试用例（参考用例，详细用例参查阅附件）</h3>		
 			<% set rs1 = server.createobject("adodb.recordset")
 			rs1.open "select * from tbl_platform where platformId="&platformId&"",conn,3,3 
 			do while not rs1.eof %>		
 			<table id="example2" class="table table-bordered table-hover"><thead><tr>
-			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">编号</h4></th>
+			<th style="width: 5%" bgcolor="#f1f1f1"><h4 class="box-title">编号</h4></th>
 			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">标签</h4></th>
 			<th style="width: 40%" bgcolor="#f1f1f1"><h4 class="box-title">标题</h4></th>
 			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">测试对象</h4></th>
 			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">测试阶段</h4></th>
 			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">测试结果</h4></th>
-			<th style="width: 10%" bgcolor="#f1f1f1"><h4 class="box-title">创建者/执行者</h4></th>
+			<th style="width: 15%" bgcolor="#f1f1f1"><h4 class="box-title">创建者/执行者</h4></th>
 			</tr></thead><tbody>	  
 			<% set rs2 = server.createobject("adodb.recordset")
 			rs2.open "select * from tbl_case where case_pjtId="&pjtId&" and case_platformId="&platformId&" order by caseId asc",conn,3,3 
@@ -274,7 +274,7 @@ end if
 			<% rs1.movenext
 			loop
 			rs1.close %> 	
-			注意：实际测试用例请参阅附件表格。			
+						
 		</div>	
 
 		<div class="col-md-12">	
@@ -319,17 +319,17 @@ end if
 		<br>
 	
 
-		<h2>第4章、测试结果及缺陷分析 </h2>
+		<h2>第4章 测试结果及缺陷分析 </h2>
 									
 		<div class="col-md-12">	
-			<h3 class="box-title"> 4.1 测试用例覆盖率</h3>
+			<h3 class="box-title"> 4.1 测试用例覆盖率（依据测试用例）</h3>
 			<table id="example2" class="table table-bordered table-hover"><thead><tr>			
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">标签</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">用例总数</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">已通过数</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">未通过数</h4></th>
 			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">未测试数</h4></th>
-			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">执行覆盖率%</h4></th></tr></thead><tbody>	
+			<th style="width: 14.28%" bgcolor="#f1f1f1"><h4 class="box-title">执行覆盖率</h4></th></tr></thead><tbody>	
 			<% set rs4 = server.createobject("adodb.recordset")
 			rs4.open "select * from tbl_platform where platformId="&platformId&" order by platformId asc",conn,3,3 
 			do while not rs4.eof 
@@ -376,7 +376,7 @@ end if
 			<tfoot>            
 			</tfoot>
 			</table>
-			注意：此部分内容请参考测试用例文档。	
+				
 		</div>		
 					
 		<div class="col-md-12">	
@@ -490,7 +490,7 @@ end if
 				
 				
 				
-		<h2>第5章、测试总结与建议</h2>
+		<h2>第5章 测试总结与建议</h2>
 									
 		<div class="col-md-12">	
 			<h3 class="box-title"> 5.1 软件质量</h3>
