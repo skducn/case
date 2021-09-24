@@ -86,7 +86,7 @@ if request("action") = "submit" then
 	rs.update
 	rs.close
 	set rs = nothing
-	response.Redirect("sltTestPlanDone-"&pjtId&"-"&platformId&".html")
+	response.Redirect("sltPlanEdit-"&pjtId&"-"&platformId&".html")
 end if 
 
 
