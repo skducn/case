@@ -75,4 +75,9 @@ admUserPanel = "用户管理"
 	admUserEdit = "编辑用户"
 admProfile = "个人账号"
 
+
+'样式
+btnPrimary = "btn btn-primary btn-lg"
+btnWarning = "btn btn-warning btn-lg"
+
 %>

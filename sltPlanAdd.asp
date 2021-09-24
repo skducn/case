@@ -130,11 +130,11 @@ set rs = nothing
 		</div>
 		
 		<!--  导入计划模板 -->			
-		<div class="col-md-2"  align="center">				
+		<div class="col-md-2"  align="left">				
 			 <% set rs66 = server.createobject("adodb.recordset")
 			rs66.open "select * from tbl_plan where planAuthor='"&session("userName")&"' and plan_pjtId="&pjtId&" order by planId desc ",conn,3,3 %>
 			<select name="testplan" id="caseErrorType" class="form-control select2" onChange="window.location=this.value;">
-			<option value="sltPlanAdd-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >请选择导入模板</option>				
+			<option value="sltPlanAdd-<%=request("pjtId")%>-<%=request("platformId")%>-0.html" >请加载模板</option>				
 			<% do while not rs66.eof
 				  set rs67 = server.createobject("adodb.recordset")
 				  rs67.open "select * from tbl_project where pjtId="&rs66("plan_pjtId")&"  order by pjtId desc ",conn,3,3 
@@ -153,7 +153,8 @@ set rs = nothing
 
 		</div>
 		<div class="col-md-2" align="right">		
-			<button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button>		
+			
+			<button type="submit" class="btn btn-primary btn-lg"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button>		
 			<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>
 		</div>
 	</div>
@@ -234,10 +235,10 @@ set rs = nothing
 			<div class="col-md-12">	<br>						
 				<h4>2.4 测试进度</h4>
 				<table class="table table-bordered"><tr>               
-				<th style="width: 20%">测试阶段</th>
-				<th style="width: 30%">测试任务</th>
-				<th style="width: 30%">工作量/人员</th>
-				<th style="width: 20%">起止时间</th></tr>
+				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试阶段</h4></th>
+				<th style="width: 30%" bgcolor="#f1f1f1"><h4 class="box-title"> 测试任务</h4></th>
+				<th style="width: 30%" bgcolor="#f1f1f1"><h4 class="box-title"> 工作量/人员</h4></th>
+				<th style="width: 20%" bgcolor="#f1f1f1"><h4 class="box-title"> 起止时间</h4></th></tr>
 				
 				<tr>
 				<td>阶段1、需求分析</td>
@@ -619,7 +620,7 @@ set rs = nothing
 		<div class="col-md-12">		
 			<br>  
 			<hr>
-			<div align="center"><button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button></div>
+			<div align="center"><button type="submit" class="btn btn-primary btn-lg"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;提交</button></div>
 
 		</div>
 		
@@ -645,15 +646,10 @@ set rs = nothing
 </div>
 </div>
 </div>
+</body>
+</html>
 
 
-
-
-
-
-<!-- date-range-picker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-<script src="/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- AdminLTE App -->
 <script src="/dist/js/app.min.js"></script>
 <script>
@@ -674,20 +670,15 @@ $('#reservation10').daterangepicker();
 
 </script>
 
-<!-- Select2 -->
-<script src="plugins/select2/select2.full.min.js"></script>
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $(".select2").select2();   
-  });
-</script>
-</body>
-</html>
-
  <!-- Javascripts-->
 <script src="731/dist/js/jquery-2.1.4.min.js"></script>
 <script src="731/dist/js/bootstrap.min.js"></script>
 <script src="731/dist/js/plugins/pace.min.js"></script>
 <script src="731/dist/js/main.js"></script>
+
+<!-- Select2 -->
+<script src="plugins/select2/select2.full.min.js"></script>
+<!-- date-range-picker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="plugins/daterangepicker/daterangepicker.js"></script>
 	

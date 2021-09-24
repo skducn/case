@@ -2,7 +2,10 @@
   
 <!--  ÉÏ´«Í¼Æ¬¿Ø¼þ	-->	
 <script type="text/javascript" src="uploadPic/js/plupload.full.min.js"></script>
+<style>
+.bb a{ padding:30px 0}
 
+</style>
   
 <%
 pjtId = request("pjtId")
@@ -90,16 +93,19 @@ end if
 				<div class="col-md-10">
 				<h2><div><%=rs("rptName")%>£¨´ýÉóºË£©</div></h2>																			
 				</div>
+				
 				<div class="col-md-2" align="right">
-				<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="±à¼­"><i class='fa fa-edit'>&nbsp;±à¼­</i></a>	
+				<a class='<%=btnWarning%>' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="±à¼­"><i class='fa fa-edit'>&nbsp;±à¼­</i></a>	
 				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="µ½Ò³µ×"><i class="fa fa-arrow-circle-down"></i></a>		
 				</div>
+					
+			
 			<%elseif rs("rptStatus") = "reject" and rs("rptAuthor")=session("userName") then%>				
 				<div class="col-md-10">
 				<h2><div><%=rs("rptName")%>£¨Î´Í¨¹ý£©</div></h2>																			
 				</div>
 				<div class="col-md-2" align="right">
-				<a class='btn btn-warning' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="±à¼­"><i class='fa fa-edit'>&nbsp;±à¼­</i></a>	
+				<a class='<%=btnWarning%>' href='sltReportEdit-<%=pjtId%>-<%=platformId%>.html' data-toggle="tooltip" data-original-title="±à¼­"><i class='fa fa-edit'>&nbsp;±à¼­</i></a>	
 				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="µ½Ò³µ×"><i class="fa fa-arrow-circle-down"></i></a>		
 				</div>
 			<%else%>

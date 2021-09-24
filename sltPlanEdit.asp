@@ -130,7 +130,7 @@ x = rs3.recordcount
 				<h3 class="box-title"><%=pjtName%> - <%=platformName%></h3>	
 			</div>
 			<div class="col-md-6" align="right">	
-				<button type="submit" class="btn btn-primary " href="#"><i class="fa fa-fw  fa-check-circle"></i>保存</button>				
+				<button type="submit" class='<%=btnPrimary%>' href="#"><i class="fa fa-fw  fa-check-circle"></i>保存</button>				
 				<a href="#DD" class="btn btn-primary" data-toggle="tooltip" data-original-title="到页底"><i class="fa fa-arrow-circle-down"></i></a>
 			</div>	
 		</div>
@@ -401,7 +401,7 @@ x = rs3.recordcount
 			<div class="col-md-12">		
 				<br>  
 				<hr>
-				<div align="center"><button type="submit" class="btn btn-primary"  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button></div>
+				<div align="center"><button type="submit" class='<%=btnPrimary%>'  href="#"><i class="fa fa-fw  fa-check-circle"></i>&nbsp;保存</button></div>
 			</div>
 		</div>
 			
@@ -417,20 +417,11 @@ x = rs3.recordcount
 
 </div>
 </div>	
+</body>
+</html>
 
 
 
-
-
-
-
-<script src="731/dist/js/plugins/pace.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-<script src="/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- AdminLTE App -->
-<script src="/dist/js/app.min.js"></script>
 <script>
 $(function () {
 //Date range picker
@@ -448,12 +439,17 @@ $('#reservation10').daterangepicker();
 
 </script>
 
-</body>
-</html>
-
  <!-- Javascripts-->
 <script src="731/dist/js/jquery-2.1.4.min.js"></script>
 <script src="731/dist/js/bootstrap.min.js"></script>
 <script src="731/dist/js/plugins/pace.min.js"></script>
 <script src="731/dist/js/main.js"></script>
 	
+
+<script src="731/dist/js/plugins/pace.min.js"></script>
+<script type="text/javascript" src="731/dist/js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="731/dist/js/plugins/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/app.min.js"></script>
