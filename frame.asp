@@ -379,7 +379,7 @@
 			<li class="treeview"><a href="#"><i class="fa fa-book" ></i><span> <%=cstReport%> </span><i class="fa fa-angle-right"></i></a>
 					<ul class="treeview-menu text-purpl">	
 						<%Set rs1 = Server.CreateObject("Adodb.Recordset")
-						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName",conn,3,3 											
+						rs1.Open "select * from tbl_project where pjtStatus='1' order by pjtName ",conn,3,3 											
 						if rs1.eof then
 							response.write "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color='white'>ÎŞÏîÄ¿</font>"
 						else
